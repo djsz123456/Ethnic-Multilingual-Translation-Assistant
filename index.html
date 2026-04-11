@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多民族语言翻译工具</title>
+    <style>
+        /* 全局样式重置（完全保留原风格） */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Tibetan", "Noto Sans Mongolian", "Noto Sans Uyghur", sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            overflow: hidden;
+        }
+
+        /* 整体容器 */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* 侧边栏（新增翻译相关入口） */
+        .sidebar {
+            width: 200px;
+            background-color: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 16px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            margin-bottom: 16px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .username {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 0 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            color: #4b5563;
+            transition: background-color 0.2s;
+        }
+
+        .nav-item:hover {
+            background-color: #f3f4f6;
+        }
+
+        .nav-item .icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        .nav-item .arrow {
+            margin-left: auto;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        /* 新增：翻译功能专属导航 */
+        .translate-nav-title {
+            font-size: 13px;
+            color: #9ca3af;
+            padding: 16px 16px 8px;
+            margin-top: 8px;
+        }
+
+        .history-title {
+            font-size: 13px;
+            color: #9ca3af;
+            padding: 16px 16px 8px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 0 8px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #4b5563;
+            transition: background-color 0.2s;
+        }
+
+        .history-item:hover {
+            background-color: #f3f4f6;
+        }
+
+        .history-item .icon {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+        }
+
+        .bottom-user {
+            padding: 12px 16px;
+            border-top: 1px solid #f3f4f6;
+            margin-top: auto;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* 主内容区（核心改造：翻译工具首页） */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9f9;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .top-left {
+            display: flex;
+            gap: 16px;
+        }
+
+        .top-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .top-icon:hover {
+            opacity: 1;
+        }
+
+        .top-center {
+            text-align: center;
+        }
+
+        .top-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .top-subtitle {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+        .top-right {
+            display: flex;
+            gap: 16px;
+        }
+
+        .call-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .call-icon:hover {
+            opacity: 1;
+        }
+
+        /* 聊天内容区：改造为翻译工具首页 */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow-y: auto;
+            gap: 32px;
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .welcome-subtitle {
+            font-size: 15px;
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        /* 快捷提问：保留原结构，替换为翻译相关场景 */
+        .quick-questions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 900px;
+            width: 100%;
+            margin-bottom: 32px;
+        }
+
+        .quick-btn {
+            padding: 10px 16px;
+            background-color: #f3f4f6;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .quick-btn:hover {
+            background-color: #e5e7eb;
+            transform: translateY(-2px);
+        }
+
+        /* 新增：文化小贴士模块 */
+        .culture-tip {
+            max-width: 900px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .culture-tip .tip-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .culture-tip .tip-content {
+            flex: 1;
+        }
+
+        .culture-tip .tip-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .culture-tip .tip-text {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .culture-tip .tip-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background-color: #f3f4f6;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #4b5563;
+            margin-right: 8px;
+        }
+
+        /* 右下角悬浮头像（保留） */
+        .float-avatar {
+            position: fixed;
+            right: 24px;
+            bottom: 100px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .float-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 底部输入栏：核心改造为翻译输入区 */
+        .input-area {
+            padding: 16px 24px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .input-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 12px 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 新增：语言选择栏 */
+        .lang-selector {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .lang-select {
+            padding: 4px 8px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #374151;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+
+        .lang-arrow {
+            font-size: 16px;
+            color: #9ca3af;
+        }
+
+        .input-box {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            color: #374151;
+            resize: none;
+            min-height: 48px;
+            max-height: 200px;
+            line-height: 1.5;
+        }
+
+        .input-box::placeholder {
+            color: #9ca3af;
+        }
+
+        .input-tools {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .tool-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #6b7280;
+            transition: color 0.2s;
+        }
+
+        .tool-btn:hover {
+            color: #1f2937;
+        }
+
+        .tool-btn .icon {
+            width: 18px;
+            height: 18px;
+            opacity: 0.8;
+        }
+
+        .beta-tag {
+            font-size: 10px;
+            color: #9ca3af;
+            background-color: #f3f4f6;
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+        .mic-btn {
+            margin-left: auto;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #f3f4f6;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .mic-btn:hover {
+            background-color: #e5e7eb;
+        }
+
+        .mic-btn .icon {
+            width: 18px;
+            height: 18px;
+            opacity: 0.8;
+        }
+
+        /* 适配民族语言书写格式 */
+        .tibetan-text {
+            direction: ltr;
+            font-family: "Noto Sans Tibetan", sans-serif;
+        }
+
+        .mongolian-text {
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            font-family: "Noto Sans Mongolian", sans-serif;
+        }
+
+        .uyghur-text {
+            direction: rtl;
+            font-family: "Noto Sans Uyghur", sans-serif;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+            }
+
+            .quick-questions {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-title {
+                font-size: 22px;
+            }
+
+            .culture-tip {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏（新增翻译历史/收藏入口） -->
+        <aside class="sidebar">
+            <div class="user-info">
+                <div class="avatar">
+                    <img src="https://picsum.photos/id/64/32/32" alt="用户头像">
+                </div>
+                <span class="username">admin</span>
+            </div>
+            <!-- 新增：翻译功能导航 -->
+            <div class="translate-nav-title">翻译工具</div>
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <span class="icon">📜</span>
+                    <span>翻译历史</span>
+                </div>
+                <div class="nav-item">
+                    <span class="icon">⭐</span>
+                    <span>我的收藏</span>
+                </div>
+            </div>
+
+            <div class="history-title">历史对话</div>
+            <div class="history-list">
+                <div class="history-item">
+                    <span class="icon">💬</span>
+                    <span>藏汉互译-政务文件翻译</span>
+                </div>
+                <div class="history-item">
+                    <span class="icon">💬</span>
+                    <span>蒙汉互译-文化短句</span>
+                </div>
+                <div class="history-item">
+                    <span class="icon">💬</span>
+                    <span>维汉互译-日常聊天</span>
+                </div>
+            </div>
+
+            <div class="bottom-user">
+                <span>与世无争</span>
+            </div>
+        </aside>
+
+        <!-- 主内容区（改造为翻译工具首页） -->
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="top-left">
+                    <span class="top-icon">🗔</span>
+                    <span class="top-icon">🖊</span>
+                </div>
+                <div class="top-center">
+                    <div class="top-title">多民族语言翻译</div>
+                    <div class="top-subtitle">支持藏、蒙、维与汉语双向互译</div>
+                </div>
+            </div>
+
+            <div class="chat-area">
+                <div>
+                    <h1 class="welcome-title">有什么我能帮你的吗?</h1>
+                    <p class="welcome-subtitle">支持藏、蒙、维三大民族语言与汉语双向翻译，附文化小贴士</p>
+                </div>
+
+                <!-- 快捷提问：替换为翻译相关场景 -->
+                <div class="quick-questions">
+                    <button class="quick-btn">藏语 ↔ 汉语 双向翻译</button>
+                    <button class="quick-btn">蒙语 ↔ 汉语 双向翻译</button>
+                    <button class="quick-btn">维语 ↔ 汉语 双向翻译</button>
+                    <button class="quick-btn">政务文件专业翻译</button>
+                    <button class="quick-btn">民族文化短句翻译</button>
+                    <button class="quick-btn">文档快速批量翻译</button>
+                    <button class="quick-btn">查看我的翻译收藏</button>
+                    <button class="quick-btn">历史翻译记录回溯</button>
+                    <button class="quick-btn">民族语言文化科普</button>
+                </div>
+
+                <!-- 新增：文化小贴士模块 -->
+                <div class="culture-tip">
+                    <div class="tip-icon">🏔️</div>
+                    <div class="tip-content">
+                        <div class="tip-title">今日文化小贴士 · 藏语</div>
+                        <div class="tip-text">
+                            藏语「扎西德勒」（བཀྲ་ཤིས་བདེ་ལེགས་）是藏族最常用的祝福语，字面意思是「吉祥如意」，常用于见面问候、节日祝福、送礼等场景，是藏文化中最具代表性的表达之一。
+                        </div>
+                        <div>
+                            <span class="tip-tag">#藏语</span>
+                            <span class="tip-tag">#日常用语</span>
+                            <span class="tip-tag">#文化科普</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右下角悬浮头像 -->
+            <div class="float-avatar">
+                <img src="https://picsum.photos/id/64/40/40" alt="豆包头像">
+            </div>
+
+            <!-- 底部输入栏：改造为翻译输入区 -->
+            <div class="input-area">
+                <div class="input-container">
+                    <!-- 新增：语言选择栏 -->
+                    <div class="lang-selector">
+                        <select class="lang-select" id="source-lang">
+                            <option value="zh">汉语</option>
+                            <option value="bo">藏语</option>
+                            <option value="mn">蒙语</option>
+                            <option value="ug">维语</option>
+                        </select>
+                        <span class="lang-arrow">→</span>
+                        <select class="lang-select" id="target-lang">
+                            <option value="bo">藏语</option>
+                            <option value="zh">汉语</option>
+                            <option value="mn">蒙语</option>
+                            <option value="ug">维语</option>
+                        </select>
+                    </div>
+
+                    <input type="text" class="input-box" id="translate-input" placeholder="输入需要翻译的内容，支持藏、蒙、维、汉多语言">
+                    
+                    <div class="input-tools">
+                        <button class="tool-btn">
+                            <span class="icon">➕</span>
+                        </button>
+                        <button class="tool-btn">
+                            <span class="icon">⚡</span>
+                            <span>快速翻译</span>
+                        </button>
+                        <button class="tool-btn">
+                            <span class="icon">📝</span>
+                            <span>文档翻译</span>
+                        </button>
+                        <button class="tool-btn">
+                            <span class="icon">⭐</span>
+                            <span>收藏</span>
+                        </button>
+                        <button class="tool-btn">
+                            <span class="icon">📜</span>
+                            <span>历史</span>
+                        </button>
+                        <button class="tool-btn">
+                            <span class="icon">🎛</span>
+                            <span>更多</span>
+                        </button>
+                        <button class="mic-btn">
+                            <span class="icon">🎤</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 预留JS对接位（后续可接入真实API） -->
+    <script>
+        // 1. 语言选择器逻辑
+        const sourceLang = document.getElementById('source-lang');
+        const targetLang = document.getElementById('target-lang');
+        const translateInput = document.getElementById('translate-input');
+
+        // 自动切换目标语言（避免源语言和目标语言相同）
+        sourceLang.addEventListener('change', () => {
+            if (sourceLang.value === targetLang.value) {
+                targetLang.value = sourceLang.value === 'zh' ? 'bo' : 'zh';
+            }
+        });
+
+        // 2. 预留翻译API对接位
+        // async function translateText(text, fromLang, toLang) {
+        //     // 对接民族语言翻译API + 大模型增强
+        //     const response = await fetch('/api/translate', {
+        //         method: 'POST',
+        //         body: JSON.stringify({ text, fromLang, toLang })
+        //     });
+        //     return await response.json();
+        // }
+
+        // 3. 预留历史/收藏同步逻辑
+        // function saveTranslateHistory(record) {
+        //     // 本地存储 + 云端同步
+        //     const history = JSON.parse(localStorage.getItem('translateHistory') || '[]');
+        //     history.unshift(record);
+        //     localStorage.setItem('translateHistory', JSON.stringify(history));
+        // }
+    </script>
+</body>
+</html>
