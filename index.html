@@ -125,10 +125,69 @@
       background: white;
     }
     /* 主体容器 */
-    .container {
+    .main-container {
+      display: flex;
       max-width: 1200px;
       margin: 30px auto;
       padding: 0 20px;
+    }
+    /* 左侧垂直导航菜单 */
+    .left-nav {
+      width: 25%;
+      background-color: #f8e8e8;
+      margin-right: 30px;
+    }
+    .left-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .left-nav li {
+      height: 90px;
+      text-align: center;
+      border-bottom: 1px solid #d4a0a0;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .left-nav li {
+      position: relative;
+    }
+    .left-nav li a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      color: #333333;
+      text-decoration: none;
+      font-size: 28px;
+      font-family: "Microsoft YaHei", SimSun, serif;
+      font-weight: normal;
+    }
+    .left-nav li a span {
+      display: block;
+      font-size: 20px;
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+    .left-nav li:hover {
+      background-color: #f0d0d0;
+    }
+    .left-nav li:hover a {
+      color: #9B2B25;
+    }
+    .left-nav li.active {
+      background-color: #e8baba;
+    }
+    .left-nav li.active a {
+      color: #9B2B25;
+    }
+    /* 右侧内容区 */
+    .container {
+      flex: 1;
     }
     .title {
       font-size: 26px;
@@ -284,7 +343,31 @@
     </div>
   </section>
 
-  <div class="container">
+  <div class="main-container">
+    <!-- 左侧垂直导航菜单 -->
+    <nav class="left-nav">
+      <ul>
+        <li><a href="#tour">日月山<span>ཉི་ཟླ་རི་བོ།</span></a></li>
+        <li><a href="#tour">青海湖<span>མཚོ་སྔོན་པོ།</span></a></li>
+        <li><a href="#tour">南宗寺<span>གནས་རྙིང་དགོན།</span></a></li>
+        <li><a href="#tour">夏琼寺<span>ཤར་ཆུང་དགོན།</span></a></li>
+        <li><a href="#tour">布达拉宫<span>ཕོ་བྲང་པོ་ཏ་ལ།</span></a></li>
+        <li><a href="#tour">拉卜楞寺<span>བླ་བྲང་དགོན་པ།</span></a></li>
+        <li><a href="#tour">塔尔寺<span>སྐུ་འབུམ།</span></a></li>
+        <li><a href="#tour">三江源<span>གཙང་གསུམ་འབྱུང་ཡུལ།</span></a></li>
+        <li><a href="#tour">阿尼玛沁雪山<span>ཨ་མྱེས་རྨ་ཆེན་གངས་རི།</span></a></li>
+        <li><a href="#tour">果洛<span>མགོ་ལོག</span></a></li>
+        <li><a href="#tour">黄南<span>རྨ་ལྷོ།</span></a></li>
+        <li><a href="#tour">玉树<span>ཡུལ་ཤུལ།</span></a></li>
+        <li><a href="#tour">贵德<span>ཁྲི་ཀ།</span></a></li>
+        <li><a href="#tools">藏文34个字符<span>བོད་ཡིག་ཡིག་འབྲུ་སུམ་ཅུ་སོ་བཞི།</span></a></li>
+        <li><a href="#tools">藏文笔记<span>བོད་ཡིག་ཟིན་བྲིས།</span></a></li>
+        <li><a href="#tools">藏文常用短语<span>བོད་ཡིག་གི་རྒྱུན་བཀོལ་ཚིག་ཐུང་།</span></a></li>
+        <li><a href="http://222.19.82.141:5002/index-Final.html">藏汉翻译<span>བོད་རྒྱ་ཡིག་སྒྱུར།</span></a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
     <!-- 安多民俗 -->
     <section id="culture">
       <h2 class="title">安多藏族民俗文化（རིག་གནས།）</h2>
@@ -350,6 +433,7 @@
         </div>
       </div>
     </section>
+    </div>
   </div>
 
   <!-- 底部 -->
