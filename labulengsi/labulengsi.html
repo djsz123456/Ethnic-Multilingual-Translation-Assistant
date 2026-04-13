@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>藏族文化专题 - 拉卜楞寺</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      background-color: #f7f3ee;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* 整体布局 */
+    .app-container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* 左侧菜单 */
+    .left-menu {
+      width: 280px;
+      background: linear-gradient(135deg, #f9f1e9 0%, #f1e2d3 100%);
+      border-right: 1px solid #e8d5c0;
+      padding: 30px 0;
+      overflow-y: auto;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+    }
+
+    .menu-title {
+      text-align: center;
+      font-size: 20px;
+      color: #8b4c39;
+      margin-bottom: 30px;
+      font-weight: bold;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .menu-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #d48a5d;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .menu-item {
+      padding: 16px 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #555;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(212, 138, 93, 0.1);
+      color: #8b4c39;
+      transform: translateX(5px);
+    }
+
+    .menu-item.active {
+      background: linear-gradient(90deg, #d48a5d 0%, #e6a87a 100%);
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(212, 138, 93, 0.3);
+    }
+
+    .menu-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #8b4c39;
+    }
+
+    /* 右侧内容 */
+    .right-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 50px 80px;
+      background: #fff;
+      position: relative;
+    }
+
+    /* 图片样式 */
+    .culture-img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      border-radius: 12px;
+      margin: 20px 0 30px 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .culture-img:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    /* 轮播图样式 */
+    .carousel-container {
+      width: 100%;
+      max-width: 800px;
+      height: 500px;
+      margin: 20px 0 30px 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    .carousel-wrapper {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+
+    .carousel-item {
+      flex: 0 0 100%;
+      height: 100%;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .carousel-control {
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .carousel-control:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .carousel-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-indicator.active {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.2);
+    }
+
+    /* 板块 */
+    .section {
+      margin-bottom: 60px;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .section-title {
+      font-size: 24px;
+      color: #8b4c39;
+      margin-bottom: 25px;
+      padding-left: 15px;
+      border-left: 5px solid #d48a5d;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, #d48a5d, transparent);
+      margin-left: 20px;
+    }
+
+    /* 卡片样式 */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #f0e6d8;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #8b4c39;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #d48a5d;
+      padding-bottom: 8px;
+    }
+
+    .card-content {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.6;
+      text-align: justify;
+      margin-bottom: 15px;
+    }
+
+    .card-link {
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .link-button {
+      background: linear-gradient(135deg, #d48a5d, #8b4c39);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(212, 138, 93, 0.3);
+    }
+
+    .link-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 138, 93, 0.5);
+      background: linear-gradient(135deg, #8b4c39, #d48a5d);
+    }
+
+    .section-text {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 15px;
+      line-height: 1.8;
+      text-align: justify;
+      padding: 0 10px;
+    }
+
+    .section-text:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .app-container {
+        flex-direction: column;
+      }
+
+      .left-menu {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        padding: 20px 0;
+      }
+
+      .menu-item {
+        padding: 12px 20px;
+        display: inline-block;
+        margin: 5px 10px;
+        border-radius: 20px;
+      }
+
+      .right-content {
+        padding: 30px 20px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+
+      .section-text {
+        font-size: 15px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 滚动条样式 */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d48a5d;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8b4c39;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="app-container">
+    <!-- 左侧菜单 -->
+    <div class="left-menu">
+      <div class="menu-title">藏族文化专题</div>
+      <div
+        class="menu-item"
+        :class="{ active: currentMenu === item }"
+        v-for="item in menuList"
+        @click="selectMenu(item)"
+      >
+        {{ item }}
+      </div>
+    </div>
+
+    <!-- 右侧内容 -->
+    <div class="right-content" v-if="currentContent || currentCards.length > 0 || currentCarousel.length > 0">
+      <div class="section">
+        <div class="section-title">{{ currentMenu }}</div>
+        
+        <!-- 图片展示 -->
+        <img v-if="currentImg && currentCarousel.length === 0" :src="currentImg" class="culture-img" alt="文化图片">
+        
+        <!-- 轮播图 -->
+        <div v-if="currentCarousel.length > 0" class="carousel-container">
+          <div class="carousel-wrapper" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+            <div v-for="(item, index) in currentCarousel" :key="index" class="carousel-item">
+              <img :src="item" alt="轮播图片">
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-control" @click="prev">&lt;</button>
+            <button class="carousel-control" @click="next">&gt;</button>
+          </div>
+          <div class="carousel-indicators">
+            <div 
+              v-for="(item, index) in currentCarousel" 
+              :key="index" 
+              class="carousel-indicator" 
+              :class="{ active: currentIndex === index }"
+              @click="goToSlide(index)"
+            ></div>
+          </div>
+        </div>
+        
+        <!-- 卡片显示 -->
+        <div v-if="currentCards.length > 0" class="card-container">
+          <div v-for="(card, index) in currentCards" :key="index" class="card">
+            <div class="card-title">{{ card.title }}</div>
+            <div class="card-content">{{ card.content }}</div>
+            <a v-if="card.url" :href="card.url" target="_blank" class="card-link">
+              <button class="link-button">访问链接</button>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 普通文本显示 -->
+        <div v-else class="section-text" v-for="(text, i) in currentContent" :key="i">
+          {{ text }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          currentMenu: "拉卜楞寺 ལྷ་བུ་གླང་བའི་དགོན་པ་",
+          menuList: ["拉卜楞寺 ལྷ་བུ་གླང་བའི་དགོན་པ་", "历史沿革 ལོ་རྒྱུས་འབྱུང་བ་", "建筑特色 རྫོགས་འབྲུག་ཁྱད་ཆོས་", "宗教意义 གནས་ལྡན་དགོན་པའི་དོན་དམ་", "文化地位 རིག་གནས་ས་གནས་", "旅游服务 ལོ་ཉུང་ཞབས་ཞུ་"],
+          currentContent: [],
+          currentImg: "",
+          currentCarousel: [],
+          currentCards: [],
+          currentIndex: 0
+        };
+      },
+      mounted() {
+        this.selectMenu("拉卜楞寺 ལྷ་བུ་གླང་བའི་དགོན་པ་");
+      },
+      methods: {
+        selectMenu(item) {
+          this.currentMenu = item;
+
+          const contentMap = {
+            "拉卜楞寺 ལྷ་བུ་གླང་བའི་དགོན་པ་": {
+              carousel: [
+                "images/lb1.jpg",
+                "images/lb2.jpg",
+                "images/lb3.jpg",
+                "images/lb4.jpg",
+                "images/lb5.jpg",
+                "images/lb6.jpg",
+                "images/lb7.jpg",
+                "images/lb8.jpg",
+                "images/lb9.jpg"
+              ],
+              cards: [
+                {
+                  title: "拉卜楞寺简介 ལྷ་བུ་གླང་བའི་དགོན་པའི་གཏན་འཁེལ་གསལ་བཤད།",
+                  content: "拉卜楞寺，位于甘肃省甘南藏族自治州夏河县，是藏传佛教格鲁派六大寺院之一，也是甘肃南部藏族地区最大的寺院。寺院创建于清康熙四十八年（1709年），由第一世嘉木样活佛阿旺宗哲主持创建。拉卜楞寺占地1234亩，建筑面积82.3万平方米，有经堂6座，佛殿84座，藏式楼31座，佛塔54座，僧舍万余间。寺院拥有世界上最长的转经筒长廊，共有2000多个转经筒，环绕寺院一周。拉卜楞寺不仅是宗教圣地，也是藏学研究的重要基地，拥有丰富的藏文古籍和文物。寺院的六大学院分别传授显宗、密宗、医药、历算、声明、修辞等学科，培养了大量的宗教人才。བླ་བྲང་དགོན་པ་ནི་ཀན་སུའུ་ཞིང་ཆེན་ཀན་ལྷོ་བོད་རིགས་རང་སྐྱོང་ཀྲོའུ་བསང་ཆུ་རྫོང་དུ་གནས་པ་དང་།བོད་བརྒྱུད་ནང་བསྟན་དགེ་ལུགས་པའི་དགོན་སྡེ་ཆེན་པོ་དྲུག་གི་གྲས་ཤིག་ཡིན་ལ།ཀན་སུའུ་ལྷོ་རྒྱུད་བོད་རིགས་ས་ཁུལ་གྱི་དགོན་པ་ཆེ་ཤོས་དེ་ཡིན།དགོན་པ་དེ་ཆིང་གོང་མ་ཁང་ཞིའི་ཁྲི་ལོ་48པར（1709ལོ）བཞེངས་པ་དང་སྐྱབས་མགོན་སྐུ་ཕྲེང་དང་པོ་ངག་དབང་འཛོམ་དྲུག་གིས་གཙོ་སྐྱོང་གནང་བ་ཞིག་རེད།དགོན་པ་དེར་ས་ཁྱོན་མུའུ་1234དང་རྒྱ་ཁྱོན་སྨི་ངོས་གྲུ་ཁྲི་82.3ཡོད་པ་དང་།མཆོད་ཁང་6དང་།ལྷ་ཁང་84བོད་བརྒྱུད་ཐོག་ཁང་31མཆོད་རྟེན་54གྲྭ་ཤག་ཁྲི་ལྷག་ཙམ་བཅས་ཡོད།དགོན་པ་དེར་འཛམ་གླིང་ཐོག་ཆེས་རིང་བའི་སྐོར་བ་བརྒྱབ་ཆོག་པའི་བསྐོར་ཤུར་ཡོད་པ་དང་།དེར་བསྐོར་བ་ཐེངས་གཅིག་བརྒྱབ་ན་བསྐོར་ཤུར་ཐེངས་2000ལྷག་ཙམ་བརྒྱབ་ཡོད།དགོན་པ་དེ་ནི་ཆོས་ལུགས་ཀྱི་གནས་མཆོག་ཅིག་དང་བོད་རིག་པའི་ཞིབ་འཇུག་གི་རྟེན་གཞི་གལ་ཆེན་ཞིག་ཡིན་པས་བོད་ཡིག་གི་དཔེ་རྙིང་དང་རིག་དངོས་ཕུན་སུམ་ཚོགས་པོ་ཡོད།དགོན་པའི་ནང་ཐབས་ཤེས་དྲུག་གི་གཞུང་ལུགས་ཁྲིད་ཀྱི་ཡོད།གྲྭ་བ་མང་པོ་གསོ་སྐྱོང་བྱས་ཡོད།"
+                }
+              ]
+            },
+            "历史沿革 ལོ་རྒྱུས་འབྱུང་བ་": {
+              cards: [
+                {
+                  title: "创建历史 གནང་བ་ལོ་རྒྱུས།",
+                  content: "拉卜楞寺创建于1709年，由第一世嘉木样活佛阿旺宗哲在青海和硕特蒙古固始汗的支持下创建。寺院初建时规模较小，经过历代嘉木样活佛的扩建和发展，逐渐成为甘、青、川地区最大的藏传佛教寺院之一。བླ་བྲང་དགོན་པ་ནི་༡༧༠༩ལོར་འཛུགས་སྐྲུན་བྱས་ཤིང་།སྐྱབས་མགོན་སྐུ་ཕྲེང་དང་པོ་ཨ་དབང་འཛོམས་གྲགས་ཀྱིས་མཚོ་སྔོན་ས་ཁུལ་གྱི་སོག་པོའི་རྒྱལ་བོ་གོ་ཤི་ཡི་རྒྱབ་སྐྱོར་འོག་བཙུགས་པ་ཡིན་ལ།དགོན་པ་འདི་ཐོག་མར་འཛུགས་སྐྲུན་བྱས་པའི་སྐབས་སུ་གཞི་ཁྱོན་ཅུང་ཆུང་བ་དང་།སྐྱབས་མགོན་སྐུ་ཕྲེང་རིམ་བྱོན་གྱིས་རྒྱ་བསྐྱེད་དང་འཕེལ་རྒྱས་བཏང་བ་བརྒྱུད་དེ།ཀན་ལྷོ་དང་མཚོ་སྔོན།སི་ཁྲོན་བཅས་ས་ཁུལ་གྱི་བོད་བརྒྱུད་ནང་བསྟན་གྱི་དགོན་པ་ཆེས་ཆེ་བའི་གྲས་སུ་གྱུར་ཡོད།"
+                },
+                {
+                  title: "历史兴衰 ལོ་རྒྱུས་ཀྱི་འགྲོ་བཤེར།",
+                  content: "在历史上，拉卜楞寺曾经历过多次兴衰。19世纪末20世纪初，寺院达到鼎盛时期，僧众达3000余人。新中国成立后，寺院得到了政府的保护和修缮，逐渐恢复了往日的繁荣。ལོ་རྒྱུས་ཐོག་བླ་བྲང་དགོན་པར་དར་རྒུད་མང་པོ་བྱུང་བ་དང་།དུས་རབས་19པའི་དུས་མཇུག་དང་དུས་རབས་20པའི་དུས་འགོར་དགོན་པ་དར་རྒྱས་ཆེ་ཤོས་ཀྱི་དུས་སུ་སླེབས་པ་དང་དགེ་འདུན་པ་3000ལྷག་ཙམ་ཟིན་གྱི་ཡོད།ཀྲུང་གོ་གསར་པ་དབུ་བརྙེས་རྗེས་དགོན་པར་སྲིད་གཞུང་གི་སྲུང་སྐྱོང་དང་ཉམས་གསོ་ཐོབ་ནས་སྔོན་མའི་དར་རྒྱས་སླར་གསོ་བྱུང་ཡོད།"
+                }
+              ]
+            },
+            "建筑特色 རྫོགས་འབྲུག་ཁྱད་ཆོས་": {
+              cards: [
+                {
+                  title: "建筑风格 འཛུགས་སྐྲུན་ཀྱི་ཁྱད་ཆོས།",
+                  content: "拉卜楞寺的建筑风格融合了藏、汉、蒙等民族的建筑特色，形成了独特的藏式建筑风格。寺院的主要建筑包括经堂、佛殿、活佛府邸、僧舍等，均采用传统的藏式碉楼建筑形式，以石木结构为主，外墙涂以白色，屋顶为平顶或金顶。བླ་བྲང་དགོན་པའི་བཟོ་བཀོད་ཐད་བོད་དང་།རྒྱ་རིགས།སོག་རིགས་སོགས་མི་རིགས་ཀྱི་བཟོ་བཀོད་ཁྱད་ཆོས་མཉམ་འདྲེས་བྱས་ཏེ་ཐུན་མོང་མ་ཡིན་པའི་བོད་བཟོའི་བཟོ་བཀོད་ཀྱི་ཁྱད་ཆོས་ལྡན་ཡོད།དགོན་པའི་བཟོ་བཀོད་གཙོ་བོའི་ནང་མཆོད་ཁང་དང་།ལྷ་ཁང་།སྤྲུལ་སྐུའི་བཞུགས་ཤགགྲྭ་ཤག་སོགས་ཚུད་ཡོད།དེ་དག་ཚང་མ་སྲོལ་རྒྱུན་གྱི་བོད་བཟོའི་མཁར་རྫོང་བཟོ་བཀོད་ཀྱི་རྣམ་པར་བརྟེན་པ་དང་རྡོ་ཤིང་གི་གྲུབ་ཆ་གཙོ་བོར་བྱེད་པ་དང་།ཕྱི་གྱང་ལ་དཀར་པོ་བྱུགས་པ།ཁང་ཀླད་སྙོམས་པོའམ་གསེར་གྱི་ཀླད་ཀ་ཡོད་པ་བཅས་རེད།"
+                },
+                {
+                  title: "主要建筑 འཛུགས་སྐྲུན་དངོས་མཚམས།",
+                  content: "寺院的经堂和佛殿内部装饰华丽，壁画、唐卡、酥油花等艺术作品琳琅满目。其中，大经堂是寺院的核心建筑，可容纳3000余名僧人同时诵经。དགོན་པའི་འདུ་ཁང་དང་ལྷ་ཁང་ནང་རྒྱན་སྤྲོས་ལེགས་པ་དང་ལྡེབས་རིས་དང་ཐང་ག་མཆོད་མར་སོགས་སྒྱུ་རྩལ་བརྩམས་ཆོས་ཀྱིས་བརྒྱན་ཡོད་པ་དང་།དེའི་ནང་འདུ་ཁང་ཆེ་མོ་ནི་དགོན་པའི་ལྟེ་བའི་སྐྲུན་དངོས་ཡིན་པ་དང་དགེ་འདུན་པ་3000ལྷག་ཙམ་མཉམ་དུ་དཔེ་ཆ་འདོན་ཐུབ་ཀྱི་ཡོད།"
+                }
+              ]
+            },
+            "宗教意义 གནས་ལྡན་དགོན་པའི་དོན་དམ་": {
+              cards: [
+                {
+                  title: "格鲁派重要寺院 དགེ་ལུགས་པའི་དགོན་པ་གཙོ་བོར་བརྗོད།",
+                  content: "拉卜楞寺是藏传佛教格鲁派的重要寺院，在藏区享有崇高的宗教地位。寺院传承了完整的藏传佛教教义和修行体系，是藏传佛教文化的重要传承者和弘扬者。བླ་བྲང་དགོན་པ་ནི་བོད་བརྒྱུད་ནང་བསྟན་གྱི་དགེ་ལུགས་པའི་དགོན་པ་གལ་ཆེན་ཞིག་ཡིན་ལ།བོད་ཁུལ་དུ་བསྟན་པའི་གོ་གནས་མཐོན་པོ་ཡོད།དགོན་པས་བོད་བརྒྱུད་ནང་བསྟན་གྱི་བསྟན་དོན་དང་སྒྲུབ་སྦྱོང་མ་ལག་ཆ་ཚང་རྒྱུན་འཛིན་བྱས་ཡོད་པས་བོད་བརྒྱུད་ནང་བསྟན་རིག་གནས་ཀྱི་རྒྱུན་འཛིན་པ་དང་དར་སྤེལ་གཏོང་མཁན་གལ་ཆེན་ཞིག་ཡིན།"
+                },
+                {
+                  title: "宗教活动 ཆོས་བྱེད་སྒོའི་བྱེད་སྒོ",
+                  content: "每年，来自各地的信众和游客都会前往拉卜楞寺朝拜和参观，寺院的宗教活动如法会、辩经等也吸引了众多信徒参与。ལོ་ལྟར་ས་གནས་ཁག་ནས་ཡོང་བའི་དད་ལྡན་མང་ཚོགས་དང་ཡུལ་སྐོར་བ་ཚང་མ་བླ་བྲང་བཀྲ་ཤིས་འཁྱིལ་དུ་གནས་སྐོར་དང་ལྟ་སྐོར་དུ་སྐྱོད་ཀྱི་ཡོད་ལ་དགོན་སྡེའི་ཆོས་ལུགས་བྱེད་སྒོ་སྟེ་དཔེ་ཆ་འདོན་པ་དང་རྩོད་པ་རྒྱག་པ་སོགས་ལའང་དད་ལྡན་མང་ཚོགས་མང་པོ་ཞུགས་ཀྱི་ཡོད།"
+                }
+              ]
+            },
+            "文化地位 རིག་གནས་ས་གནས་": {
+              cards: [
+                {
+                  title: "藏文化宝库 བོད་རིག་གནས་ཀྱི་དངོས་མཛོད་",
+                  content: "拉卜楞寺不仅是宗教圣地，也是藏文化的重要宝库。寺院收藏了大量的藏文古籍、经卷、文物等，其中包括许多珍贵的历史文献和艺术作品。བླ་བྲང་དགོན་པ་ནི་ཆོས་ལུགས་ཀྱི་གནས་མཆོག་ཅིག་ཡིན་པ་མ་ཟད།བོད་ཀྱི་རིག་གནས་ཀྱི་རིན་ཆེན་བང་མཛོད་ཅིག་ཀྱང་ཡིན།དགོན་པའི་ནང་དུ་བོད་ཡིག་གི་གནའ་གཞུང་དང་གསུང་རབ།རིག་དངོས་སོགས་འབོར་ཆེན་ཉར་ཚགས་བྱས་ཡོད་པ་དང་།དེའི་ནང་དུ་རྩ་ཆེ་བའི་ལོ་རྒྱུས་ཀྱི་ཡིག་ཆ་དང་སྒྱུ་རྩལ་བརྩམས་ཆོས་མང་པོ་འདུས་ཡོད།"
+                },
+                {
+                  title: "藏学研究基地 བོད་རིག་པའི་ཞིབ་འཇུག་ལྟེ་གནས།",
+                  content: "拉卜楞寺的六大学院涵盖了藏学的各个领域，是藏学研究的重要基地。寺院培养的学者和高僧对藏文化的传承和发展做出了重要贡献。བླ་བྲང་དགོན་པའི་སློབ་གླིང་དྲུག་ནི་བོད་རིག་པའི་ཁྱབ་ཁོངས་སོ་སོ་ཡོད་པ་དང་།བོད་རིག་པའི་ཞིབ་འཇུག་གི་གནས་གཞི་གལ་ཆེན་ཡིན།དགོན་པས་སྐྱེད་སྲིང་བྱས་པའི་མཁས་དབང་དང་བླ་ཆེན་གྱིས་བོད་རིག་པའི་རྒྱུན་འཛིན་དང་འཕེལ་རྒྱས་ལ་བྱས་རྗེས་གལ་ཆེན་བཞག"
+                }
+              ]
+            },
+            "旅游服务 ལོ་ཉུང་ཞབས་ཞུ་": {
+              cards: [
+                {
+                  title: "旅游景点 ཡུལ་སྐོར་མཛེས་ལྗོངས།",
+                  content: "拉卜楞寺是甘南藏族自治州的重要旅游景点，每年吸引着大量的国内外游客。寺院为游客提供了完善的旅游服务设施，包括导游服务、参观路线指引、纪念品销售等。བླ་བྲང་དགོན་པ་ནི་ཀན་ལྷོ་བོད་རིགས་རང་སྐྱོང་ཀྲོའུ་ཡི་ཡུལ་སྐོར་མཛེས་ལྗོངས་ཁུལ་གལ་ཆེན་ཞིག་ཡིན་པས་ལོ་ལྟར་རྒྱལ་ཁབ་ཕྱི་ནང་གི་ཡུལ་སྐོར་བ་མང་པོའི་ཡིད་དབང་བཀུག་ཡོད།དགོན་པས་ཡུལ་སྐོར་བར་སྣེ་ཤན་པའི་ཞབས་ཞུ་དང་།ལྟ་སྐོར་ལམ་ཐིག་མཛུབ་ཁྲིད།དྲན་གསོའི་དངོས་རྫས་འཚོང་བ་སོགས་ཀྱི་ཞབས་ཞུའི་སྒྲིག་བཀོད་འཐུས་སྒོ་ཚང་པོ་མཁོ་འདོན་བྱེད་ཀྱི་ཡོད།"
+                },
+                {
+                  title: "文化体验 རིག་གནས་ལེན་རྟོགས།",
+                  content: "游客可以参观寺院的主要建筑，欣赏精美的藏式建筑艺术和宗教艺术品，感受浓厚的宗教氛围。此外，寺院周边还有许多特色的藏族文化体验活动，如藏式餐饮、民俗表演等。ཡུལ་སྐོར་བས་དགོན་སྡེའི་བཟོ་སྐྲུན་གཙོ་བོར་ལྟ་སྐོར་བྱས་ནས་སྤུས་དག་ལེགས་པའི་བོད་བཟོའི་བཟོ་སྐྲུན་སྒྱུ་རྩལ་དང་ཆོས་ལུགས་སྒྱུ་རྩལ་བརྩམས་ཆོས་ལ་རོལ་མྱོང་བྱས་ཏེ་ཆོས་ལུགས་ཀྱི་རྣམ་པ་ཟབ་མོ་ཉམས་སུ་མྱོང་ཆོག་པ་དང་།དེ་མིན་དགོན་སྡེའི་མཐའ་འཁོར་དུ་ད་དུང་ཁྱད་ཆོས་ལྡན་པའི་བོད་རིགས་རིག་གནས་ཀྱི་ཉམས་ལེན་བྱེད་སྒོ་མང་པོ་ཡོད་པ་དཔེར་ན།བོད་ཟས་དང་དམངས་སྲོལ་འཁྲབ་སྟོན་སོགས་ཡོད་པ་རེད།"
+                }
+              ]
+            }
+          };
+
+          const content = contentMap[item] || {};
+          this.currentContent = []; // 不再使用文本形式
+          this.currentImg = content.img || "";
+          this.currentCarousel = content.carousel || [];
+          this.currentCards = content.cards || [];
+          this.currentIndex = 0;
+        },
+        prev() {
+          this.currentIndex = (this.currentIndex - 1 + this.currentCarousel.length) % this.currentCarousel.length;
+        },
+        next() {
+          this.currentIndex = (this.currentIndex + 1) % this.currentCarousel.length;
+        },
+        goToSlide(index) {
+          this.currentIndex = index;
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+</html>
