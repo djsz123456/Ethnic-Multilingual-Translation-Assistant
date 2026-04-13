@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安多藏语常用短语</title>
+  <!-- 引入Vue3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      /* 全局藏文字体配置，确保藏文正常显示 */
+      font-family: "Noto Sans Tibetan", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #f8f5f0;
+      padding: 20px;
+    }
+
+    /* 页面容器 */
+    .phrase-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* 顶部标题区（对应卡片标题样式） */
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
+      border-bottom: 1px solid #e0d8d0;
+    }
+
+    .main-title {
+      font-size: 28px;
+      color: #a82c2c;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .title-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #a82c2c;
+      border-radius: 50%;
+      clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+    }
+
+    .subtitle-tibetan {
+      font-size: 22px;
+      color: #a82c2c;
+      margin-top: 10px;
+      letter-spacing: 2px;
+    }
+
+    /* 分类筛选栏 */
+    .category-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .category-item {
+      padding: 8px 20px;
+      border: 1px solid #d0c8c0;
+      border-radius: 20px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    .category-item.active {
+      background: #a82c2c;
+      color: #fff;
+      border-color: #a82c2c;
+    }
+
+    /* 短语列表区 */
+    .phrase-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    /* 单个短语卡片 */
+    .phrase-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s;
+    }
+
+    .phrase-card:hover {
+      transform: translateY(-3px);
+    }
+
+    /* 短语内容区 */
+    .tibetan-text {
+      font-size: 20px;
+      line-height: 1.8;
+      color: #222;
+      margin-bottom: 10px;
+      min-height: 40px;
+    }
+
+    .chinese-text {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    /* 操作按钮区 */
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn-audio {
+      padding: 6px 14px;
+      background: #f0e8e0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-audio:hover {
+      background: #e0d0c8;
+    }
+
+    .btn-collect {
+      padding: 6px 14px;
+      background: #fff;
+      border: 1px solid #a82c2c;
+      color: #a82c2c;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-collect.collected {
+      background: #a82c2c;
+      color: #fff;
+    }
+
+    /* 搜索栏 */
+    .search-bar {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .search-input {
+      width: 80%;
+      max-width: 500px;
+      padding: 12px 20px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    /* 提示弹窗 */
+    .toast {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #28a745;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 6px;
+      font-size: 15px;
+      display: none;
+      z-index: 999;
+    }
+
+    .toast.show {
+      display: block;
+      animation: fade 0.3s;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .phrase-list {
+        grid-template-columns: 1fr;
+      }
+      .main-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+  <!-- 引入藏文字体 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanstibetan.css">
+</head>
+<body>
+
+<div id="app" class="phrase-container">
+  <!-- 顶部标题 -->
+  <div class="page-header">
+    <div class="main-title">
+      <span class="title-icon"></span>
+      安多藏语常用短语
+    </div>
+    <!-- 藏文标题占位，后续填充内容 -->
+    <div class="subtitle-tibetan"></div>
+  </div>
+
+  <!-- 搜索栏 -->
+  <div class="search-bar">
+    <input
+      v-model="searchKeyword"
+      type="text"
+      class="search-input"
+      placeholder="输入中文/藏文搜索常用短语..."
+    >
+  </div>
+
+  <!-- 分类筛选 -->
+  <div class="category-bar">
+    <div
+      v-for="cat in categories"
+      :key="cat.id"
+      class="category-item"
+      :class="{active: currentCategory === cat.id}"
+      @click="currentCategory = cat.id"
+    >
+      {{ cat.name }}
+    </div>
+  </div>
+
+  <!-- 短语列表 -->
+  <div class="phrase-list">
+    <div
+      v-for="(item, index) in filteredPhrases"
+      :key="index"
+      class="phrase-card"
+    >
+      <!-- 藏文短语占位 -->
+      <div class="tibetan-text"></div>
+      <!-- 中文释义 -->
+      <div class="chinese-text">{{ item.chinese }}</div>
+      <!-- 操作按钮 -->
+      <div class="card-actions">
+        <button class="btn-audio" @click="playAudio(index)">🔊 发音</button>
+        <button
+          class="btn-collect"
+          :class="{collected: item.collected}"
+          @click="toggleCollect(index)"
+        >
+          {{ item.collected ? '已收藏' : '收藏' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 提示弹窗 -->
+  <div class="toast" :class="{show: toastShow}">{{ toastText }}</div>
+</div>
+
+<script>
+const { createApp } = Vue
+
+createApp({
+  data() {
+    return {
+      // 分类数据（仅中文，无藏文）
+      categories: [
+        { id: 'all', name: '全部' },
+        { id: 'greeting', name: '日常问候' },
+        { id: 'travel', name: '旅行常用' },
+        { id: 'food', name: '餐饮美食' },
+        { id: 'shopping', name: '购物砍价' }
+      ],
+      currentCategory: 'all',
+      searchKeyword: '',
+      // 短语数据（仅存中文，藏文后续动态填充）
+      phrases: [
+        { chinese: '你好', collected: false, category: 'greeting' },
+        { chinese: '谢谢', collected: false, category: 'greeting' },
+        { chinese: '再见', collected: false, category: 'greeting' },
+        { chinese: '多少钱', collected: false, category: 'shopping' },
+        { chinese: '便宜一点', collected: false, category: 'shopping' },
+        { chinese: '这个是什么', collected: false, category: 'travel' },
+        { chinese: '我想去这里', collected: false, category: 'travel' },
+        { chinese: '这个很好吃', collected: false, category: 'food' }
+      ],
+      toastShow: false,
+      toastText: ''
+    }
+  },
+  computed: {
+    // 筛选后的短语列表（分类+搜索）
+    filteredPhrases() {
+      return this.phrases.filter(item => {
+        const matchCategory = this.currentCategory === 'all' || item.category === this.currentCategory
+        const matchSearch = item.chinese.includes(this.searchKeyword)
+        return matchCategory && matchSearch
+      })
+    }
+  },
+  methods: {
+    // 播放发音（预留接口，后续对接音频）
+    playAudio(index) {
+      this.showToast('正在播放发音...')
+    },
+    // 收藏/取消收藏
+    toggleCollect(index) {
+      const item = this.filteredPhrases[index]
+      item.collected = !item.collected
+      this.showToast(item.collected ? '收藏成功' : '已取消收藏')
+    },
+    // 显示提示
+    showToast(text) {
+      this.toastText = text
+      this.toastShow = true
+      setTimeout(() => {
+        this.toastShow = false
+      }, 2000)
+    }
+  }
+}).mount('#app')
+</script>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>藏文笔记</title>
+  <!-- 引入Vue3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Noto Sans Tibetan", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #f8f5f0;
+      padding: 20px;
+    }
+
+    /* 顶部标题 */
+    .note-header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #a82c2c;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* 容器 */
+    .note-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 标题输入框 */
+    .note-title {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    /* 编辑区域 */
+    .note-editor {
+      width: 100%;
+      height: 450px;
+      padding: 20px;
+      font-size: 17px;
+      line-height: 1.8;
+      border: none;
+      border-radius: 12px;
+      resize: none;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+      background: #fff;
+    }
+
+    /* 按钮区域 */
+    .note-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      justify-content: center;
+    }
+
+    /* 保存按钮 */
+    .btn-save {
+      padding: 12px 30px;
+      background: #a82c2c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* 清空按钮 */
+    .btn-clear {
+      padding: 12px 30px;
+      background: #666;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* 提示消息 */
+    .toast {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #28a745;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 6px;
+      font-size: 15px;
+      display: none;
+    }
+
+    .toast.show {
+      display: block;
+      animation: fade 0.3s;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="app" class="note-container">
+  <div class="note-header">藏文笔记 ཡིག་གཟུགས།</div>
+
+  <!-- 标题 -->
+  <input
+    v-model="noteTitle"
+    type="text"
+    class="note-title"
+    placeholder="请输入笔记标题"
+  >
+
+  <!-- 编辑区 -->
+  <textarea
+    v-model="noteContent"
+    class="note-editor"
+    placeholder="请在这里书写藏文或汉文笔记..."
+  ></textarea>
+
+  <!-- 按钮 -->
+  <div class="note-buttons">
+    <button class="btn-save" @click="saveNote">💾 保存笔记</button>
+    <button class="btn-clear" @click="clearNote">🗑️ 清空内容</button>
+  </div>
+
+  <!-- 提示 -->
+  <div class="toast" :class="{ show: toastShow }">{{ toastText }}</div>
+</div>
+
+<script>
+const { createApp } = Vue
+
+createApp({
+  data() {
+    return {
+      noteTitle: '',
+      noteContent: '',
+      toastShow: false,
+      toastText: ''
+    }
+  },
+  mounted() {
+    // 页面加载时读取本地保存的笔记
+    const savedTitle = localStorage.getItem('tibetan_note_title')
+    const savedContent = localStorage.getItem('tibetan_note_content')
+    if (savedTitle) this.noteTitle = savedTitle
+    if (savedContent) this.noteContent = savedContent
+  },
+  methods: {
+    // 保存笔记到本地
+    saveNote() {
+      localStorage.setItem('tibetan_note_title', this.noteTitle)
+      localStorage.setItem('tibetan_note_content', this.noteContent)
+      this.showToast('✅ 笔记保存成功')
+    },
+    // 清空内容
+    clearNote() {
+      this.noteTitle = ''
+      this.noteContent = ''
+      localStorage.removeItem('tibetan_note_title')
+      localStorage.removeItem('tibetan_note_content')
+      this.showToast('🗑️ 已清空笔记')
+    },
+    // 显示提示
+    showToast(text) {
+      this.toastText = text
+      this.toastShow = true
+      setTimeout(() => {
+        this.toastShow = false
+      }, 2000)
+    }
+  }
+}).mount('#app')
+</script>
+
+</body>
+</html>
