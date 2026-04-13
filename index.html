@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Microsoft YaHei", sans-serif;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
     }
     body {
       background-color: #f7f7f7;
@@ -127,64 +127,110 @@
     }
     /* 主体容器 */
     .main-container {
-      display: flex;
       max-width: 1200px;
       margin: 30px auto;
       padding: 0 20px;
     }
-    /* 左侧垂直导航菜单 */
-    .left-nav {
-      width: auto;
-      margin-right: 30px;
+    /* 横向导航栏 */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    
+    .horizontal-nav {
+      width: 100%;
+      background-color: #9B2B25;
+      margin: 20px 0;
+      overflow-x: auto;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
     }
-    .left-nav ul {
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 20px;
+    }
+    .horizontal-nav ul {
       list-style: none;
       padding: 0;
       margin: 0;
-    }
-    .left-nav li {
-      height: 90px;
-      text-align: center;
-      border-bottom: 1px solid #d4a0a0;
-      transition: all 0.2s ease;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      background-color: #f8e8e8;
+      height: 60px;
     }
-    .left-nav li {
+    .horizontal-nav li {
+      flex: 1;
+      text-align: center;
+      transition: all 0.3s ease;
       position: relative;
     }
-    .left-nav li a {
+    .horizontal-nav li:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background-color: rgba(255,255,255,0.3);
+    }
+    .horizontal-nav li a {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 200px;
+      width: 100%;
       height: 100%;
-      color: #333333;
+      color: white;
       text-decoration: none;
-      font-size: 28px;
-      font-family: "Microsoft YaHei", SimSun, serif;
-      font-weight: normal;
+      font-size: 14px;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+      font-weight: 500;
+      transition: all 0.3s ease;
     }
-    .left-nav li a span {
+    .horizontal-nav li a span {
       display: block;
-      font-size: 20px;
-      opacity: 0.7;
-      margin-top: 2px;
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 4px;
+      font-weight: 400;
     }
-    .left-nav li:hover {
-      background-color: #f0d0d0;
+    .horizontal-nav li:hover {
+      background-color: #f0e68c;
+      transform: translateY(-2px);
     }
-    .left-nav li:hover a {
+    .horizontal-nav li:hover a {
       color: #9B2B25;
     }
-    .left-nav li.active {
-      background-color: #e8baba;
+    .horizontal-nav li.active {
+      background-color: #8a2320;
+      position: relative;
     }
-    .left-nav li.active a {
-      color: #9B2B25;
+    .horizontal-nav li.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 20%;
+      width: 60%;
+      height: 2px;
+      background-color: #D4AF37;
+    }
+    .horizontal-nav li.active a {
+      color: white;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .horizontal-nav {
+        margin: 10px 0;
+      }
+      .horizontal-nav ul {
+        height: 80px;
+      }
+      .horizontal-nav li a {
+        font-size: 12px;
+      }
+      .horizontal-nav li a span {
+        font-size: 10px;
+      }
     }
     /* 右侧内容区 */
     .container {
@@ -196,12 +242,14 @@
       text-align: center;
       margin-bottom: 30px;
       position: relative;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+      font-weight: 700;
     }
     .title::after {
       content: '';
       width: 120px;
       height: 3px;
-      background: #D4AF37;
+      background: #9B2B25;
       display: block;
       margin: 8px auto 0;
     }
@@ -214,12 +262,17 @@
     }
     .card {
       background: white;
-      border-radius: 6px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
       height: 100%;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
     .card img {
       width: 100%;
@@ -227,7 +280,7 @@
       object-fit: cover;
     }
     .card-body {
-      padding: 15px;
+      padding: 20px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -238,21 +291,24 @@
     .card-title {
       font-size: 17px;
       color: #9B2B25;
-      margin-bottom: 6px;
-      font-family: "Microsoft YaHei", sans-serif;
+      margin-bottom: 10px;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+      font-weight: 500;
     }
     .card-title a {
       color: #9B2B25;
       text-decoration: none;
+      transition: color 0.3s ease;
     }
     .card-title a:hover {
       color: #D4AF37;
-      text-decoration: underline;
+      text-decoration: none;
     }
     .card-desc {
       font-size: 13px;
       color: #666;
       line-height: 1.5;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
     }
     /* 木鱼 */
     .muyu-btn {
@@ -405,9 +461,9 @@
     </div>
   </section>
 
-  <div class="main-container">
-    <!-- 左侧垂直导航菜单 -->
-    <nav class="left-nav">
+  <!-- 横向导航栏 -->
+  <nav class="horizontal-nav">
+    <div class="nav-container">
       <ul>
         <li><a href="riyueshan/riyueshan.html">日月山<span>ཉི་ཟླ་རི་བོ།</span></a></li>
         <li><a href="qinghahu/qinghaihu.html">青海湖<span>མཚོ་སྔོན་པོ།</span></a></li>
@@ -422,8 +478,10 @@
         <li><a href="yushu/yushu.html">玉树<span>ཡུལ་ཤུལ།</span></a></li>
         <li><a href="guide/guide.html">贵德<span>ཁྲི་ཀ།</span></a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
 
+  <div class="main-container">
     <div class="container">
     <!-- 安多民俗 -->
     <section id="culture">
