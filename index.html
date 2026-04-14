@@ -7,7 +7,6 @@
   <meta name="keywords" content="安多藏族,青海旅游,藏族文化,塔尔寺,青海湖">
   <title>雪域安多·藏韵传承 - 安多藏族文化传播平台</title>
   
-  <!-- Preload critical resources -->
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +29,8 @@
       --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
       --radius-md: 12px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --card-width: 320px;
+      --card-gap: 24px;
     }
 
     * {
@@ -50,7 +51,6 @@
       overflow-x: hidden;
     }
 
-    /* Skip to content for accessibility */
     .skip-link {
       position: absolute;
       top: -40px;
@@ -67,7 +67,6 @@
       top: 0;
     }
 
-    /* Enhanced Top Bar */
     .top-bar {
       width: 100%;
       height: 40px;
@@ -97,7 +96,6 @@
       color: var(--primary-red);
     }
 
-    /* Modern Header */
     .header {
       width: 100%;
       background: linear-gradient(135deg, var(--primary-red) 0%, #B83C2E 100%);
@@ -163,7 +161,6 @@
       width: 60%;
     }
 
-    /* Hero Section with Video Background Alternative */
     .hero {
       width: 100%;
       height: 600px;
@@ -309,14 +306,12 @@
       transform: scale(1.3);
     }
 
-    /* Main Container */
     .main-container {
       max-width: 1400px;
       margin: 0 auto;
       padding: 60px 30px;
     }
 
-    /* Horizontal Navigation - Improved */
     .horizontal-nav {
       width: 100%;
       background: linear-gradient(135deg, var(--primary-red) 0%, #B83C2E 100%);
@@ -416,7 +411,6 @@
       background-color: var(--primary-gold);
     }
 
-    /* Section Titles */
     .section-title {
       font-size: 36px;
       color: var(--primary-red);
@@ -437,15 +431,147 @@
       border-radius: 2px;
     }
 
-    /* Modern Card Grid */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
+    /* ===== HORIZONTAL CARD CAROUSEL STYLES ===== */
+    .carousel-wrapper {
+      position: relative;
       margin-bottom: 60px;
+      padding: 0 50px;
     }
-    
+
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: var(--card-gap);
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 20px 10px 30px;
+      cursor: grab;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .carousel-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel-track:active {
+      cursor: grabbing;
+    }
+
+    .carousel-track.dragging {
+      scroll-behavior: auto;
+      cursor: grabbing;
+    }
+
+    /* Gradient Masks */
+    .carousel-container::before,
+    .carousel-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .carousel-container::before {
+      left: 50px;
+      background: linear-gradient(to right, var(--bg-primary) 0%, transparent 100%);
+    }
+
+    .carousel-container::after {
+      right: 50px;
+      background: linear-gradient(to left, var(--bg-primary) 0%, transparent 100%);
+    }
+
+    /* Navigation Arrows */
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--primary-red);
+      transition: var(--transition);
+    }
+
+    .carousel-arrow:hover {
+      background: var(--primary-red);
+      color: white;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .carousel-arrow:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .carousel-arrow.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .carousel-arrow.prev {
+      left: 0;
+    }
+
+    .carousel-arrow.next {
+      right: 0;
+    }
+
+    /* Scroll Indicator Dots */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      padding: 0;
+    }
+
+    .carousel-dot:hover {
+      background: var(--primary-gold);
+      transform: scale(1.2);
+    }
+
+    .carousel-dot.active {
+      background: var(--primary-red);
+      width: 30px;
+      border-radius: 5px;
+    }
+
+    /* Card Styles */
     .card {
+      flex: 0 0 var(--card-width);
+      scroll-snap-align: start;
       background: white;
       border-radius: var(--radius-md);
       overflow: hidden;
@@ -456,30 +582,31 @@
       transition: var(--transition);
       border: 1px solid rgba(0,0,0,0.05);
       cursor: pointer;
+      user-select: none;
     }
-    
+
     .card:hover {
       transform: translateY(-10px);
       box-shadow: var(--shadow-lg);
     }
-    
+
     .card-image-wrapper {
       position: relative;
       overflow: hidden;
       height: 220px;
     }
-    
+
     .card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
     }
-    
+
     .card:hover img {
       transform: scale(1.1);
     }
-    
+
     .card-overlay {
       position: absolute;
       top: 0;
@@ -493,11 +620,11 @@
       align-items: flex-end;
       padding: 20px;
     }
-    
+
     .card:hover .card-overlay {
       opacity: 1;
     }
-    
+
     .card-badge {
       position: absolute;
       top: 15px;
@@ -510,14 +637,14 @@
       font-weight: 600;
       box-shadow: var(--shadow-sm);
     }
-    
+
     .card-body {
       padding: 25px;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-    
+
     .card-title {
       font-size: 19px;
       color: var(--primary-red);
@@ -525,24 +652,24 @@
       font-weight: 600;
       line-height: 1.4;
     }
-    
+
     .card-title a {
       color: inherit;
       text-decoration: none;
       transition: var(--transition);
     }
-    
+
     .card-title a:hover {
       color: var(--primary-gold);
     }
-    
+
     .card-desc {
       font-size: 14px;
       color: var(--text-secondary);
       line-height: 1.7;
       flex: 1;
     }
-    
+
     .card-footer {
       margin-top: 15px;
       padding-top: 15px;
@@ -554,7 +681,7 @@
       color: #999;
     }
 
-    /* Tools Section - Special Cards */
+    /* Tools Section */
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -639,7 +766,6 @@
       font-family: 'Noto Sans Tibetan', sans-serif;
     }
 
-    /* Footer */
     .footer {
       background: linear-gradient(135deg, var(--primary-red) 0%, #7A221E 100%);
       color: white;
@@ -694,7 +820,6 @@
       margin: 8px 0;
     }
 
-    /* Back to Top Button */
     .back-to-top {
       position: fixed;
       bottom: 30px;
@@ -726,7 +851,6 @@
       transform: translateY(-5px);
     }
 
-    /* Loading Animation */
     .loading-skeleton {
       background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
       background-size: 200% 100%;
@@ -739,8 +863,11 @@
       100% { background-position: -200% 0; }
     }
 
-    /* Responsive Design */
     @media (max-width: 1024px) {
+      :root {
+        --card-width: 280px;
+      }
+      
       .hero h1 {
         font-size: 40px;
       }
@@ -748,13 +875,14 @@
       .hero-stats {
         gap: 30px;
       }
-      
-      .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
     }
     
     @media (max-width: 768px) {
+      :root {
+        --card-width: 260px;
+        --card-gap: 16px;
+      }
+      
       .top-bar {
         display: none;
       }
@@ -805,7 +933,21 @@
         font-size: 26px;
       }
       
-      .card-grid,
+      .carousel-wrapper {
+        padding: 0 40px;
+      }
+      
+      .carousel-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+      
+      .carousel-container::before,
+      .carousel-container::after {
+        width: 40px;
+      }
+      
       .tools-grid {
         grid-template-columns: 1fr;
       }
@@ -816,6 +958,10 @@
     }
     
     @media (max-width: 480px) {
+      :root {
+        --card-width: 240px;
+      }
+      
       .hero {
         height: 350px;
       }
@@ -827,20 +973,38 @@
       .hero p {
         font-size: 14px;
       }
+      
+      .carousel-wrapper {
+        padding: 0 35px;
+      }
+      
+      .carousel-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
     }
 
-    /* Print Styles */
     @media print {
       .header,
       .top-bar,
       .horizontal-nav,
-      .back-to-top {
+      .back-to-top,
+      .carousel-arrow {
         display: none !important;
       }
       
       body {
         background: white;
         color: black;
+      }
+      
+      .carousel-track {
+        overflow: visible;
+      }
+      
+      .card {
+        break-inside: avoid;
       }
     }
   </style>
@@ -849,7 +1013,6 @@
   <a href="#main-content" class="skip-link">跳到主要内容</a>
 
 <div id="app">
-  <!-- Top Info Bar -->
   <div class="top-bar">
     <div class="top-bar-text">
       🏔️ 雪域安多·藏韵传承 | 本地人讲述·真实民俗·安多藏族文化传播平台
@@ -860,21 +1023,19 @@
     </div>
   </div>
 
-  <!-- Header Navigation -->
   <header class="header">
     <div class="header-wrap">
-      <div class="logo">གངས་ལྗོངས་ཨ་མདོ། བོད་ཀྱི་སྲོལ་རྒྱུན་རིག་གནས་རྒྱུན་འཛིན་བྱེད་པ།</div>
+      <div class="logo">གངས་ལྗོངས་ཨ་མདོ། བོད་ཀྱི་སྲོལ་རྒྱུན་རིག་གནས་རྒུན་འིན་བྱེད་པ།</div>
       <nav class="nav" role="navigation" aria-label="主导航">
         <a href="#home" @click.prevent="scrollToSection('home')">首页</a>
         <a href="#culture" @click.prevent="scrollToSection('culture')">安多民俗</a>
         <a href="#tour" @click.prevent="scrollToSection('tour')">藏地旅游</a>
         <a href="#tools" @click.prevent="scrollToSection('tools')">藏文工具</a>
-        <a href="guanyupingtai/guanyupingtai.html">关于平台</a>
+        <a href="#about" @click.prevent="scrollToSection('about')">关于平台</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
   <section class="hero" id="home" aria-label="轮播图">
     <div class="hero-slides">
       <div v-for="(slide, index) in bannerSlides" 
@@ -889,15 +1050,15 @@
           <div class="hero-stats">
             <div class="stat-item">
               <span class="stat-number">12+</span>
-              <div class="stat-label"> sacred sites</div>
+              <div class="stat-label">圣地景点</div>
             </div>
             <div class="stat-item">
               <span class="stat-number">1000+</span>
-              <div class="stat-label">Years of Culture</div>
+              <div class="stat-label">年文化传承</div>
             </div>
             <div class="stat-item">
               <span class="stat-number">50+</span>
-              <div class="stat-label">Traditional Festivals</div>
+              <div class="stat-label">传统节日</div>
             </div>
           </div>
         </div>
@@ -918,7 +1079,6 @@
     </div>
   </section>
 
-  <!-- Horizontal Navigation -->
   <nav class="horizontal-nav" aria-label="景点导航">
     <div class="nav-container">
       <ul>
@@ -928,62 +1088,135 @@
         <li><a href="xiaqiong/xiaqiongsi.html">夏琼寺<span>ཤར་ཆུང་དགོན།</span></a></li>
         <li><a href="labulengsi/labulengsi.html">拉卜楞寺<span>བླ་བྲང་དགོན་པ།</span></a></li>
         <li><a href="taersi/taersi.html">塔尔寺<span>སྐུ་འབུམ།</span></a></li>
-        <li><a href="sanjiangyuan/sanjiangyuan.html">三江源<span>གཙང་གསུམ་འབྱུང་ཡུལ།</span></a></li>
+        <li><a href="sanjiangyuan/sanjiangyuan.html">三江源<span>གཙང་གསུམ་འབྱུང་ུལ།</span></a></li>
         <li><a href="xueshan/xueshan.html">阿尼玛沁雪山<span>ཨ་མྱེས་རྨ་ཆེན་གངས་རི།</span></a></li>
         <li><a href="guoluo/guoluo.html">果洛<span>མགོ་ལོག</span></a></li>
-        <li><a href="huangnan/huangnan.html">黄南<span>རྨ་ལྷོ།</span></a></li>
-        <li><a href="yushu/yushu.html">玉树<span>ཡུལ་ཤུལ།</span></a></li>
+        <li><a href="huangnan/huangnan.html">黄南<span>རྨ་ལྷོ</span></a></li>
+        <li><a href="yushu/yushu.html">玉树<span>ཡུ་ཤུལ།</span></a></li>
         <li><a href="guide/guide.html">贵德<span>ཁྲི་ཀ།</span></a></li>
       </ul>
     </div>
   </nav>
 
   <main class="main-container" id="main-content">
-    <!-- Amdo Folk Culture Section -->
     <section id="culture" aria-labelledby="culture-title">
       <h2 class="section-title" id="culture-title">安多藏族民俗文化（རིག་གནས།）</h2>
-      <div class="card-grid">
-        <article class="card" v-for="(item,i) in folkList" :key="i">
-          <div class="card-image-wrapper">
-            <img :src="item.img" :alt="item.title" loading="lazy">
-            <div class="card-overlay"></div>
-            <span class="card-badge">民俗</span>
+      
+      <div class="carousel-wrapper">
+        <button class="carousel-arrow prev" 
+                :class="{ disabled: cultureScrollPos <= 0 }"
+                @click="scrollCarousel('culture', -1)"
+                aria-label="向左滚动">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+        
+        <div class="carousel-container">
+          <div class="carousel-track" 
+               ref="cultureTrack"
+               @scroll="updateScrollPos('culture')"
+               @mousedown="startDrag($event, 'culture')"
+               @mousemove="onDrag($event, 'culture')"
+               @mouseup="endDrag('culture')"
+               @mouseleave="endDrag('culture')"
+               @touchstart="startDrag($event, 'culture')"
+               @touchmove="onDrag($event, 'culture')"
+               @touchend="endDrag('culture')">
+            <article class="card" v-for="(item,i) in folkList" :key="i">
+              <div class="card-image-wrapper">
+                <img :src="item.img" :alt="item.title" loading="lazy">
+                <div class="card-overlay"></div>
+                <span class="card-badge">民俗</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">{{ item.title }}</h3>
+                <p class="card-desc">{{ item.desc }}</p>
+                <div class="card-footer">
+                  <span><i class="fa fa-map-marker"></i> 安多地区</span>
+                  <span><i class="fa fa-eye"></i> 了解更多</span>
+                </div>
+              </div>
+            </article>
           </div>
-          <div class="card-body">
-            <h3 class="card-title">{{ item.title }}</h3>
-            <p class="card-desc">{{ item.desc }}</p>
-            <div class="card-footer">
-              <span><i class="fa fa-map-marker"></i> 安多地区</span>
-              <span><i class="fa fa-eye"></i> 了解更多</span>
-            </div>
-          </div>
-        </article>
+        </div>
+        
+        <button class="carousel-arrow next" 
+                :class="{ disabled: cultureScrollPos >= cultureMaxScroll }"
+                @click="scrollCarousel('culture', 1)"
+                aria-label="向右滚动">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+        
+        <div class="carousel-dots">
+          <button v-for="(item, index) in folkList" 
+                  :key="index"
+                  class="carousel-dot"
+                  :class="{ active: Math.round(cultureScrollPos / cardWidth) === index }"
+                  @click="scrollToCard('culture', index)"
+                  :aria-label="`第${index + 1}张卡片`">
+          </button>
+        </div>
       </div>
     </section>
 
-    <!-- Tourism Section -->
     <section id="tour" aria-labelledby="tour-title">
       <h2 class="section-title" id="tour-title">藏地旅游 + 民俗（དམངས་སྲོལ།）</h2>
-      <div class="card-grid">
-        <article class="card" v-for="(item,i) in tourList" :key="i">
-          <div class="card-image-wrapper">
-            <img :src="item.img" :alt="item.title" loading="lazy">
-            <div class="card-overlay"></div>
-            <span class="card-badge">旅游</span>
+      
+      <div class="carousel-wrapper">
+        <button class="carousel-arrow prev" 
+                :class="{ disabled: tourScrollPos <= 0 }"
+                @click="scrollCarousel('tour', -1)"
+                aria-label="向左滚动">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+        
+        <div class="carousel-container">
+          <div class="carousel-track" 
+               ref="tourTrack"
+               @scroll="updateScrollPos('tour')"
+               @mousedown="startDrag($event, 'tour')"
+               @mousemove="onDrag($event, 'tour')"
+               @mouseup="endDrag('tour')"
+               @mouseleave="endDrag('tour')"
+               @touchstart="startDrag($event, 'tour')"
+               @touchmove="onDrag($event, 'tour')"
+               @touchend="endDrag('tour')">
+            <article class="card" v-for="(item,i) in tourList" :key="i">
+              <div class="card-image-wrapper">
+                <img :src="item.img" :alt="item.title" loading="lazy">
+                <div class="card-overlay"></div>
+                <span class="card-badge">旅游</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">{{ item.title }}</h3>
+                <p class="card-desc">{{ item.desc }}</p>
+                <div class="card-footer">
+                  <span><i class="fa fa-star"></i> 热门景点</span>
+                  <span><i class="fa fa-arrow-right"></i> 查看详情</span>
+                </div>
+              </div>
+            </article>
           </div>
-          <div class="card-body">
-            <h3 class="card-title">{{ item.title }}</h3>
-            <p class="card-desc">{{ item.desc }}</p>
-            <div class="card-footer">
-              <span><i class="fa fa-star"></i> 热门景点</span>
-              <span><i class="fa fa-arrow-right"></i> 查看详情</span>
-            </div>
-          </div>
-        </article>
+        </div>
+        
+        <button class="carousel-arrow next" 
+                :class="{ disabled: tourScrollPos >= tourMaxScroll }"
+                @click="scrollCarousel('tour', 1)"
+                aria-label="向右滚动">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+        
+        <div class="carousel-dots">
+          <button v-for="(item, index) in tourList" 
+                  :key="index"
+                  class="carousel-dot"
+                  :class="{ active: Math.round(tourScrollPos / cardWidth) === index }"
+                  @click="scrollToCard('tour', index)"
+                  :aria-label="`第${index + 1}张卡片`">
+          </button>
+        </div>
       </div>
     </section>
 
-    <!-- Tools Section -->
     <section id="tools" aria-labelledby="tools-title">
       <h2 class="section-title" id="tools-title">藏文实用工具（ལག་ཆ།）</h2>
       <div class="tools-grid">
@@ -996,7 +1229,7 @@
         <div class="tool-card">
           <div class="tool-icon"><i class="fa fa-keyboard-o"></i></div>
           <h3 class="tool-title"><a href="jianpan/jianpan.html">藏族输入法</a></h3>
-          <p class="tool-tibetan">བོད་ཡིག་གཏགས་ཐབས།</p>
+          <p class="tool-tibetan">བོད་ཡིག་གཏགས་ཐབས</p>
         </div>
 
         <div class="tool-card">
@@ -1026,7 +1259,7 @@
         <div class="tool-card">
           <div class="tool-icon"><i class="fa fa-music"></i></div>
           <h3 class="tool-title"><a href="music/music.html">传统音乐</a></h3>
-          <p class="tool-tibetan">སྲོལ་རྒྱུན་རོལ་དབྱངས།</p>
+          <p class="tool-tibetan">སྲོལ་རྒྱུན་རོལ་དབྱངས</p>
         </div>
 
         <div class="tool-card">
@@ -1038,7 +1271,6 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="footer" id="about">
     <div class="footer-content">
       <div class="footer-section">
@@ -1052,10 +1284,17 @@
         <a href="#tour">旅游景点</a>
         <a href="#tools">藏文工具</a>
       </div>
+      <div class="footer-section">
+        <h3>联系方式</h3>
+        <p><i class="fa fa-envelope"></i> contact@tibetan-culture.com</p>
+        <p><i class="fa fa-phone"></i> +86 XXX XXXX XXXX</p>
+        <p><i class="fa fa-map-marker"></i> 青海省西宁市</p>
       </div>
       <div class="footer-section">
         <h3>关注我们</h3>
         <p>微信公众号：雪域安多</p>
+        <p>微博：@安多藏族文化</p>
+        <p>抖音：@藏韵传承</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -1065,7 +1304,6 @@
     </div>
   </footer>
 
-  <!-- Back to Top Button -->
   <div class="back-to-top" 
        :class="{ visible: showBackToTop }" 
        @click="scrollToTop"
@@ -1082,6 +1320,15 @@ createApp({
     return {
       currentSlide: 0,
       showBackToTop: false,
+      cardWidth: 344,
+      cultureScrollPos: 0,
+      cultureMaxScroll: 0,
+      tourScrollPos: 0,
+      tourMaxScroll: 0,
+      dragState: {
+        culture: { isDragging: false, startX: 0, scrollLeft: 0 },
+        tour: { isDragging: false, startX: 0, scrollLeft: 0 }
+      },
       bannerSlides: [
         { 
           img: 'image/mm1.jpg', 
@@ -1096,7 +1343,7 @@ createApp({
           subtitle: '走进安多藏区，感受信仰的力量'
         },
         { 
-          img: 'image/qhh1.jpg', 
+          img: 'image/mm3.jpg', 
           alt: '青海湖',
           title: '圣湖青海湖',
           subtitle: '转湖祈福，体验藏族传统习俗'
@@ -1108,20 +1355,20 @@ createApp({
           subtitle: '酥油花、壁画、堆绣的非遗传承'
         },
         { 
-          img: 'image/mq1.jpg', 
+          img: 'image/mm5.jpg', 
           alt: '雪山草原',
           title: '阿尼玛沁雪山',
-          subtitle: '神山圣水，安多藏族的spiritual家园'
+          subtitle: '神山圣水，安多藏族的精神家园'
         }
       ],
       folkList: [
         {
-          title: '藏族情歌《拉伊》 བོད་རིགས་ཀྱི་མཛའ་གཞས།',
+          title: '藏族情歌《拉伊》 བོད་རིགས་ཀྱི་ཛའ་གས།',
           desc: '形式：山间对唱；习俗：青年恋爱交流；内涵：源于草原生活情感表达，非遗文化。',
           img: 'image/mn1.jpg'
         },
         {
-          title: '安多藏戏 ཨ་མདོའི་ལྷ་མོ།',
+          title: '安多藏戏 ཨ་མདོའི་ལྷ་ོ།',
           desc: '形式：舞台表演；习俗：节日展演；内涵：宗教故事与生活文化传承。',
           img: 'image/mn2.jpg'
         },
@@ -1131,14 +1378,24 @@ createApp({
           img: 'image/mn3.jpg'
         },
         {
-          title: '转湖习俗 མཚོ་སྐོར་གཏོང་བའི་གོམས་སྲོལ།',
+          title: '转湖习俗 མཚོ་སྐོར་གཏོང་བའི་གོམས་སྲོ།',
           desc: '形式：环湖行走；习俗：祈福平安；内涵：敬畏自然、信仰传承。',
           img: 'image/mn4.jpg'
+        },
+        {
+          title: '煨桑仪式 བསང་གཏོང་བའི་ཆོ་ག',
+          desc: '形式：焚烧柏枝；习俗：祭祀祈福；内涵：净化心灵、沟通神灵。',
+          img: 'image/mn5.jpg'
+        },
+        {
+          title: '藏历新年 ལོ་གསར།',
+          desc: '形式：家庭团聚、跳神仪式；习俗：辞旧迎新；内涵：传承祖先智慧。',
+          img: 'image/mn6.jpg'
         }
       ],
       tourList: [
         {
-          title: '塔尔寺 སྐུ་འབུམ་དགོན།',
+          title: '塔尔寺 སུ་འབམ་དགོན།',
           desc: '青海·西宁｜藏传佛教圣地 + 酥油花、堆绣非遗民俗。',
           img: 'image/nn1.jpg'
         },
@@ -1156,6 +1413,16 @@ createApp({
           title: '同仁古城 ཐུན་རིན་གནའ་མཁར།',
           desc: '青海·黄南｜热贡唐卡、安多手工艺传承地。',
           img: 'image/nn4.jpg'
+        },
+        {
+          title: '日月山 ཉི་ཟླ་རི་བོ།',
+          desc: '青海·湟源｜文成公主进藏地标、汉藏文化交融见证。',
+          img: 'image/nn5.jpg'
+        },
+        {
+          title: '三江源 གཙང་གསུམ་འབུང་ཡལ།',
+          desc: '青海·玉树｜长江黄河澜沧江源头、生态保护区。',
+          img: 'image/nn6.jpg'
         }
       ]
     }
@@ -1163,9 +1430,15 @@ createApp({
   mounted() {
     this.startAutoSlide()
     window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('resize', this.handleResize)
+    this.$nextTick(() => {
+      this.updateCardWidth()
+      this.updateMaxScroll()
+    })
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('resize', this.handleResize)
   },
   methods: {
     startAutoSlide() {
@@ -1187,6 +1460,83 @@ createApp({
     },
     handleScroll() {
       this.showBackToTop = window.pageYOffset > 300
+    },
+    handleResize() {
+      this.updateCardWidth()
+      this.updateMaxScroll()
+    },
+    updateCardWidth() {
+      const style = getComputedStyle(document.documentElement)
+      const cardWidth = parseInt(style.getPropertyValue('--card-width')) || 320
+      const cardGap = parseInt(style.getPropertyValue('--card-gap')) || 24
+      this.cardWidth = cardWidth + cardGap
+    },
+    updateMaxScroll() {
+      const cultureTrack = this.$refs.cultureTrack
+      const tourTrack = this.$refs.tourTrack
+      
+      if (cultureTrack) {
+        this.cultureMaxScroll = cultureTrack.scrollWidth - cultureTrack.clientWidth
+      }
+      if (tourTrack) {
+        this.tourMaxScroll = tourTrack.scrollWidth - tourTrack.clientWidth
+      }
+    },
+    updateScrollPos(type) {
+      const track = this.$refs[type + 'Track']
+      if (track) {
+        if (type === 'culture') {
+          this.cultureScrollPos = track.scrollLeft
+        } else {
+          this.tourScrollPos = track.scrollLeft
+        }
+      }
+    },
+    scrollCarousel(type, direction) {
+      const track = this.$refs[type + 'Track']
+      if (track) {
+        const scrollAmount = this.cardWidth * 1.5
+        track.scrollBy({
+          left: direction * scrollAmount,
+          behavior: 'smooth'
+        })
+      }
+    },
+    scrollToCard(type, index) {
+      const track = this.$refs[type + 'Track']
+      if (track) {
+        track.scrollTo({
+          left: index * this.cardWidth,
+          behavior: 'smooth'
+        })
+      }
+    },
+    startDrag(e, type) {
+      const track = this.$refs[type + 'Track']
+      if (!track) return
+      
+      this.dragState[type].isDragging = true
+      this.dragState[type].startX = e.pageX || e.touches[0].pageX
+      this.dragState[type].scrollLeft = track.scrollLeft
+      track.classList.add('dragging')
+    },
+    onDrag(e, type) {
+      if (!this.dragState[type].isDragging) return
+      
+      e.preventDefault()
+      const track = this.$refs[type + 'Track']
+      if (!track) return
+      
+      const x = e.pageX || e.touches[0].pageX
+      const walk = (x - this.dragState[type].startX) * 1.5
+      track.scrollLeft = this.dragState[type].scrollLeft - walk
+    },
+    endDrag(type) {
+      const track = this.$refs[type + 'Track']
+      if (track) {
+        track.classList.remove('dragging')
+      }
+      this.dragState[type].isDragging = false
     }
   }
 }).mount('#app')
