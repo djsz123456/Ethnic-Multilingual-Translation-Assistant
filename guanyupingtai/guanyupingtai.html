@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="关于雪域安多·藏韵传承平台 - 致力于安多藏族文化的数字化保护与传播">
+  <title>关于我们 - 雪域安多·藏韵传承</title>
+  
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --deep-red: #7A221E;
+      --bg-primary: #FAF9F7;
+      --bg-secondary: #FFFFFF;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --text-light: #95A5A6;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+      --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.2);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background Pattern */
+    .bg-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.03;
+      background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 35px, var(--primary-red) 35px, var(--primary-red) 70px),
+        repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--primary-gold) 35px, var(--primary-gold) 70px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .navbar.scrolled {
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .nav-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-red);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary-red), var(--primary-gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--primary-gold);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-red);
+      background: rgba(155, 43, 37, 0.05);
+    }
+
+    .nav-links a:hover::after {
+      width: 60%;
+    }
+
+    .nav-links a.active {
+      color: var(--primary-red);
+      background: rgba(155, 43, 37, 0.1);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-red) 0%, var(--deep-red) 100%);
+      overflow: hidden;
+      padding-top: 80px;
+    }
+
+    .hero-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      max-width: 1000px;
+      padding: 0 30px;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+      }
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 900;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 40px;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+
+    .hero-tibetan {
+      font-size: 28px;
+      font-family: 'Noto Sans Tibetan', sans-serif;
+      margin-top: 20px;
+      opacity: 0.9;
+      letter-spacing: 2px;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-20px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+    }
+
+    .scroll-indicator i {
+      font-size: 32px;
+      color: white;
+      opacity: 0.8;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 100px 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-label {
+      display: inline-block;
+      color: var(--primary-gold);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .section-divider {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    /* Mission Section */
+    .mission-section {
+      background: white;
+    }
+
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .mission-card {
+      background: var(--bg-primary);
+      padding: 40px 30px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      transition: var(--transition);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+
+    .mission-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary-gold);
+    }
+
+    .mission-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .mission-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 25px;
+      background: linear-gradient(135deg, var(--primary-red), var(--primary-gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      color: white;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .mission-card:hover .mission-icon {
+      transform: rotateY(360deg);
+    }
+
+    .mission-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 15px;
+    }
+
+    .mission-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* Story Timeline */
+    .story-section {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 60px auto 0;
+      padding: 40px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-red), var(--primary-gold));
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 50%;
+      position: relative;
+      margin-bottom: 50px;
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.6s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .timeline-item:nth-child(even) {
+      justify-content: flex-start;
+      padding-right: 0;
+      padding-left: 50%;
+      transform: translateX(50px);
+    }
+
+    .timeline-item:nth-child(even).visible {
+      transform: translateX(0);
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 4px solid var(--primary-red);
+      border-radius: 50%;
+      z-index: 2;
+      box-shadow: var(--shadow-md);
+    }
+
+    .timeline-content {
+      background: white;
+      padding: 30px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      max-width: 400px;
+      margin: 0 30px;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .timeline-content:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .timeline-year {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary-red), var(--primary-gold));
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .timeline-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .timeline-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Features Grid */
+    .features-section {
+      background: white;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .feature-card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .feature-image {
+      height: 220px;
+      background: linear-gradient(135deg, var(--primary-red), var(--primary-gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-image::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .feature-body {
+      padding: 30px;
+      flex: 1;
+    }
+
+    .feature-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .feature-stats {
+      display: flex;
+      gap: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-red);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 5px;
+    }
+
+    /* Team Section */
+    .team-section {
+      background: linear-gradient(135deg, var(--primary-red) 0%, var(--deep-red) 100%);
+      color: white;
+    }
+
+    .team-section .section-title {
+      color: white;
+    }
+
+    .team-section .section-label {
+      color: var(--primary-gold);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .team-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 40px 30px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .team-card:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 25px;
+      background: linear-gradient(135deg, var(--primary-gold), #fff);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: var(--primary-red);
+      border: 4px solid white;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .team-name {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .team-role {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 15px;
+      color: var(--primary-gold);
+    }
+
+    .team-bio {
+      font-size: 14px;
+      line-height: 1.7;
+      opacity: 0.95;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background: white;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-top: 60px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary-red), var(--primary-gold));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-md);
+    }
+
+    .contact-details h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .contact-details p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .contact-form {
+      background: var(--bg-primary);
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-family: inherit;
+      transition: var(--transition);
+      background: white;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 4px rgba(155, 43, 37, 0.1);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--text-primary);
+      color: white;
+      padding: 60px 30px 30px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: var(--primary-gold);
+    }
+
+    .footer-section p,
+    .footer-section a {
+      font-size: 14px;
+      opacity: 0.9;
+      line-height: 1.8;
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 10px;
+      transition: var(--transition);
+    }
+
+    .footer-section a:hover {
+      color: var(--primary-gold);
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .hero-title {
+        font-size: 48px;
+      }
+
+      .mission-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline::before {
+        left: 30px;
+      }
+
+      .timeline-item,
+      .timeline-item:nth-child(even) {
+        justify-content: flex-start;
+        padding-left: 80px;
+        padding-right: 0;
+      }
+
+      .timeline-dot {
+        left: 30px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-title {
+        font-size: 36px;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+      }
+
+      .section-title {
+        font-size: 32px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 28px;
+      }
+
+      .section {
+        padding: 60px 20px;
+      }
+
+      .section-title {
+        font-size: 26px;
+      }
+    }
+
+    /* Loading Animation */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary-red);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Background Pattern -->
+  <div class="bg-pattern"></div>
+
+  <div id="app">
+    <!-- Navigation -->
+    <nav class="navbar" :class="{ scrolled: isScrolled }">
+      <div class="nav-container">
+        <a href="../index.html" class="nav-logo">
+          <div class="nav-logo-icon">
+            <i class="fa fa-mountain"></i>
+          </div>
+          <span>雪域安多</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../index.html">首页</a></li>
+          <li><a href="#mission">使命愿景</a></li>
+          <li><a href="#story">发展历程</a></li>
+          <li><a href="#features">平台特色</a></li>
+          <li><a href="#team">团队介绍</a></li>
+          <li><a href="#contact" class="active">联系我们</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-particles">
+        <div v-for="n in 20" :key="n" class="particle" 
+             :style="{
+               left: Math.random() * 100 + '%',
+               width: Math.random() * 10 + 5 + 'px',
+               height: Math.random() * 10 + 5 + 'px',
+               animationDelay: Math.random() * 20 + 's',
+               animationDuration: (Math.random() * 10 + 15) + 's'
+             }">
+        </div>
+      </div>
+      
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fa fa-star"></i> 计算机设计大赛参赛作品
+        </div>
+        <h1 class="hero-title">雪域安多 · 藏韵传承</h1>
+        <p class="hero-subtitle">
+          用科技守护文化，用数字传承文明<br>
+          让千年藏族文化在新时代焕发光彩
+        </p>
+        <p class="hero-tibetan">གངས་ལྗོངས་ཨ་མདོ། བོད་ཀྱི་སྲོལ་རྒྱུན་རིག་གནས་རྒྱུན་འཛིན་བྱེད་པ།</p>
+      </div>
+
+      <div class="scroll-indicator" @click="scrollToSection('mission')">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section mission-section" id="mission">
+      <div class="section-container">
+        <div class="section-header fade-in">
+          <span class="section-label">Our Mission</span>
+          <h2 class="section-title">使命与愿景</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="mission-grid">
+          <div class="mission-card fade-in" v-for="(item, index) in missions" :key="index">
+            <div class="mission-icon">
+              <i :class="item.icon"></i>
+            </div>
+            <h3 class="mission-title">{{ item.title }}</h3>
+            <p class="mission-desc">{{ item.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Story Timeline -->
+    <section class="section story-section" id="story">
+      <div class="section-container">
+        <div class="section-header fade-in">
+          <span class="section-label">Our Journey</span>
+          <h2 class="section-title">发展历程</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item" v-for="(item, index) in timeline" :key="index">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-year">{{ item.year }}</span>
+              <h3 class="timeline-title">{{ item.title }}</h3>
+              <p class="timeline-desc">{{ item.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features-section" id="features">
+      <div class="section-container">
+        <div class="section-header fade-in">
+          <span class="section-label">Platform Features</span>
+          <h2 class="section-title">平台特色</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card fade-in" v-for="(feature, index) in features" :key="index">
+            <div class="feature-image">
+              <i :class="feature.icon"></i>
+            </div>
+            <div class="feature-body">
+              <h3 class="feature-title">{{ feature.title }}</h3>
+              <p class="feature-desc">{{ feature.desc }}</p>
+              <div class="feature-stats">
+                <div class="stat" v-for="(stat, sIndex) in feature.stats" :key="sIndex">
+                  <span class="stat-value">{{ stat.value }}</span>
+                  <div class="stat-label">{{ stat.label }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section team-section" id="team">
+      <div class="section-container">
+        <div class="section-header fade-in">
+          <span class="section-label">Our Team</span>
+          <h2 class="section-title">核心团队</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="team-grid">
+          <div class="team-card fade-in" v-for="(member, index) in team" :key="index">
+            <div class="team-avatar">
+              <i :class="member.avatar"></i>
+            </div>
+            <h3 class="team-name">{{ member.name }}</h3>
+            <p class="team-role">{{ member.role }}</p>
+            <p class="team-bio">{{ member.bio }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact">
+      <div class="section-container">
+        <div class="section-header fade-in">
+          <span class="section-label">Get In Touch</span>
+          <h2 class="section-title">联系我们</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info fade-in">
+            <div class="contact-item" v-for="(item, index) in contacts" :key="index">
+              <div class="contact-icon">
+                <i :class="item.icon"></i>
+              </div>
+              <div class="contact-details">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.info }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form fade-in">
+            <form @submit.prevent="submitForm">
+              <div class="form-group">
+                <label class="form-label">姓名</label>
+                <input type="text" class="form-input" v-model="form.name" placeholder="请输入您的姓名" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">邮箱</label>
+                <input type="email" class="form-input" v-model="form.email" placeholder="请输入您的邮箱" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">主题</label>
+                <input type="text" class="form-input" v-model="form.subject" placeholder="请输入消息主题" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">留言内容</label>
+                <textarea class="form-textarea" v-model="form.message" placeholder="请输入您的留言..." required></textarea>
+              </div>
+              <button type="submit" class="submit-btn">
+                <i class="fa fa-paper-plane"></i> 发送消息
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>关于平台</h3>
+          <p>雪域安多·藏韵传承是一个致力于安多藏族文化数字化保护与传播的创新平台，通过现代技术手段让传统文化焕发新生。</p>
+        </div>
+        <div class="footer-section">
+          <h3>快速链接</h3>
+          <a href="../index.html">返回首页</a>
+          <a href="#mission">使命愿景</a>
+          <a href="#features">平台特色</a>
+          <a href="#contact">联系我们</a>
+        </div>
+        <div class="footer-section">
+          <h3>联系方式</h3>
+          <p><i class="fa fa-envelope"></i> contact@tibetan-culture.com</p>
+          <p><i class="fa fa-phone"></i> +86 XXX XXXX XXXX</p>
+          <p><i class="fa fa-map-marker"></i> 青海省西宁市</p>
+        </div>
+        <div class="footer-section">
+          <h3>关注我们</h3>
+          <a href="#"><i class="fa fa-wechat"></i> 微信公众号</a>
+          <a href="#"><i class="fa fa-weibo"></i> 官方微博</a>
+          <a href="#"><i class="fa fa-video-camera"></i> 抖音账号</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 雪域安多·藏韵传承. All Rights Reserved. | 计算机设计大赛参赛作品</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          isScrolled: false,
+          form: {
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+          },
+          missions: [
+            {
+              icon: 'fa fa-book',
+              title: '文化保护',
+              desc: '通过数字化手段记录、保存和传承安多藏族非物质文化遗产，确保珍贵文化资源得以永久保存。'
+            },
+            {
+              icon: 'fa fa-globe',
+              title: '文化传播',
+              desc: '利用互联网技术打破地域限制，让全球用户都能了解和学习安多藏族的历史、语言、艺术和习俗。'
+            },
+            {
+              icon: 'fa fa-users',
+              title: '社区建设',
+              desc: '构建线上线下相结合的藏族文化交流社区，促进文化传承者、学者和爱好者的互动与合作。'
+            }
+          ],
+          timeline: [
+            {
+              year: '2025.07',
+              title: '本土深耕',
+              desc: '由青海安多本土藏族学生主导，独自深入安多各地，补充、校验文化内容，挖掘本土特色文化资源，确保平台内容的真实性、文化准确性与本土温度。'
+            },                                  
+            {
+              year: '2026.04',
+              title: '平台开发',
+              desc: '启动技术开发工作，搭建网站架构，开发核心功能模块，包括藏文工具、景点展示等。'
+            },
+            {
+              year: '2026.04',
+              title: '内容完善',
+              desc: '完善平台内容，添加更多景点信息、民俗文化资料，优化用户体验和界面设计。'
+            },
+            {
+              year: '2026.04',
+              title: '测试优化',
+              desc: '进行全面的功能测试和性能优化，修复bug，提升页面加载速度和交互流畅度。'
+            },
+            {
+              year: '2026.05',
+              title: '参赛提交',
+              desc: '完成所有准备工作，正式提交浙江省计算机设计大赛，期待获得认可。'
+            }
+          ],
+          features: [
+            {
+              icon: 'fa fa-language',
+              title: '双语支持',
+              desc: '全面支持汉藏双语显示，提供藏文输入法、翻译工具、字符学习等功能，降低语言学习门槛。',
+              stats: [
+                { value: '500+', label: '词汇量' },
+                { value: '30', label: '常用短语' }
+              ]
+            },
+            {
+              icon: 'fa fa-map-marker',
+              title: '景点导览',
+              desc: '详细介绍12+个安多地区著名景点，包含历史文化背景、民俗活动和实用旅游信息。',
+              stats: [
+                { value: '12+', label: '景点' },
+                { value: '100+', label: '图片' }
+              ]
+            },
+            {
+              icon: 'fa fa-calendar',
+              title: '藏历查询',
+              desc: '提供1951-2051年百年藏历查询功能，包含节日、殊胜日等传统信息，方便用户了解藏族历法。',
+              stats: [
+                { value: '100', label: '年份覆盖' },
+                { value: '365', label: '每日信息' }
+              ]
+            },
+            {
+              icon: 'fa fa-music',
+              title: '传统音乐',
+              desc: '收录藏族传统乐器介绍和音乐作品，支持在线播放和本地上传，让用户感受藏族音乐魅力。',
+              stats: [
+                { value: '8+', label: '乐器类型' },
+                { value: '∞', label: '可上传' }
+              ]
+            },
+            {
+              icon: 'fa fa-pencil',
+              title: '学习笔记',
+              desc: '内置藏文笔记功能，支持本地存储，用户可以随时记录学习心得和文化感悟。',
+              stats: [
+                { value: '∞', label: '存储空间' },
+                { value: '离线', label: '可用' }
+              ]
+            },
+            {
+              icon: 'fa fa-mobile',
+              title: '响应式设计',
+              desc: '完美适配桌面、平板和手机等各种设备，确保在任何屏幕上都有良好的浏览体验。',
+              stats: [
+                { value: '100%', label: '响应式' },
+                { value: '4K', label: '高清支持' }
+              ]
+            }
+          ],
+          team: [
+            {
+              avatar: 'fa fa-user',
+              name: '核心负责人',
+              role: '核心负责人 & 前端开发',
+              bio: '负责整体项目规划、技术架构设计和前端开发工作，专注于用户体验优化。'
+            },
+            {
+              avatar: 'fa fa-user',
+              name: '文档汇总与排版优化',
+              role: '文化顾问 & 内容优化',
+              bio: '负责藏族文化内容的收集、整理和审核，确保信息的准确性和文化敏感性。'
+            },
+            {
+              avatar: 'fa fa-user',
+              name: 'UI设计师',
+              role: '视觉设计 & 交互设计',
+              bio: '负责平台整体视觉风格设计，打造符合藏族文化特色的现代化界面。'
+            },
+            {
+              avatar: 'fa fa-user',
+              name: '技术支持',
+              role: '后端开发 & 测试工程师',
+              bio: '负责功能实现、性能优化和质量保证，确保平台稳定运行。'
+            }
+          ],
+          contacts: [
+            {
+              icon: 'fa fa-envelope',
+              title: '电子邮件',
+              info: 'contact@tibetan-culture.com'
+            },
+            {
+              icon: 'fa fa-phone',
+              title: '联系电话',
+              info: '+86 XXX XXXX XXXX'
+            },
+            {
+              icon: 'fa fa-map-marker',
+              title: '地址',
+              info: '青海省西宁市某某区某某路XX号'
+            },
+            {
+              icon: 'fa fa-clock-o',
+              title: '工作时间',
+              info: '周一至周五 9:00 - 18:00'
+            }
+          ]
+        }
+      },
+      mounted() {
+        // Hide loading overlay
+        setTimeout(() => {
+          document.getElementById('loadingOverlay').classList.add('hidden')
+        }, 800)
+
+        // Scroll listener
+        window.addEventListener('scroll', this.handleScroll)
+        
+        // Intersection Observer for animations
+        this.setupIntersectionObserver()
+      },
+      beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll)
+      },
+      methods: {
+        handleScroll() {
+          this.isScrolled = window.pageYOffset > 50
+        },
+        scrollToSection(id) {
+          const element = document.getElementById(id)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' })
+          }
+        },
+        setupIntersectionObserver() {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible')
+                
+                // Special handling for timeline items
+                if (entry.target.classList.contains('timeline-item')) {
+                  entry.target.classList.add('visible')
+                }
+              }
+            })
+          }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+          })
+
+          // Observe all fade-in elements
+          document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el)
+          })
+
+          // Observe timeline items
+          document.querySelectorAll('.timeline-item').forEach(el => {
+            observer.observe(el)
+          })
+        },
+        submitForm() {
+          // Simulate form submission
+          alert('感谢您的留言！我们会尽快回复您。\n\n注意：这是演示版本，实际项目中需要连接后端API。')
+          
+          // Reset form
+          this.form = {
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+          }
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
