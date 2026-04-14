@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉语翻译藏文工具 - 青海安多藏族文化传播平台</title>
+    <style>
+        
+        /* 标题区域 */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .header .divider {
+            width: 80px;
+            height: 3px;
+            background-color: #c8161d;
+            margin: 0 auto;
+        }
+        
+        /* 容器 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 翻译区域 */
+        .translate-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .input-section,
+        .output-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .text-area {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .text-area:focus {
+            outline: none;
+            border-color: #c8161d;
+            box-shadow: 0 0 0 2px rgba(200, 22, 29, 0.1);
+        }
+        
+        .output-section .text-area {
+            background-color: #f9f9f9;
+            cursor: default;
+        }
+        
+        .counter {
+            text-align: right;
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        /* 按钮样式 */
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .translate-btn {
+            background-color: #c8161d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .translate-btn:hover {
+            background-color: #a81319;
+        }
+        
+        .translate-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* 结果操作按钮 */
+        .result-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        
+        .action-btn {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* 使用说明区域 */
+        .instructions {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .instructions h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .instructions ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .instructions ul li {
+            position: relative;
+            margin-bottom: 10px;
+            padding-left: 20px;
+        }
+        
+        .instructions ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #c8161d;
+            font-weight: bold;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background-color: #c8161d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 标题区域 -->
+    <div class="header">
+        <h1>汉语翻译藏文工具</h1>
+        <p>支持中文输入，一键翻译成藏文</p>
+        <div class="divider"></div>
+    </div>
+    
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 翻译区域 -->
+        <div class="translate-section">
+            <!-- 输入区域 -->
+            <div class="input-section">
+                <div class="section-title">请输入需要翻译的中文</div>
+                <textarea class="text-area" id="inputText" placeholder="请输入中文..." oninput="updateCounter()"></textarea>
+                <div class="counter" id="counter">已输入 0 字</div>
+            </div>
+            
+            <!-- 翻译按钮 -->
+            <div class="btn-container">
+                <button class="translate-btn" id="translateBtn" onclick="translate()">开始翻译</button>
+            </div>
+            
+            <!-- 输出区域 -->
+            <div class="output-section">
+                <div class="section-title">藏文翻译结果</div>
+                <textarea class="text-area" id="outputText" readonly placeholder="翻译结果将显示在这里..."></textarea>
+                <div class="result-actions">
+                    <button class="action-btn" onclick="copyResult()">复制结果</button>
+                    <button class="action-btn" onclick="clearResult()">清空内容</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 使用说明 -->
+        <div class="instructions">
+            <h2>使用说明</h2>
+            <ul>
+                <li>本工具仅支持汉语翻译成藏文，不支持反向翻译。</li>
+                <li>支持短句、日常用语、短文翻译。</li>
+                <li>结果仅供学习参考，正式文件请人工核对。</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>青海安多藏族文化传播平台 &copy; 2026</p>
+    </footer>
+    
+    <script>
+        // 更新字数统计
+        function updateCounter() {
+            const inputText = document.getElementById('inputText');
+            const counter = document.getElementById('counter');
+            const length = inputText.value.length;
+            counter.textContent = `已输入 ${length} 字`;
+        }
+        
+        // 翻译功能（模拟）
+        function translate() {
+            const inputText = document.getElementById('inputText');
+            const outputText = document.getElementById('outputText');
+            const translateBtn = document.getElementById('translateBtn');
+            
+            // 验证输入
+            if (!inputText.value.trim()) {
+                alert('请输入需要翻译的中文');
+                return;
+            }
+            
+            // 禁用按钮并显示翻译中
+            translateBtn.disabled = true;
+            translateBtn.textContent = '翻译中...';
+            
+            // 模拟翻译过程
+            setTimeout(() => {
+                // 这里可以替换为实际的翻译API调用
+                // 模拟翻译结果
+                const mockResult = "བོད་སྐད་བརྗོད་བརྡུང་།";
+                outputText.value = mockResult;
+                
+                // 恢复按钮状态
+                translateBtn.disabled = false;
+                translateBtn.textContent = '开始翻译';
+            }, 1500);
+        }
+        
+        // 复制结果
+        function copyResult() {
+            const outputText = document.getElementById('outputText');
+            
+            if (!outputText.value.trim()) {
+                alert('没有可复制的内容');
+                return;
+            }
+            
+            outputText.select();
+            document.execCommand('copy');
+            alert('结果已复制到剪贴板');
+        }
+        
+        // 清空内容
+        function clearResult() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').value = '';
+            updateCounter();
+        }
+    </script>
+</body>
+</html>

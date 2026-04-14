@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>喜马拉雅藏文输入法 网页虚拟键盘</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background: #f5f5f5;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #992620;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        /* 输入框 */
+        #inputBox {
+            width: 90%;
+            max-width: 1200px;
+            height: 120px;
+            font-size: 24px;
+            padding: 15px;
+            border: 2px solid #b97a46;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            resize: none;
+        }
+        /* 键盘容器 */
+        .keyboard {
+            background: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        /* 按键行 */
+        .key-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            justify-content: center;
+        }
+        /* 按键样式 */
+        .key {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            min-width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .key:hover {
+            background: #333;
+        }
+        .key:active {
+            background: #555;
+        }
+        /* 宽按键 */
+        .key.wide {
+            min-width: 80px;
+        }
+        .key.extra-wide {
+            min-width: 120px;
+        }
+        .key.space {
+            min-width: 400px;
+        }
+        /* Shift状态提示 */
+        .shift-status {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>喜马拉雅藏文输入法 网页虚拟键盘</h1>
+    <textarea id="inputBox" placeholder="点击下方按键输入藏文"></textarea>
+
+    <div class="shift-status">当前状态：正常（非Shift）</div>
+
+    <div class="keyboard">
+        <!-- 第一行：功能键 -->
+        <div class="key-row">
+            <button class="key" onclick="insertKey('Esc')">Esc</button>
+            <button class="key" onclick="insertKey('F1')">F1</button>
+            <button class="key" onclick="insertKey('F2')">F2</button>
+            <button class="key" onclick="insertKey('F3')">F3</button>
+            <button class="key" onclick="insertKey('F4')">F4</button>
+            <button class="key" onclick="insertKey('F5')">F5</button>
+            <button class="key" onclick="insertKey('F6')">F6</button>
+            <button class="key" onclick="insertKey('F7')">F7</button>
+            <button class="key" onclick="insertKey('F8')">F8</button>
+            <button class="key" onclick="insertKey('F9')">F9</button>
+            <button class="key" onclick="insertKey('F10')">F10</button>
+            <button class="key" onclick="insertKey('F11')">F11</button>
+            <button class="key" onclick="insertKey('F12')">F12</button>
+            <button class="key wide" onclick="insertKey('🔊')">🔊</button>
+            <button class="key" onclick="insertKey('Insert')">Insert</button>
+            <button class="key" onclick="insertKey('Del')">Del</button>
+        </div>
+
+        <!-- 第二行：数字键（对应藏文字根） -->
+        <div class="key-row">
+            <button class="key" onclick="insert('ཨ')">ཨ</button>
+            <button class="key" onclick="insert('༡')">༡</button>
+            <button class="key" onclick="insert('༢')">༢</button>
+            <button class="key" onclick="insert('༣')">༣</button>
+            <button class="key" onclick="insert('༤')">༤</button>
+            <button class="key" onclick="insert('༥')">༥</button>
+            <button class="key" onclick="insert('༦')">༦</button>
+            <button class="key" onclick="insert('༧')">༧</button>
+            <button class="key" onclick="insert('༨')">༨</button>
+            <button class="key" onclick="insert('༩')">༩</button>
+            <button class="key" onclick="insert('༠')">༠</button>
+            <button class="key" onclick="insert('ས')">ས</button>
+            <button class="key" onclick="insert('ག')">ག</button>
+            <button class="key wide" onclick="backspace()">Backspace</button>
+        </div>
+
+        <!-- 第三行：Tab行 -->
+        <div class="key-row">
+            <button class="key wide" onclick="insertKey('Tab')">Tab</button>
+            <button class="key" onclick="insert('ཀ')">ཀ</button>
+            <button class="key" onclick="insert('ཤ')">ཤ</button>
+            <button class="key" onclick="insert('ད')">ད</button>
+            <button class="key" onclick="insert('ར')">ར</button>
+            <button class="key" onclick="insert('ཏ')">ཏ</button>
+            <button class="key" onclick="insert('ཡ')">ཡ</button>
+            <button class="key" onclick="insert('ུ')">ུ</button>
+            <button class="key" onclick="insert('ི')">ི</button>
+            <button class="key" onclick="insert('ོ')">ོ</button>
+            <button class="key" onclick="insert('པ')">པ</button>
+            <button class="key" onclick="insert('ཙ')">ཙ</button>
+            <button class="key" onclick="insert('ཚ')">ཚ</button>
+            <button class="key wide" onclick="insertKey('Enter')">Enter</button>
+        </div>
+
+        <!-- 第四行：Caps Lock行 -->
+        <div class="key-row">
+            <button class="key extra-wide" onclick="toggleShift()">Caps Lock</button>
+            <button class="key" onclick="insert('ཨ')">ཨ</button>
+            <button class="key" onclick="insert('ས')">ས</button>
+            <button class="key" onclick="insert('ད')">ད</button>
+            <button class="key" onclick="insert('ཕ')">ཕ</button>
+            <button class="key" onclick="insert('ག')">ག</button>
+            <button class="key" onclick="insert('ཧ')">ཧ</button>
+            <button class="key" onclick="insert('་')">་</button>
+            <button class="key" onclick="insert('ཀ')">ཀ</button>
+            <button class="key" onclick="insert('བ')">བ</button>
+            <button class="key" onclick="insert('འ')">འ</button>
+            <button class="key" onclick="insert('ི')">ི</button>
+            <button class="key extra-wide" onclick="insertKey('Enter')">Enter</button>
+        </div>
+
+        <!-- 第五行：Shift行 -->
+        <div class="key-row">
+            <button class="key extra-wide" onclick="toggleShift()">Shift</button>
+            <button class="key" onclick="insert('ཟ')">ཟ</button>
+            <button class="key" onclick="insert('ཞ')">ཞ</button>
+            <button class="key" onclick="insert('ཙ')">ཙ</button>
+            <button class="key" onclick="insert('བ')">བ</button>
+            <button class="key" onclick="insert('ང')">ང</button>
+            <button class="key" onclick="insert('ན')">ན</button>
+            <button class="key" onclick="insert('མ')">མ</button>
+            <button class="key" onclick="insert('ལ')">ལ</button>
+            <button class="key" onclick="insert('ས')">ས</button>
+            <button class="key" onclick="insert('ཤ')">ཤ</button>
+            <button class="key" onclick="insert('ཚ')">ཚ</button>
+            <button class="key" onclick="insertKey('↑')">↑</button>
+            <button class="key" onclick="insertKey('Fn')">Fn</button>
+        </div>
+
+        <!-- 第六行：控制键+空格 -->
+        <div class="key-row">
+            <button class="key" onclick="insertKey('Fn')">Fn</button>
+            <button class="key" onclick="insertKey('Ctrl')">Ctrl</button>
+            <button class="key" onclick="insertKey('Win')">Win</button>
+            <button class="key" onclick="insertKey('Alt')">Alt</button>
+            <button class="key space" onclick="insert(' ')">空格</button>
+            <button class="key" onclick="insertKey('Alt')">Alt</button>
+            <button class="key" onclick="insertKey('Ctrl')">Ctrl</button>
+            <button class="key" onclick="insertKey('←')">←</button>
+            <button class="key" onclick="insertKey('↓')">↓</button>
+            <button class="key" onclick="insertKey('→')">→</button>
+        </div>
+    </div>
+
+    <script>
+        const inputBox = document.getElementById('inputBox');
+        const shiftStatus = document.querySelector('.shift-status');
+        let isShiftActive = false;
+
+        // 插入藏文字符
+        function insert(char) {
+            inputBox.value += char;
+            inputBox.focus();
+        }
+
+        // 插入功能键（如Tab、Enter）
+        function insertKey(key) {
+            switch(key) {
+                case 'Backspace':
+                    inputBox.value = inputBox.value.slice(0, -1);
+                    break;
+                case 'Enter':
+                    inputBox.value += '\n';
+                    break;
+                case 'Tab':
+                    inputBox.value += '\t';
+                    break;
+                case '↑':
+                case '↓':
+                case '←':
+                case '→':
+                    inputBox.value += key;
+                    break;
+                case ' ':
+                    inputBox.value += ' ';
+                    break;
+                default:
+                    // 其他功能键不插入内容
+                    break;
+            }
+            inputBox.focus();
+        }
+
+        // 退格
+        function backspace() {
+            inputBox.value = inputBox.value.slice(0, -1);
+            inputBox.focus();
+        }
+
+        // 切换Shift状态
+        function toggleShift() {
+            isShiftActive = !isShiftActive;
+            shiftStatus.textContent = isShiftActive ? '当前状态：Shift激活' : '当前状态：正常（非Shift）';
+        }
+
+        // 支持物理键盘同步
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Shift') toggleShift();
+        });
+        document.addEventListener('keyup', (e) => {
+            if(e.key === 'Shift') toggleShift();
+        });
+    </script>
+</body>
+</html>
