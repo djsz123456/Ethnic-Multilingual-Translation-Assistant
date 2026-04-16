@@ -316,46 +316,54 @@
       width: 100%;
       background: linear-gradient(135deg, var(--primary-red) 0%, #B83C2E 100%);
       margin: 40px 0;
-      overflow-x: auto;
       box-shadow: var(--shadow-lg);
       border-radius: var(--radius-md);
-      scrollbar-width: thin;
-      scrollbar-color: var(--primary-gold) var(--primary-red);
-    }
-    
-    .horizontal-nav::-webkit-scrollbar {
-      height: 6px;
-    }
-    
-    .horizontal-nav::-webkit-scrollbar-track {
-      background: var(--primary-red);
-    }
-    
-    .horizontal-nav::-webkit-scrollbar-thumb {
-      background: var(--primary-gold);
-      border-radius: 3px;
-    }
-    
-    .nav-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0;
-    }
-    
-    .horizontal-nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      min-width: max-content;
-    }
-    
-    .horizontal-nav li {
-      transition: var(--transition);
       position: relative;
     }
     
-    .horizontal-nav li:not(:last-child)::after {
+    .nav-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 0;
+      list-style: none;
+      position: relative;
+    }
+    
+    .nav-region {
+      position: relative;
+      flex: 1;
+      max-width: 350px;
+    }
+    
+    .nav-region-trigger {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 22px 24px;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      background: transparent;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      position: relative;
+    }
+    
+    .nav-region-trigger:hover,
+    .nav-region.active .nav-region-trigger {
+      background-color: rgba(212, 175, 55, 0.2);
+      color: var(--primary-gold);
+    }
+    
+    .nav-region:not(:last-child) .nav-region-trigger::after {
       content: '';
       position: absolute;
       right: 0;
@@ -365,43 +373,20 @@
       background-color: rgba(255,255,255,0.2);
     }
     
-    .horizontal-nav li a {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px 28px;
-      color: white;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      transition: var(--transition);
-      white-space: nowrap;
-    }
-    
-    .horizontal-nav li a span {
+    .nav-region-label {
       display: block;
       font-size: 12px;
-      opacity: 0.85;
-      margin-top: 6px;
       font-weight: 400;
-      font-family: 'Noto Sans Tibetan', sans-serif;
+      opacity: 0.8;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
     }
     
-    .horizontal-nav li:hover {
-      background-color: rgba(212, 175, 55, 0.2);
-      transform: translateY(-2px);
+    .nav-region.active .nav-region-trigger {
+      background-color: rgba(138, 37, 32, 0.9);
     }
     
-    .horizontal-nav li:hover a {
-      color: var(--primary-gold);
-    }
-    
-    .horizontal-nav li.active {
-      background-color: rgba(138, 37, 32, 0.8);
-    }
-    
-    .horizontal-nav li.active::after {
+    .nav-region.active .nav-region-trigger::before {
       content: '';
       position: absolute;
       bottom: 0;
@@ -409,6 +394,173 @@
       width: 60%;
       height: 3px;
       background-color: var(--primary-gold);
+    }
+    
+    /* Secondary Navigation - Dropdown */
+    .nav-submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, #8A2520 0%, #6B1C18 100%);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+      padding: 15px 0;
+      animation: submenuFadeIn 0.3s ease;
+    }
+    
+    @keyframes submenuFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .nav-region.active .nav-submenu {
+      display: block;
+    }
+    
+    /* Desktop hover */
+    @media (min-width: 769px) {
+      .nav-region:hover .nav-submenu {
+        display: block;
+      }
+    }
+    
+    .nav-submenu-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .nav-submenu-item {
+      position: relative;
+    }
+    
+    .nav-submenu-item a {
+      display: block;
+      padding: 10px 18px;
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 6px;
+      transition: var(--transition);
+      white-space: nowrap;
+      position: relative;
+    }
+    
+    .nav-submenu-item a span {
+      display: block;
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: 2px;
+      font-weight: 400;
+      font-family: 'Noto Sans Tibetan', sans-serif;
+    }
+    
+    .nav-submenu-item a:hover {
+      background-color: rgba(212, 175, 55, 0.3);
+      color: var(--primary-gold);
+      transform: translateY(-2px);
+    }
+    
+    .nav-submenu-item.active a {
+      font-weight: 700;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: var(--primary-gold);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+    
+    .nav-submenu-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -4px;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background-color: rgba(255,255,255,0.15);
+    }
+    
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .nav-main {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .nav-region {
+        max-width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .nav-region:not(:last-child) .nav-region-trigger::after {
+        display: none;
+      }
+      
+      .nav-region-trigger {
+        padding: 16px 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+      
+      .nav-region-trigger::before {
+        display: none !important;
+      }
+      
+      .nav-region.active .nav-region-trigger {
+        background-color: rgba(138, 37, 32, 0.9);
+      }
+      
+      .nav-region-trigger-chevron {
+        display: inline-block;
+        transition: transform 0.3s ease;
+        font-size: 12px;
+      }
+      
+      .nav-region.active .nav-region-trigger-chevron {
+        transform: rotate(180deg);
+      }
+      
+      .nav-submenu {
+        position: static;
+        border-radius: 0;
+        box-shadow: none;
+        background: rgba(0, 0, 0, 0.15);
+      }
+      
+      .nav-submenu-list {
+        flex-direction: column;
+        gap: 4px;
+        padding: 10px 20px;
+      }
+      
+      .nav-submenu-item a {
+        padding: 12px 16px;
+      }
+      
+      .nav-submenu-item:not(:last-child)::after {
+        display: none;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .nav-region-trigger-chevron {
+        display: none;
+      }
     }
 
     .section-title {
@@ -1080,22 +1232,92 @@
   </section>
 
   <nav class="horizontal-nav" aria-label="景点导航">
-    <div class="nav-container">
-      <ul>
-        <li><a href="riyueshan/riyueshan.html">日月山<span>ཉི་ཟླ་རི་བོ།</span></a></li>
-        <li><a href="qinghahu/qinghaihu.html">青海湖<span>མཚོ་སྔོན་པོ།</span></a></li>
-        <li><a href="nanzong/nanzong.html">南宗寺<span>གནས་རྙིང་དགོན།</span></a></li>
-        <li><a href="xiaqiong/xiaqiongsi.html">夏琼寺<span>ཤར་ཆུང་དགོན།</span></a></li>
-        <li><a href="labulengsi/labulengsi.html">拉卜楞寺<span>བླ་བྲང་དགོན་པ།</span></a></li>
-        <li><a href="taersi/taersi.html">塔尔寺<span>སྐུ་འབུམ།</span></a></li>
-        <li><a href="sanjiangyuan/sanjiangyuan.html">三江源<span>གཙང་གསུམ་འབྱུང་ུལ།</span></a></li>
-        <li><a href="xueshan/xueshan.html">阿尼玛沁雪山<span>ཨ་མྱེས་རྨ་ཆེན་གངས་རི།</span></a></li>
-        <li><a href="guoluo/guoluo.html">果洛<span>མགོ་ལོག</span></a></li>
-        <li><a href="huangnan/huangnan.html">黄南<span>རྨ་ལྷོ</span></a></li>
-        <li><a href="yushu/yushu.html">玉树<span>ཡུ་ཤུལ།</span></a></li>
-        <li><a href="guide/guide.html">贵德<span>ཁྲི་ཀ།</span></a></li>
-      </ul>
-    </div>
+    <ul class="nav-main">
+      <li class="nav-region" 
+          :class="{ active: activeRegion === 'qinghai' }"
+          @mouseenter="handleRegionHover('qinghai')"
+          @mouseleave="handleRegionLeave('qinghai')"
+          @click="toggleRegion('qinghai')">
+        <button class="nav-region-trigger" aria-expanded="activeRegion === 'qinghai'">
+          <span>青海安多核心区</span>
+          <span class="nav-region-label">安多文化核心承载区</span>
+          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
+        </button>
+        <div class="nav-submenu">
+          <ul class="nav-submenu-list">
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'riyueshan' }"><a href="riyueshan/riyueshan.html" @click="setActiveScenic('riyueshan')">日月山<span>安多门户</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'qinghaihu' }"><a href="qinghahu/qinghaihu.html" @click="setActiveScenic('qinghaihu')">青海湖<span>圣湖</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'nanzong' }"><a href="nanzong/nanzong.html" @click="setActiveScenic('nanzong')">南宗寺<span>佛教圣地</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'xiaqiong' }"><a href="xiaqiong/xiaqiongsi.html" @click="setActiveScenic('xiaqiong')">夏琼寺<span>宗喀巴祖庭</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'labulengsi' }"><a href="labulengsi/labulengsi.html" @click="setActiveScenic('labulengsi')">拉卜楞寺<span>安多佛教学府</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'taersi' }"><a href="taersi/taersi.html" @click="setActiveScenic('taersi')">塔尔寺<span>藏传佛教名寺</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'xuanshan' }"><a href="xueshan/xueshan.html" @click="setActiveScenic('xuanshan')">阿尼玛沁雪山<span>神山</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sanjiangyuan' }"><a href="sanjiangyuan/sanjiangyuan.html" @click="setActiveScenic('sanjiangyuan')">三江源<span>中华水塔</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'guoluo' }"><a href="guoluo/guoluo.html" @click="setActiveScenic('guoluo')">果洛<span>格萨尔文化之乡</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'huangnan' }"><a href="huangnan/huangnan.html" @click="setActiveScenic('huangnan')">黄南<span>热贡艺术发源地</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'yushu' }"><a href="yushu/yushu.html" @click="setActiveScenic('yushu')">玉树<span>康巴安多交融地</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'guide' }"><a href="guide/guide.html" @click="setActiveScenic('guide')">贵德<span>高原江南</span></a></li>
+          </ul>
+        </div>
+      </li>
+      
+      <li class="nav-region" 
+          :class="{ active: activeRegion === 'gannan' }"
+          @mouseenter="handleRegionHover('gannan')"
+          @mouseleave="handleRegionLeave('gannan')"
+          @click="toggleRegion('gannan')">
+        <button class="nav-region-trigger" aria-expanded="activeRegion === 'gannan'">
+          <span>甘南安多文化区</span>
+          <span class="nav-region-label">安多文化重要传承地</span>
+          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
+        </button>
+        <div class="nav-submenu">
+          <ul class="nav-submenu-list">
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'labulengsi-gn' }"><a href="labulengsi/labulengsi.html" @click="setActiveScenic('labulengsi-gn')">拉卜楞寺<span>核心地标</span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'langmusi' }"><a href="#" @click="setActiveScenic('langmusi')">郎木寺<span></span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'zagan' }"><a href="#" @click="setActiveScenic('zagan')">扎尕那<span></span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="#" @click="setActiveScenic('sangke')">桑科草原<span></span></a></li>
+          </ul>
+        </div>
+      </li>
+      
+      <li class="nav-region" 
+          :class="{ active: activeRegion === 'chuanxibei' }"
+          @mouseenter="handleRegionHover('chuanxibei')"
+          @mouseleave="handleRegionLeave('chuanxibei')"
+          @click="toggleRegion('chuanxibei')">
+        <button class="nav-region-trigger" aria-expanded="activeRegion === 'chuanxibei'">
+          <span>川西北安多片区</span>
+          <span class="nav-region-label">安多与康巴文化交融区</span>
+          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
+        </button>
+        <div class="nav-submenu">
+          <ul class="nav-submenu-list">
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'aba' }"><a href="#" @click="setActiveScenic('aba')">阿坝州<span></span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'ruorgai' }"><a href="#" @click="setActiveScenic('ruorgai')">若尔盖草原<span></span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'songpan' }"><a href="#" @click="setActiveScenic('songpan')">松潘古城<span></span></a></li>
+          </ul>
+        </div>
+      </li>
+      
+      <li class="nav-region" 
+          :class="{ active: activeRegion === 'zangbei' }"
+          @mouseenter="handleRegionHover('zangbei')"
+          @mouseleave="handleRegionLeave('zangbei')"
+          @click="toggleRegion('zangbei')">
+        <button class="nav-region-trigger" aria-expanded="activeRegion === 'zangbei'">
+          <span>藏北安多延伸区</span>
+          <span class="nav-region-label">安多文化西向延伸带</span>
+          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
+        </button>
+        <div class="nav-submenu">
+          <ul class="nav-submenu-list">
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="#" @click="setActiveScenic('naqu')">那曲<span></span></a></li>
+            <li class="nav-submenu-item" :class="{ active: currentScenic === 'tangula' }"><a href="#" @click="setActiveScenic('tangula')">唐古拉山口<span></span></a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
   </nav>
 
   <main class="main-container" id="main-content">
@@ -1329,6 +1551,9 @@ createApp({
         culture: { isDragging: false, startX: 0, scrollLeft: 0 },
         tour: { isDragging: false, startX: 0, scrollLeft: 0 }
       },
+      activeRegion: null,
+      currentScenic: null,
+      isMobile: false,
       bannerSlides: [
         { 
           img: 'image/mm1.jpg', 
@@ -1431,10 +1656,12 @@ createApp({
     this.startAutoSlide()
     window.addEventListener('scroll', this.handleScroll)
     window.addEventListener('resize', this.handleResize)
+    this.checkMobile()
     this.$nextTick(() => {
       this.updateCardWidth()
       this.updateMaxScroll()
     })
+    this.highlightCurrentPage()
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
@@ -1480,6 +1707,51 @@ createApp({
       }
       if (tourTrack) {
         this.tourMaxScroll = tourTrack.scrollWidth - tourTrack.clientWidth
+      }
+    },
+    checkMobile() {
+      this.isMobile = window.innerWidth <= 768
+    },
+    handleRegionHover(region) {
+      if (!this.isMobile) {
+        this.activeRegion = region
+      }
+    },
+    handleRegionLeave(region) {
+      if (!this.isMobile) {
+        this.activeRegion = null
+      }
+    },
+    toggleRegion(region) {
+      if (this.isMobile) {
+        this.activeRegion = this.activeRegion === region ? null : region
+      }
+    },
+    setActiveScenic(scenicId) {
+      this.currentScenic = scenicId
+    },
+    highlightCurrentPage() {
+      const path = window.location.pathname
+      const fileName = path.split('/').pop().replace('.html', '')
+      
+      const scenicMap = {
+        'riyueshan': 'riyueshan',
+        'qinghaihu': 'qinghaihu',
+        'nanzong': 'nanzong',
+        'xiaqiongsi': 'xiaqiong',
+        'labulengsi': 'labulengsi',
+        'taersi': 'taersi',
+        'sanjiangyuan': 'sanjiangyuan',
+        'xueshan': 'xuanshan',
+        'guoluo': 'guoluo',
+        'huangnan': 'huangnan',
+        'yushu': 'yushu',
+        'guide': 'guide'
+      }
+      
+      if (scenicMap[fileName]) {
+        this.currentScenic = scenicMap[fileName]
+        this.activeRegion = 'qinghai'
       }
     },
     updateScrollPos(type) {
