@@ -1159,6 +1159,96 @@
         break-inside: avoid;
       }
     }
+
+    /* 藏地旅游模块样式 */
+    .tour-map-section {
+      padding: 60px 20px;
+      background: #fff;
+    }
+    .tour-map-section .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .tour-map-section .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .tour-map-section .section-title h2 {
+      font-size: 26px;
+      color: #9c2020;
+      margin: 0 0 10px;
+    }
+    .tour-map-section .divider {
+      width: 70px;
+      height: 3px;
+      background: #9c2020;
+      margin: 0 auto;
+    }
+    .map-container {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+    .map-wrapper {
+      flex: 0 0 70%;
+      min-height: 520px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    }
+    .amap-container {
+      width: 100%;
+      height: 100%;
+    }
+    .place-list-wrapper {
+      flex: 1;
+      min-width: 280px;
+      max-height: 520px;
+      overflow-y: auto;
+      padding: 20px;
+      background: #f8f8f8;
+      border-radius: 10px;
+    }
+    .region-group {
+      margin-bottom: 25px;
+    }
+    .region-group h3 {
+      font-size: 16px;
+      color: #9c2020;
+      margin: 0 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #eee;
+    }
+    .place-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .place-item {
+      padding: 10px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      transition: 0.2s;
+      color: #333;
+    }
+    .place-item:hover {
+      background: #f0e0e0;
+    }
+    .place-item.active {
+      background: #9c2020;
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      .map-wrapper {
+        flex: 1 1 100%;
+        min-height: 380px;
+      }
+      .place-list-wrapper {
+        flex: 1 1 100%;
+        max-height: 350px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1453,6 +1543,89 @@
       </div>
     </section>
 
+    <section class="tour-map-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Amdo Tourism + Folk Customs</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="map-container">
+        <!-- 地图 -->
+        <div class="map-wrapper">
+          <div id="amap-container" class="amap-container"></div>
+        </div>
+
+        <!-- 右侧地名列表 -->
+        <div class="place-list-wrapper">
+          <!-- 青海 · 安多核心区 -->
+          <div class="region-group">
+            <h3>青海安多核心区</h3>
+            <ul class="place-list">
+              <li
+                v-for="place in qinghaiPlaces"
+                :key="place.id"
+                class="place-item"
+                :class="{ active: activePlaceId === place.id }"
+                @click="handlePlaceClick(place)"
+              >
+                {{ place.name }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- 甘南 · 安多文化区 -->
+          <div class="region-group">
+            <h3>甘南安多文化区</h3>
+            <ul class="place-list">
+              <li
+                v-for="place in gannanPlaces"
+                :key="place.id"
+                class="place-item"
+                :class="{ active: activePlaceId === place.id }"
+                @click="handlePlaceClick(place)"
+              >
+                {{ place.name }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- 川西 · 安多边缘区 -->
+          <div class="region-group">
+            <h3>川西安多边缘区</h3>
+            <ul class="place-list">
+              <li
+                v-for="place in chuanxiPlaces"
+                :key="place.id"
+                class="place-item"
+                :class="{ active: activePlaceId === place.id }"
+                @click="handlePlaceClick(place)"
+              >
+                {{ place.name }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- 藏北 · 安多延伸区 -->
+          <div class="region-group">
+            <h3>藏北安多延伸区</h3>
+            <ul class="place-list">
+              <li
+                v-for="place in northernTibetPlaces"
+                :key="place.id"
+                class="place-item"
+                :class="{ active: activePlaceId === place.id }"
+                @click="handlePlaceClick(place)"
+              >
+                {{ place.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
     <section id="tools" aria-labelledby="tools-title">
       <h2 class="section-title" id="tools-title">藏文实用工具（ལག་ཆ།）</h2>
       <div class="tools-grid">
@@ -1568,6 +1741,128 @@ createApp({
       activeRegion: null,
       currentScenic: null,
       isMobile: false,
+      map: null,
+      markers: [],
+      activePlaceId: null,
+      // 景点数据
+      qinghaiPlaces: [
+        { id: 1, name: 'Taer Monastery', lng: 101.9676, lat: 36.6203, desc: 'Famous Gelugpa monastery in Qinghai, birthplace of Tsongkhapa.' },
+        { id: 2, name: 'Qinghai Lake', lng: 100.9967, lat: 36.9598, desc: 'China largest inland salt lake, a sacred lake in local culture.' },
+        { id: 3, name: 'Regong Art Village', lng: 102.01, lat: 35.52, desc: 'Famous for Regong Thangka art and murals.' }
+      ],
+
+      qinghaiPlaces: [
+        {
+          id: 1,
+          name: 'Qinghai Lake',
+          lng: 100.9967,
+          lat: 36.9598,
+          desc: 'China\'s largest inland saltwater lake, sacred in Amdo culture.',
+          img: 'https://img1.baidu.com/it/u=224553196,2864513376&fm=26&fmt=auto'
+        },
+        {
+          id: 2,
+          name: 'Taer Monastery',
+          lng: 101.9676,
+          lat: 36.6203,
+          desc: 'Famous Gelugpa monastery, birthplace of Tsongkhapa.',
+          img: 'https://img0.baidu.com/it/u=172231387,1360117301&fm=26&fmt=auto'
+        },
+        {
+          id: 3,
+          name: 'Regong Art Village',
+          lng: 102.01,
+          lat: 35.52,
+          desc: 'Home of Regong Thangka, UNESCO Intangible Heritage.',
+          img: 'https://img0.baidu.com/it/u=3743514026,2129975700&fm=26&fmt=auto'
+        },
+        {
+          id: 4,
+          name: 'Riyue Mountain',
+          lng: 101.4,
+          lat: 36.4,
+          desc: 'Key pass on the ancient Silk Road, gateway to Amdo.',
+          img: 'https://img0.baidu.com/it/u=2999166807,3113918944&fm=26&fmt=auto'
+        },
+        {
+          id: 5,
+          name: "A'nyêmaqên Mountain",
+          lng: 99.5,
+          lat: 34.8,
+          desc: 'Sacred mountain of Amdo Tibetans.',
+          img: 'https://img1.baidu.com/it/u=3825685852,2133011353&fm=26&fmt=auto'
+        },
+        {
+          id: 6,
+          name: 'Three Rivers Source',
+          lng: 96.0,
+          lat: 34.5,
+          desc: 'Headwaters of Yangtze, Yellow, Lancang rivers.',
+          img: 'https://img0.baidu.com/it/u=4019552197,1432849335&fm=26&fmt=auto'
+        }
+      ],
+      gannanPlaces: [
+        {
+          id: 10,
+          name: 'Labrang Monastery',
+          lng: 102.5019,
+          lat: 35.1986,
+          desc: 'One of the great Gelugpa monasteries.',
+          img: 'https://img1.baidu.com/it/u=119437517,1661010343&fm=26&fmt=auto'
+        },
+        {
+          id: 11,
+          name: 'Langmu Temple',
+          lng: 102.63,
+          lat: 34.06,
+          desc: 'Temple complex spanning Gansu and Sichuan.',
+          img: 'https://img0.baidu.com/it/u=4217442187,3174415444&fm=26&fmt=auto'
+        },
+        {
+          id: 12,
+          name: 'Gannan Grassland',
+          lng: 102.2,
+          lat: 34.7,
+          desc: 'Vast alpine grassland of Amdo.',
+          img: 'https://img1.baidu.com/it/u=2734511097,1402601145&fm=26&fmt=auto'
+        }
+      ],
+      chuanxiPlaces: [
+        {
+          id: 20,
+          name: 'Kangding',
+          lng: 101.96,
+          lat: 30.05,
+          desc: 'Gateway to Tibetan Plateau in Sichuan.',
+          img: 'https://img0.baidu.com/it/u=1863311196,2543311196&fm=26&fmt=auto'
+        },
+        {
+          id: 21,
+          name: 'Songpan Ancient Town',
+          lng: 103.60,
+          lat: 32.64,
+          desc: 'Historic town on the Tea-Horse Road.',
+          img: 'https://img1.baidu.com/it/u=2083311196,2543311196&fm=26&fmt=auto'
+        }
+      ],
+      northernTibetPlaces: [
+        {
+          id: 30,
+          name: 'Amdo County',
+          lng: 91.68,
+          lat: 32.27,
+          desc: 'Northern Tibet\'s Amdo region.',
+          img: 'https://img0.baidu.com/it/u=3083311196,2543311196&fm=26&fmt=auto'
+        },
+        {
+          id: 31,
+          name: 'Nagqu',
+          lng: 92.05,
+          lat: 31.48,
+          desc: 'Major town in northern Amdo.',
+          img: 'https://img1.baidu.com/it/u=4083311196,2543311196&fm=26&fmt=auto'
+        }
+      ],
       bannerSlides: [
         { 
           img: 'image/mm1.jpg', 
@@ -1674,12 +1969,17 @@ createApp({
     this.$nextTick(() => {
       this.updateCardWidth()
       this.updateMaxScroll()
+      this.initAMap()
     })
     this.highlightCurrentPage()
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
     window.removeEventListener('resize', this.handleResize)
+    // 销毁地图实例，避免内存泄漏
+    if (this.map) {
+      this.map.destroy()
+    }
   },
   methods: {
     startAutoSlide() {
@@ -1720,9 +2020,92 @@ createApp({
         this.cultureMaxScroll = cultureTrack.scrollWidth - cultureTrack.clientWidth
       }
       if (tourTrack) {
-        this.tourMaxScroll = tourTrack.scrollWidth - tourTrack.clientWidth
-      }
-    },
+      this.tourMaxScroll = tourTrack.scrollWidth - tourTrack.clientWidth
+    }
+  },
+  // 初始化高德地图
+  initAMap() {
+    // 替换成你自己的高德Key
+    const AMapKey = '6a3c629ed8bb34fb24b2a2185dc2bfb0';
+
+    if (!window.AMap) {
+      const script = document.createElement('script');
+      script.src = `https://webapi.amap.com/maps?v=1.4.15&key=${AMapKey}`;
+      script.onload = () => this.createMap();
+      document.body.appendChild(script);
+    } else {
+      this.createMap();
+    }
+  },
+  // 创建地图实例
+  createMap() {
+    this.map = new AMap.Map('amap-container', {
+      zoom: 7,
+      center: [101.5, 35.5],
+      viewMode: '3D',
+      resizeEnable: true
+    });
+    this.addAllMarkers();
+  },
+  // 添加所有景点标记
+  addAllMarkers() {
+    const allPlaces = [
+      ...this.qinghaiPlaces,
+      ...this.gannanPlaces,
+      ...this.chuanxiPlaces,
+      ...this.northernTibetPlaces
+    ];
+
+    allPlaces.forEach(place => {
+      const marker = new AMap.Marker({
+        position: [place.lng, place.lat],
+        title: place.name,
+        map: this.map,
+        icon: new AMap.Icon({
+          size: new AMap.Size(28, 36),
+          image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png',
+          imageSize: new AMap.Size(28, 36)
+        })
+      });
+
+      // 信息窗口（带图片）
+      const infoWindow = new AMap.InfoWindow({
+        content: `
+<div style="width:260px; padding:10px;">
+  <h4 style="margin:0 0 8px; color:#9c2020;">${place.name}</h4>
+  <img
+    src="${place.img}"
+    style="width:100%; height:120px; object-fit:cover; border-radius:6px;"
+    alt="${place.name}"
+  />
+  <p style="margin:8px 0 0; font-size:13px; color:#555; line-height:1.5;">
+    ${place.desc}
+  </p>
+</div>`,
+        offset: new AMap.Pixel(0, -30),
+        closeWhenClickMap: true
+      });
+
+      marker.on('click', () => {
+        this.handlePlaceClick(place);
+      });
+
+      marker.infoWindow = infoWindow;
+      marker.placeId = place.id;
+      this.markers.push(marker);
+    });
+  },
+  // 点击景点列表项/标记的联动逻辑
+  handlePlaceClick(place) {
+    this.activePlaceId = place.id;
+    this.map.setCenter([place.lng, place.lat]);
+    this.map.setZoom(12);
+
+    const targetMarker = this.markers.find(m => m.placeId === place.id);
+    if (targetMarker?.infoWindow) {
+      targetMarker.infoWindow.open(this.map, targetMarker.getPosition());
+    }
+  },
     checkMobile() {
       this.isMobile = window.innerWidth <= 768
     },
