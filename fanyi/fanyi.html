@@ -303,7 +303,7 @@
 
     <!-- 顶部导航 -->
     <div class="topbar">
-        <span class="logo">雪域安多·藏韵传承</span>
+        <a class="logo" href="../index.html" style="text-decoration:none">雪域安多·藏韵传承</a>
         <a href="../index.html"><i class="fa fa-home"></i> 首页</a>
         <span class="sep">›</span>
         <span>藏汉互译</span>
@@ -312,15 +312,12 @@
     <!-- 页头 -->
     <div class="page-header">
         <h1>藏汉互译工具</h1>
-        <p>支持藏语 ⇄ 汉语双向翻译，由百度翻译API提供支持</p>
+        <p>支持藏语 ⇄ 汉语双向翻译，由MyMemory翻译API提供支持</p>
         <span class="badge"><i class="fa fa-language"></i>བོད་སྐད་ · 中文</span>
     </div>
 
     <!-- 主体 -->
     <div class="main">
-
-        <!-- API说明 -->
-        <div class="api-notice" id="apiNotice" style="display:none"></div>
 
         <!-- 方向选择 -->
         <div class="direction-bar">
@@ -397,16 +394,16 @@
             <h2><i class="fa fa-info-circle"></i> 使用说明</h2>
             <ul class="info-list">
                 <li>支持藏语（བོད་སྐད་）⇄ 汉语双向翻译，语言代码：藏语 <code style="background:#f0ebe4;padding:1px 5px;border-radius:3px;">bo</code>，汉语 <code style="background:#f0ebe4;padding:1px 5px;border-radius:3px;">zh</code>。</li>
-                <li>由百度翻译通用文本翻译API提供支持，单次最多 2000 字符。</li>
+                <li>由MyMemory翻译API提供支持，单次最多 2000 字符。</li>
                 <li>翻译结果仅供学习与参考，正式文件请人工核对。</li>
-                <li>如翻译失败，请检查 APPID 与密钥是否填写正确，以及网络连接是否畅通。</li>
-                <li>百度翻译API每月免费额度为 100 万字符（标准版）。</li>
+                <li>如翻译失败，请检查网络连接是否畅通。</li>
+                <li>支持快捷键 Ctrl+Enter 快速翻译。</li>
             </ul>
         </div>
     </div>
 
     <footer>
-        <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 翻译服务由百度翻译提供</p>
+        <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 翻译服务由MyMemory提供</p>
     </footer>
 
     <script>
@@ -508,5 +505,13 @@
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') doTranslate();
         });
     </script>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:50px;height:50px;background:#9B2B25;color:#fff;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.15);border:none;z-index:998;transition:all 0.3s;" aria-label="返回顶部">
+  <i class="fa fa-arrow-up"></i>
+</button>
+<script>
+window.addEventListener('scroll',function(){var b=document.getElementById('backToTop');b.style.display=window.pageYOffset>300?'flex':'none';});
+</script>
+
 </body>
 </html>

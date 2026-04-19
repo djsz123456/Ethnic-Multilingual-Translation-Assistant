@@ -171,7 +171,7 @@
 
     .pronunciation {
       font-size: 11px;
-      color: #aaa;
+      color: #777;
       line-height: 1.4;
     }
 
@@ -204,7 +204,7 @@
 
     .result-hint {
       font-size: 14px;
-      color: #aaa;
+      color: #777;
       margin-bottom: 24px;
     }
 
@@ -338,6 +338,29 @@
       }
       .syllable-char {
         font-size: 40px;
+      }
+      .top-bar {
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+    }
+    @media (max-width: 480px) {
+      .container {
+        margin: 10px;
+        padding: 16px 10px;
+      }
+      .letter-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px;
+      }
+      .tibetan-char {
+        font-size: 30px;
+      }
+      .syllable-grid {
+        gap: 12px;
+      }
+      .syllable-char {
+        font-size: 34px;
       }
     }
   </style>
@@ -492,5 +515,17 @@
 
   renderLetters();
 </script>
+
+<footer style="background:#9B2B25;color:rgba(255,255,255,0.85);text-align:center;padding:24px 20px;font-size:14px;">
+  <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 探寻安多秘境，传承藏韵文化</p>
+</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:50px;height:50px;background:#9B2B25;color:#fff;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.15);border:none;z-index:998;transition:all 0.3s;" aria-label="返回顶部">
+  <i class="fa fa-arrow-up"></i>
+</button>
+<script>
+window.addEventListener('scroll',function(){var b=document.getElementById('backToTop');b.style.display=window.pageYOffset>300?'flex':'none';});
+</script>
+
 </body>
 </html>
