@@ -344,256 +344,7 @@
       padding: 60px 30px;
     }
 
-    .horizontal-nav {
-      width: 100%;
-      background: linear-gradient(135deg, var(--primary-red) 0%, #B83C2E 100%);
-      margin: 40px 0;
-      box-shadow: var(--shadow-lg);
-      border-radius: var(--radius-md);
-      position: relative;
-    }
-    
-    .nav-main {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      gap: 0;
-      padding: 0;
-      list-style: none;
-      position: relative;
-    }
-    
-    .nav-region {
-      position: relative;
-      flex: 1;
-      max-width: 350px;
-    }
-    
-    .nav-region-trigger {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 22px 24px;
-      color: white;
-      text-decoration: none;
-      cursor: pointer;
-      transition: var(--transition);
-      border: none;
-      background: transparent;
-      width: 100%;
-      font-size: 16px;
-      font-weight: 600;
-      text-align: center;
-      position: relative;
-    }
-    
-    .nav-region-trigger:hover,
-    .nav-region.active .nav-region-trigger {
-      background-color: rgba(212, 175, 55, 0.2);
-      color: var(--primary-gold);
-    }
-    
-    .nav-region:not(:last-child) .nav-region-trigger::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 25%;
-      height: 50%;
-      width: 1px;
-      background-color: rgba(255,255,255,0.2);
-    }
-    
-    .nav-region-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 400;
-      opacity: 0.8;
-      margin-top: 4px;
-      letter-spacing: 0.5px;
-    }
-    
-    .nav-region.active .nav-region-trigger {
-      background-color: rgba(138, 37, 32, 0.9);
-    }
-    
-    .nav-region.active .nav-region-trigger::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 20%;
-      width: 60%;
-      height: 3px;
-      background-color: var(--primary-gold);
-    }
-    
-    /* Secondary Navigation - Dropdown */
-    .nav-submenu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: linear-gradient(180deg, #8A2520 0%, #6B1C18 100%);
-      border-radius: 0 0 var(--radius-md) var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      z-index: 100;
-      padding: 15px 0;
-      animation: submenuFadeIn 0.3s ease;
-    }
-    
-    @keyframes submenuFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .nav-region.active .nav-submenu {
-      display: block;
-    }
-    
-    /* Desktop hover */
-    @media (min-width: 769px) {
-      .nav-region:hover .nav-submenu {
-        display: block;
-      }
-    }
-    
-    .nav-submenu-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    
-    .nav-submenu-item {
-      position: relative;
-    }
-    
-    .nav-submenu-item a {
-      display: block;
-      padding: 10px 18px;
-      color: rgba(255, 255, 255, 0.9);
-      text-decoration: none;
-      font-size: 14px;
-      border-radius: 6px;
-      transition: var(--transition);
-      white-space: nowrap;
-      position: relative;
-    }
-    
-    .nav-submenu-item a span {
-      display: block;
-      font-size: 11px;
-      opacity: 0.7;
-      margin-top: 2px;
-      font-weight: 400;
-      font-family: 'Noto Sans Tibetan', sans-serif;
-    }
-    
-    .nav-submenu-item a:hover {
-      background-color: rgba(212, 175, 55, 0.3);
-      color: var(--primary-gold);
-      transform: translateY(-2px);
-    }
-    
-    .nav-submenu-item.active a {
-      font-weight: 700;
-      background-color: rgba(255, 255, 255, 0.15);
-      color: var(--primary-gold);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-    }
-    
-    .nav-submenu-item:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      right: -4px;
-      top: 20%;
-      height: 60%;
-      width: 1px;
-      background-color: rgba(255,255,255,0.15);
-    }
-    
-    /* Mobile Styles */
-    @media (max-width: 768px) {
-      .nav-main {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      .nav-region {
-        max-width: 100%;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-      }
-      
-      .nav-region:not(:last-child) .nav-region-trigger::after {
-        display: none;
-      }
-      
-      .nav-region-trigger {
-        padding: 16px 20px;
-        flex-direction: row;
-        justify-content: space-between;
-        text-align: left;
-      }
-      
-      .nav-region-trigger::before {
-        display: none !important;
-      }
-      
-      .nav-region.active .nav-region-trigger {
-        background-color: rgba(138, 37, 32, 0.9);
-      }
-      
-      .nav-region-trigger-chevron {
-        display: inline-block;
-        transition: transform 0.3s ease;
-        font-size: 12px;
-      }
-      
-      .nav-region.active .nav-region-trigger-chevron {
-        transform: rotate(180deg);
-      }
-      
-      .nav-submenu {
-        position: static;
-        border-radius: 0;
-        box-shadow: none;
-        background: rgba(0, 0, 0, 0.15);
-      }
-      
-      .nav-submenu-list {
-        flex-direction: column;
-        gap: 4px;
-        padding: 10px 20px;
-      }
-      
-      .nav-submenu-item a {
-        padding: 12px 16px;
-      }
-      
-      .nav-submenu-item:not(:last-child)::after {
-        display: none;
-      }
-    }
-    
-    @media (min-width: 769px) {
-      .nav-region-trigger-chevron {
-        display: none;
-      }
-    }
+
 
     .section-title {
       font-size: 36px;
@@ -1226,7 +977,6 @@
     @media print {
       .header,
       .top-bar,
-      .horizontal-nav,
       .back-to-top,
       .carousel-arrow {
         display: none !important;
@@ -1243,6 +993,586 @@
       
       .card {
         break-inside: avoid;
+      }
+    }
+
+    /* ==================== Floating User Button ==================== */
+    .user-btn-wrapper {
+      position: relative;
+      z-index: 10001;
+    }
+
+    .user-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(155, 43, 37, 0.35);
+      transition: var(--transition);
+      position: relative;
+      z-index: 10001;
+    }
+
+    .user-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 24px rgba(155, 43, 37, 0.5);
+    }
+
+    .user-btn:active {
+      transform: scale(0.95);
+    }
+
+    .user-btn.logged-in {
+      background: linear-gradient(135deg, var(--primary-gold), #E8C84A);
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+    }
+
+    .user-btn.logged-in:hover {
+      box-shadow: 0 6px 24px rgba(212, 175, 55, 0.5);
+    }
+
+    .user-btn .badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      background: #DC3545;
+      border-radius: 50%;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    /* ==================== Dropdown Menu ==================== */
+    .dropdown-menu {
+      position: absolute;
+      top: 66px;
+      right: 0;
+      width: 260px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: var(--transition);
+      z-index: 10000;
+    }
+
+    .dropdown-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dropdown-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .dropdown-user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dropdown-username {
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dropdown-user-email {
+      font-size: 12px;
+      opacity: 0.8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    .dropdown-list {
+      padding: 8px 0;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f0eb;
+      color: var(--primary-red);
+    }
+
+    .dropdown-item i {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .dropdown-item:hover i {
+      color: var(--primary-red);
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 0;
+    }
+
+    .dropdown-item.logout {
+      color: #DC3545;
+    }
+
+    .dropdown-item.logout:hover {
+      background: #fef2f2;
+      color: #DC3545;
+    }
+
+    .dropdown-item.logout i {
+      color: #DC3545;
+    }
+
+    /* ==================== Modal Overlay ==================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 10002;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px) scale(0.95);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0, 0, 0, 0.08);
+      color: var(--text-secondary);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .modal-close:hover {
+      background: rgba(0, 0, 0, 0.15);
+      color: var(--text-primary);
+      transform: rotate(90deg);
+    }
+
+    /* ==================== Auth Modal Tabs ==================== */
+    .auth-modal-header {
+      padding: 30px 35px 0;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 14px 20px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .auth-tab:hover {
+      color: var(--primary-red);
+    }
+
+    .auth-tab.active {
+      color: var(--primary-red);
+      border-bottom-color: var(--primary-red);
+    }
+
+    .auth-modal-body {
+      padding: 30px 35px 35px;
+    }
+
+    /* ==================== Login Form ==================== */
+    .form-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 16px;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 50px;
+      padding: 0 18px 0 48px;
+      border: 2px solid #e8e8e8;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      transition: var(--transition);
+    }
+
+    .form-input::placeholder {
+      color: #bbb;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 4px rgba(155, 43, 37, 0.1);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .form-input:focus ~ .input-icon {
+      color: var(--primary-red);
+    }
+
+    .form-input.error {
+      border-color: #DC3545;
+      box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 15px;
+      padding: 4px;
+      transition: var(--transition);
+    }
+
+    .password-toggle:hover {
+      color: var(--primary-red);
+    }
+
+    .error-message {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #DC3545;
+    }
+
+    .error-message i {
+      font-size: 14px;
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-size: 14px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .remember-me:hover {
+      color: var(--primary-red);
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary-red);
+      cursor: pointer;
+    }
+
+    .forgot-password {
+      color: var(--primary-red);
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .forgot-password:hover {
+      color: var(--primary-gold);
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(155, 43, 37, 0.25);
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .submit-btn:hover:not(:disabled)::before {
+      left: 100%;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(155, 43, 37, 0.4);
+    }
+
+    .submit-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .submit-btn .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .switch-auth {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 20px;
+    }
+
+    .switch-auth a {
+      color: var(--primary-red);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .switch-auth a:hover {
+      color: var(--primary-gold);
+    }
+
+    /* ==================== Registration Form ==================== */
+    .sms-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .sms-group .form-input {
+      flex: 1;
+    }
+
+    .sms-btn {
+      padding: 0 16px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--primary-red);
+      background: transparent;
+      color: var(--primary-red);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+
+    .sms-btn:hover:not(:disabled) {
+      background: var(--primary-red);
+      color: white;
+    }
+
+    .sms-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      border-color: #ccc;
+      color: #999;
+    }
+
+    /* ==================== Toast ==================== */
+    .toast {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      padding: 16px 24px;
+      border-radius: var(--radius-md);
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: toastIn 0.4s ease-out;
+    }
+
+    .toast.success {
+      background: linear-gradient(135deg, #28A745, #20c997);
+    }
+
+    .toast.error {
+      background: linear-gradient(135deg, #DC3545, #c82333);
+    }
+
+    .toast.info {
+      background: linear-gradient(135deg, var(--primary-gold), #E8C84A);
+    }
+
+    @keyframes toastIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
       }
     }
 
@@ -1389,9 +1719,9 @@
       🏔️ 雪域安多·藏韵传承 | 本地人讲述·真实民俗·安多藏族文化传播平台
     </div>
     <div class="top-bar-links">
-      <a href="#" @click.prevent><i class="fa fa-heart"></i> 收藏</a>
-      <a href="#" @click.prevent><i class="fa fa-share-alt"></i> 分享</a>
-    </div>
+        <a href="#" @click.prevent="handleFeatureClick('收藏')"><i class="fa fa-heart"></i> 收藏</a>
+        <a href="#" @click.prevent="handleFeatureClick('分享')"><i class="fa fa-share-alt"></i> 分享</a>
+      </div>
   </div>
 
   <header class="header">
@@ -1404,6 +1734,48 @@
         <a href="#tools" @click.prevent="scrollToSection('tools')">藏文工具</a>
         <a href="guanyupingtai/guanyupingtai.html">关于平台</a>
       </nav>
+      <!-- ==================== Floating User Button ==================== -->
+      <div class="user-btn-wrapper">
+        <button 
+          class="user-btn" 
+          :class="{ 'logged-in': isLoggedIn }"
+          @click="handleBtnClick"
+          :title="isLoggedIn ? '用户菜单' : '登录 / 注册'"
+        >
+          <i :class="isLoggedIn ? 'fa fa-user' : 'fa fa-sign-in'"></i>
+          <span v-if="isLoggedIn" class="badge">{{ userName.charAt(0) }}</span>
+        </button>
+
+        <!-- Dropdown Menu (Logged In) -->
+        <div class="dropdown-menu" :class="{ show: showDropdown }">
+          <div class="dropdown-header">
+            <div class="dropdown-avatar">{{ userName.charAt(0) }}</div>
+            <div class="dropdown-user-info">
+              <div class="dropdown-username">{{ userName }}</div>
+              <div class="dropdown-user-email">欢迎回来</div>
+            </div>
+          </div>
+          <div class="dropdown-list">
+            <a class="dropdown-item" href="javascript:void(0)">
+              <i class="fa fa-user-circle-o"></i>
+              个人中心
+            </a>
+            <a class="dropdown-item" href="javascript:void(0)">
+              <i class="fa fa-star-o"></i>
+              我的收藏
+            </a>
+            <a class="dropdown-item" href="javascript:void(0)">
+              <i class="fa fa-history"></i>
+              浏览历史
+            </a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item logout" @click="handleLogout">
+              <i class="fa fa-sign-out"></i>
+              退出登录
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -1450,108 +1822,8 @@
     </div>
   </section>
 
-  <nav class="horizontal-nav" aria-label="景点导航">
-    <ul class="nav-main">
-      <li class="nav-region" 
-          :class="{ active: activeRegion === 'qinghai' }"
-          @mouseenter="handleRegionHover('qinghai')"
-          @mouseleave="handleRegionLeave('qinghai')"
-          @click="toggleRegion('qinghai')">
-        <button class="nav-region-trigger" aria-expanded="activeRegion === 'qinghai'">
-          <span>青海安多核心区</span>
-          <span class="nav-region-label">安多文化核心承载区</span>
-          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
-        </button>
-        <div class="nav-submenu">
-          <ul class="nav-submenu-list">
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'riyueshan' }"><a href="riyueshan/riyueshan.html" @click="setActiveScenic('riyueshan')">日月山<span>安多门户</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'qinghaihu' }"><a href="qinghahu/qinghaihu.html" @click="setActiveScenic('qinghaihu')">青海湖<span>圣湖</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'nanzong' }"><a href="nanzong/nanzong.html" @click="setActiveScenic('nanzong')">南宗寺<span>佛教圣地</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'xiaqiong' }"><a href="xiaqiong/xiaqiongsi.html" @click="setActiveScenic('xiaqiong')">夏琼寺<span>宗喀巴祖庭</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'labulengsi' }"><a href="labulengsi/labulengsi.html" @click="setActiveScenic('labulengsi')">拉卜楞寺<span>安多佛教学府</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'taersi' }"><a href="taersi/taersi.html" @click="setActiveScenic('taersi')">塔尔寺<span>藏传佛教名寺</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'xuanshan' }"><a href="xueshan/xueshan.html" @click="setActiveScenic('xuanshan')">阿尼玛沁雪山<span>神山</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sanjiangyuan' }"><a href="sanjiangyuan/sanjiangyuan.html" @click="setActiveScenic('sanjiangyuan')">三江源<span>中华水塔</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'guoluo' }"><a href="guoluo/guoluo.html" @click="setActiveScenic('guoluo')">果洛<span>格萨尔文化之乡</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'huangnan' }"><a href="huangnan/huangnan.html" @click="setActiveScenic('huangnan')">黄南<span>热贡艺术发源地</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'yushu' }"><a href="yushu/yushu.html" @click="setActiveScenic('yushu')">玉树<span>康巴安多交融地</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'guide' }"><a href="guide/guide.html" @click="setActiveScenic('guide')">贵德<span>高原江南</span></a></li>
-          </ul>
-        </div>
-      </li>
-      
-      <li class="nav-region" 
-          :class="{ active: activeRegion === 'gannan' }"
-          @mouseenter="handleRegionHover('gannan')"
-          @mouseleave="handleRegionLeave('gannan')"
-          @click="toggleRegion('gannan')">
-        <button class="nav-region-trigger" aria-expanded="activeRegion === 'gannan'">
-          <span>甘南安多文化区</span>
-          <span class="nav-region-label">安多文化重要传承地</span>
-          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
-        </button>
-        <div class="nav-submenu">
-          <ul class="nav-submenu-list">
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'labulengsi-gn' }"><a href="labulengsi/labulengsi.html" @click="setActiveScenic('labulengsi-gn')">拉卜楞寺<span>核心地标</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'langmusi' }"><a href="lms/lms.html" @click="setActiveScenic('langmusi')">郎木寺<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'zagan' }"><a href="zgn/zgn.html" @click="setActiveScenic('zagan')">扎尕那<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="sangkecaoyuan/sangkecaoyuan.html" @click="setActiveScenic('sangke')">桑科草原<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="milariba/milariba.html" @click="setActiveScenic('sangke')">米拉日巴佛阁<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="xiahe/xiahe1.html" @click="setActiveScenic('sangke')">夏河 八角城<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="maqu/maqu.html" @click="setActiveScenic('sangke')">玛曲<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="xiahe/xiahe2.html" @click="setActiveScenic('sangke')">夏河 甘加草原<span></span></a></li>
-          </ul>
-        </div>
-      </li>
-      
-      <li class="nav-region" 
-          :class="{ active: activeRegion === 'chuanxibei' }"
-          @mouseenter="handleRegionHover('chuanxibei')"
-          @mouseleave="handleRegionLeave('chuanxibei')"
-          @click="toggleRegion('chuanxibei')">
-        <button class="nav-region-trigger" aria-expanded="activeRegion === 'chuanxibei'">
-          <span>川西北安多片区</span>
-          <span class="nav-region-label">安多与康巴文化交融区</span>
-          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
-        </button>
-        <div class="nav-submenu">
-          <ul class="nav-submenu-list">
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'aba' }"><a href="#" @click="setActiveScenic('aba')">阿坝州<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'ruorgai' }"><a href="#" @click="setActiveScenic('ruorgai')">若尔盖草原<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'songpan' }"><a href="#" @click="setActiveScenic('songpan')">松潘古城<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'songpan' }"><a href="#" @click="setActiveScenic('songpan')">年宝玉则<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'songpan' }"><a href="#" @click="setActiveScenic('songpan')">马尔康卓克基官寨<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'songpan' }"><a href="#" @click="setActiveScenic('songpan')">九曲黄河第一湾<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'songpan' }"><a href="#" @click="setActiveScenic('songpan')">红原大草原<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'songpan' }"><a href="#" @click="setActiveScenic('songpan')">阿坝县各莫寺<span></span></a></li>
-          </ul>
-        </div>
-      </li>
-      
-      <li class="nav-region" 
-          :class="{ active: activeRegion === 'zangbei' }"
-          @mouseenter="handleRegionHover('zangbei')"
-          @mouseleave="handleRegionLeave('zangbei')"
-          @click="toggleRegion('zangbei')">
-        <button class="nav-region-trigger" aria-expanded="activeRegion === 'zangbei'">
-          <span>藏北安多延伸区</span>
-          <span class="nav-region-label">安多文化西向延伸带</span>
-          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
-        </button>
-        <div class="nav-submenu">
-          <ul class="nav-submenu-list">
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/naqu.html" @click="setActiveScenic('naqu')">那曲<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'tangula' }"><a href="naqu/tanggulashankou.html" @click="setActiveScenic('tangula')">唐古拉山口<span></span></a></li>
-             <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/namucuo.html" @click="setActiveScenic('naqu')">纳木措<span></span></a></li>
-              <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/kekexili.html" @click="setActiveScenic('naqu')">可可西里<span></span></a></li>
-               <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/kulouqiang.html" @click="setActiveScenic('naqu')">骷髅墙<span></span></a></li>
-                <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/selincuo.html" @click="setActiveScenic('naqu')">色林错<span></span></a></li>
-                 <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/zandansi.html" @click="setActiveScenic('naqu')">赞丹寺<span></span></a></li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </nav>
+
+
 
   <main class="main-container" id="main-content">
     <section id="culture" aria-labelledby="culture-title">
@@ -1832,6 +2104,239 @@
        aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
   </div>
+
+    <!-- ==================== Auth Modal ==================== -->
+    <div class="modal-overlay" :class="{ show: showModal }" @click.self="closeModal">
+      <div class="modal-content">
+        <button class="modal-close" @click="closeModal">
+          <i class="fa fa-times"></i>
+        </button>
+
+        <div class="auth-modal-header">
+          <div class="auth-tabs">
+            <button 
+              class="auth-tab" 
+              :class="{ active: authTab === 'login' }" 
+              @click="authTab = 'login'"
+            >登录</button>
+            <button 
+              class="auth-tab" 
+              :class="{ active: authTab === 'register' }" 
+              @click="authTab = 'register'"
+            >注册</button>
+          </div>
+        </div>
+
+        <div class="auth-modal-body">
+          <!-- Login Form -->
+          <form v-if="authTab === 'login'" @submit.prevent="handleLogin">
+            <div class="form-group">
+              <label class="form-label">账号</label>
+              <div class="input-wrapper">
+                <input
+                  v-model="loginForm.username"
+                  type="text"
+                  class="form-input"
+                  :class="{ error: loginErrors.username }"
+                  placeholder="请输入用户名 / 手机号"
+                  @input="clearLoginError('username')"
+                  @blur="validateLoginUsername"
+                >
+                <i class="fa fa-user input-icon"></i>
+              </div>
+              <div v-if="loginErrors.username" class="error-message">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ loginErrors.username }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">密码</label>
+              <div class="input-wrapper">
+                <input
+                  v-model="loginForm.password"
+                  :type="showLoginPassword ? 'text' : 'password'"
+                  class="form-input"
+                  :class="{ error: loginErrors.password }"
+                  placeholder="请输入密码"
+                  @input="clearLoginError('password')"
+                  @blur="validateLoginPassword"
+                >
+                <i class="fa fa-lock input-icon"></i>
+                <button
+                  type="button"
+                  class="password-toggle"
+                  @click="showLoginPassword = !showLoginPassword"
+                >
+                  <i :class="showLoginPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+              <div v-if="loginErrors.password" class="error-message">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ loginErrors.password }}
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="remember-me">
+                <input type="checkbox" v-model="rememberMe">
+                <span>记住我</span>
+              </label>
+              <a href="javascript:void(0)" class="forgot-password" @click="handleForgotPassword">忘记密码？</a>
+            </div>
+
+            <button type="submit" class="submit-btn" :disabled="loginLoading">
+              <span v-if="loginLoading" class="spinner"></span>
+              <i v-else class="fa fa-sign-in"></i>
+              {{ loginLoading ? '登录中...' : '立即登录' }}
+            </button>
+
+            <div class="switch-auth">
+              没有账号？<a @click="authTab = 'register'">前往注册</a>
+            </div>
+          </form>
+
+          <!-- Registration Form -->
+          <form v-else @submit.prevent="handleRegister">
+            <div class="form-group">
+              <label class="form-label">用户名</label>
+              <div class="input-wrapper">
+                <input
+                  v-model="registerForm.username"
+                  type="text"
+                  class="form-input"
+                  :class="{ error: registerErrors.username }"
+                  placeholder="请输入用户名"
+                  @input="clearRegisterError('username')"
+                >
+                <i class="fa fa-user input-icon"></i>
+              </div>
+              <div v-if="registerErrors.username" class="error-message">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ registerErrors.username }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">手机号</label>
+              <div class="sms-group">
+                <div class="input-wrapper" style="flex: 1;">
+                  <input
+                    v-model="registerForm.phone"
+                    type="text"
+                    class="form-input"
+                    :class="{ error: registerErrors.phone }"
+                    placeholder="请输入手机号"
+                    @input="clearRegisterError('phone')"
+                  >
+                  <i class="fa fa-mobile input-icon"></i>
+                </div>
+                <button 
+                  type="button" 
+                  class="sms-btn" 
+                  :disabled="smsCountdown > 0"
+                  @click="sendSmsCode"
+                >
+                  {{ smsCountdown > 0 ? smsCountdown + 's' : '获取验证码' }}
+                </button>
+              </div>
+              <div v-if="registerErrors.phone" class="error-message">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ registerErrors.phone }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">验证码</label>
+              <div class="input-wrapper">
+                <input
+                  v-model="registerForm.code"
+                  type="text"
+                  class="form-input"
+                  :class="{ error: registerErrors.code }"
+                  placeholder="请输入验证码"
+                  @input="clearRegisterError('code')"
+                  maxlength="6"
+                >
+                <i class="fa fa-shield input-icon"></i>
+              </div>
+              <div v-if="registerErrors.code" class="error-message">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ registerErrors.code }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">密码</label>
+              <div class="input-wrapper">
+                <input
+                  v-model="registerForm.password"
+                  :type="showRegisterPassword ? 'text' : 'password'"
+                  class="form-input"
+                  :class="{ error: registerErrors.password }"
+                  placeholder="请设置密码（6-20位）"
+                  @input="clearRegisterError('password')"
+                >
+                <i class="fa fa-lock input-icon"></i>
+                <button
+                  type="button"
+                  class="password-toggle"
+                  @click="showRegisterPassword = !showRegisterPassword"
+                >
+                  <i :class="showRegisterPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+              <div v-if="registerErrors.password" class="error-message">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ registerErrors.password }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">确认密码</label>
+              <div class="input-wrapper">
+                <input
+                  v-model="registerForm.confirmPassword"
+                  :type="showRegisterConfirm ? 'text' : 'password'"
+                  class="form-input"
+                  :class="{ error: registerErrors.confirmPassword }"
+                  placeholder="请再次输入密码"
+                  @input="clearRegisterError('confirmPassword')"
+                >
+                <i class="fa fa-lock input-icon"></i>
+                <button
+                  type="button"
+                  class="password-toggle"
+                  @click="showRegisterConfirm = !showRegisterConfirm"
+                >
+                  <i :class="showRegisterConfirm ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+              <div v-if="registerErrors.confirmPassword" class="error-message">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ registerErrors.confirmPassword }}
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn" :disabled="registerLoading">
+              <span v-if="registerLoading" class="spinner"></span>
+              <i v-else class="fa fa-user-plus"></i>
+              {{ registerLoading ? '注册中...' : '立即注册' }}
+            </button>
+
+            <div class="switch-auth">
+              已有账号？<a @click="authTab = 'login'">立即登录</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div v-if="toast.visible" class="toast" :class="toast.type">
+      <i :class="toastIcon"></i>
+      {{ toast.message }}
+    </div>
 </div>
 
 <script>
@@ -1851,8 +2356,32 @@ createApp({
         culture: { isDragging: false, startX: 0, scrollLeft: 0 },
         tour: { isDragging: false, startX: 0, scrollLeft: 0 }
       },
-      activeRegion: null,
-      currentScenic: null,
+
+      // User Auth
+      isLoggedIn: false,
+      userName: '',
+      showDropdown: false,
+      showModal: false,
+      authTab: 'login',
+
+      // Login
+      loginForm: { username: '', password: '' },
+      loginErrors: { username: '', password: '' },
+      showLoginPassword: false,
+      rememberMe: false,
+      loginLoading: false,
+
+      // Register
+      registerForm: { username: '', phone: '', code: '', password: '', confirmPassword: '' },
+      registerErrors: { username: '', phone: '', code: '', password: '', confirmPassword: '' },
+      showRegisterPassword: false,
+      showRegisterConfirm: false,
+      registerLoading: false,
+      smsCountdown: 0,
+
+      // Toast
+      toast: { visible: false, message: '', type: 'info' },
+
       isMobile: false,
       map: null,
       markers: [],
@@ -2254,10 +2783,52 @@ createApp({
       this.currentSlide = index
     },
     scrollToSection(sectionId) {
+      if (!this.isLoggedIn) {
+        this.showModal = true
+        this.authTab = 'login'
+        this.showToast('请先登录后再访问功能', 'info')
+        return
+      }
       const element = document.getElementById(sectionId)
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
+    },
+
+    handleFeatureClick(feature) {
+      if (!this.isLoggedIn) {
+        this.showModal = true
+        this.authTab = 'login'
+        this.showToast(`请先登录后再使用${feature}功能`, 'info')
+        return
+      }
+      // 这里可以添加具体功能的实现
+      this.showToast(`${feature}功能已触发`, 'info')
+    },
+
+    scrollToCard(type, index) {
+      if (!this.isLoggedIn) {
+        this.showModal = true
+        this.authTab = 'login'
+        this.showToast('请先登录后再查看详情', 'info')
+        return
+      }
+      const track = this.$refs[`${type}Track`]
+      if (track) {
+        const cardWidth = this.cardWidth
+        const scrollAmount = index * cardWidth
+        track.scrollTo({ left: scrollAmount, behavior: 'smooth' })
+      }
+    },
+
+    handlePlaceClick(place) {
+      if (!this.isLoggedIn) {
+        this.showModal = true
+        this.authTab = 'login'
+        this.showToast('请先登录后再查看详情', 'info')
+        return
+      }
+      this.showToast(`查看${place.name}详情`, 'info')
     },
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -2373,47 +2944,8 @@ createApp({
     checkMobile() {
       this.isMobile = window.innerWidth <= 768
     },
-    handleRegionHover(region) {
-      if (!this.isMobile) {
-        this.activeRegion = region
-      }
-    },
-    handleRegionLeave(region) {
-      if (!this.isMobile) {
-        this.activeRegion = null
-      }
-    },
-    toggleRegion(region) {
-      if (this.isMobile) {
-        this.activeRegion = this.activeRegion === region ? null : region
-      }
-    },
-    setActiveScenic(scenicId) {
-      this.currentScenic = scenicId
-    },
     highlightCurrentPage() {
-      const path = window.location.pathname
-      const fileName = path.split('/').pop().replace('.html', '')
-      
-      const scenicMap = {
-        'riyueshan': 'riyueshan',
-        'qinghaihu': 'qinghaihu',
-        'nanzong': 'nanzong',
-        'xiaqiongsi': 'xiaqiong',
-        'labulengsi': 'labulengsi',
-        'taersi': 'taersi',
-        'sanjiangyuan': 'sanjiangyuan',
-        'xueshan': 'xuanshan',
-        'guoluo': 'guoluo',
-        'huangnan': 'huangnan',
-        'yushu': 'yushu',
-        'guide': 'guide'
-      }
-      
-      if (scenicMap[fileName]) {
-        this.currentScenic = scenicMap[fileName]
-        this.activeRegion = 'qinghai'
-      }
+      // 简化页面高亮逻辑
     },
     loadFolkList() {
       fetch('/api/folk/list')
@@ -2517,8 +3049,375 @@ createApp({
       this.dragState[type].isDragging = false
     },
     
+    // ========== Auth Methods ==========
+    async checkLoginStatus() {
+      const token = localStorage.getItem('authToken')
+      const name = localStorage.getItem('userName')
+      if (token && name) {
+        try {
+          const response = await fetch('/api/user/info', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          })
 
+          if (!response.ok) {
+            throw new Error('登录已过期')
+          }
 
+          const data = await response.json()
+          
+          if (data.code === 200) {
+            this.isLoggedIn = true
+            this.userName = name
+          }
+        } catch (error) {
+          console.error('验证登录状态失败:', error)
+          localStorage.removeItem('authToken')
+          localStorage.removeItem('userId')
+          localStorage.removeItem('userName')
+          this.isLoggedIn = false
+          this.userName = ''
+        }
+      }
+    },
+
+    handleBtnClick() {
+      if (this.isLoggedIn) {
+        this.showDropdown = !this.showDropdown
+      } else {
+        this.showModal = true
+        this.authTab = 'login'
+      }
+    },
+
+    closeDropdown(e) {
+      if (!e.target.closest('.user-btn-wrapper')) {
+        this.showDropdown = false
+      }
+    },
+
+    closeModal() {
+      this.showModal = false
+    },
+
+    // ========== Login Validation ==========
+    validateLoginUsername() {
+      if (!this.loginForm.username.trim()) {
+        this.loginErrors.username = '请输入用户名或手机号'
+        return false
+      }
+      this.loginErrors.username = ''
+      return true
+    },
+
+    validateLoginPassword() {
+      if (!this.loginForm.password) {
+        this.loginErrors.password = '请输入密码'
+        return false
+      }
+      if (this.loginForm.password.length < 6) {
+        this.loginErrors.password = '密码长度至少为6位'
+        return false
+      }
+      this.loginErrors.password = ''
+      return true
+    },
+
+    clearLoginError(field) {
+      this.loginErrors[field] = ''
+    },
+
+    async handleLogin() {
+      const isUsernameValid = this.validateLoginUsername()
+      const isPasswordValid = this.validateLoginPassword()
+      if (!isUsernameValid || !isPasswordValid) return
+
+      this.loginLoading = true
+
+      try {
+        const response = await fetch('/api/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: this.loginForm.username.trim(),
+            password: this.loginForm.password
+          })
+        })
+
+        if (!response.ok) {
+          throw new Error(`登录失败: ${response.status}`)
+        }
+
+        const data = await response.json()
+        
+        if (data.code !== 200) {
+          throw new Error(data.msg || '登录失败')
+        }
+
+        const userData = data.data || {}
+
+        localStorage.setItem('authToken', userData.token)
+        localStorage.setItem('userId', userData.userId)
+        localStorage.setItem('userName', userData.username)
+
+        if (this.rememberMe) {
+          localStorage.setItem('rememberedUsername', userData.username)
+        }
+
+        this.isLoggedIn = true
+        this.userName = userData.username
+        this.showModal = false
+        this.showToast('登录成功，欢迎回来！', 'success')
+
+        this.loginForm = { username: '', password: '' }
+      } catch (error) {
+        console.error('登录失败:', error)
+        this.showToast(error.message || '登录失败，请稍后重试', 'error')
+      } finally {
+        this.loginLoading = false
+      }
+    },
+
+    // ========== Register Validation ==========
+    validateRegisterUsername() {
+      if (!this.registerForm.username.trim()) {
+        this.registerErrors.username = '请输入用户名'
+        return false
+      }
+      if (this.registerForm.username.length < 2) {
+        this.registerErrors.username = '用户名至少为2个字符'
+        return false
+      }
+      this.registerErrors.username = ''
+      return true
+    },
+
+    validateRegisterPhone() {
+      const phoneRegex = /^1[3-9]\d{9}$/
+      if (!this.registerForm.phone) {
+        this.registerErrors.phone = '请输入手机号'
+        return false
+      }
+      if (!phoneRegex.test(this.registerForm.phone)) {
+        this.registerErrors.phone = '请输入正确的手机号'
+        return false
+      }
+      this.registerErrors.phone = ''
+      return true
+    },
+
+    validateRegisterCode() {
+      if (!this.registerForm.code.trim()) {
+        this.registerErrors.code = '请输入验证码'
+        return false
+      }
+      if (this.registerForm.code.length < 4) {
+        this.registerErrors.code = '验证码格式不正确'
+        return false
+      }
+      this.registerErrors.code = ''
+      return true
+    },
+
+    validateRegisterPassword() {
+      if (!this.registerForm.password) {
+        this.registerErrors.password = '请设置密码'
+        return false
+      }
+      if (this.registerForm.password.length < 6 || this.registerForm.password.length > 20) {
+        this.registerErrors.password = '密码长度应为6-20位'
+        return false
+      }
+      this.registerErrors.password = ''
+      return true
+    },
+
+    validateRegisterConfirm() {
+      if (!this.registerForm.confirmPassword) {
+        this.registerErrors.confirmPassword = '请再次输入密码'
+        return false
+      }
+      if (this.registerForm.password !== this.registerForm.confirmPassword) {
+        this.registerErrors.confirmPassword = '两次密码输入不一致'
+        return false
+      }
+      this.registerErrors.confirmPassword = ''
+      return true
+    },
+
+    clearRegisterError(field) {
+      this.registerErrors[field] = ''
+    },
+
+    async sendSmsCode() {
+      if (!this.validateRegisterPhone()) return
+
+      try {
+        const response = await fetch('/api/user/sms/code', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            phone: this.registerForm.phone
+          })
+        })
+
+        if (!response.ok) {
+          throw new Error(`发送验证码失败: ${response.status}`)
+        }
+
+        const data = await response.json()
+        
+        if (data.code !== 200) {
+          throw new Error(data.msg || '发送验证码失败')
+        }
+
+        this.smsCountdown = 60
+        const timer = setInterval(() => {
+          this.smsCountdown--
+          if (this.smsCountdown <= 0) {
+            clearInterval(timer)
+          }
+        }, 1000)
+
+        this.showToast('验证码已发送', 'info')
+      } catch (error) {
+        console.error('发送验证码失败:', error)
+        this.showToast(error.message || '发送验证码失败，请稍后重试', 'error')
+      }
+    },
+
+    async handleRegister() {
+      const checks = [
+        this.validateRegisterUsername(),
+        this.validateRegisterPhone(),
+        this.validateRegisterCode(),
+        this.validateRegisterPassword(),
+        this.validateRegisterConfirm()
+      ]
+      if (!checks.every(Boolean)) return
+
+      this.registerLoading = true
+
+      try {
+        const response = await fetch('/api/user/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: this.registerForm.username.trim(),
+            phone: this.registerForm.phone,
+            code: this.registerForm.code.trim(),
+            password: this.registerForm.password
+          })
+        })
+
+        if (!response.ok) {
+          throw new Error(`注册失败: ${response.status}`)
+        }
+
+        const data = await response.json()
+        
+        if (data.code !== 200) {
+          throw new Error(data.msg || '注册失败')
+        }
+
+        this.showToast('注册成功，请登录！', 'success')
+        this.authTab = 'login'
+        this.registerForm = { username: '', phone: '', code: '', password: '', confirmPassword: '' }
+      } catch (error) {
+        console.error('注册失败:', error)
+        this.showToast(error.message || '注册失败，请稍后重试', 'error')
+      } finally {
+        this.registerLoading = false
+      }
+    },
+
+    // ========== Logout ==========
+    async handleLogout() {
+      this.showDropdown = false
+      const token = localStorage.getItem('authToken')
+      
+      try {
+        if (token) {
+          await fetch('/api/user/logout', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          })
+        }
+      } catch (error) {
+        console.error('退出登录请求失败:', error)
+      } finally {
+        localStorage.removeItem('authToken')
+        localStorage.removeItem('userId')
+        localStorage.removeItem('userName')
+        this.isLoggedIn = false
+        this.userName = ''
+        this.showToast('已退出登录', 'info')
+      }
+    },
+
+    handleForgotPassword() {
+      this.showToast('请联系管理员重置密码', 'info')
+    },
+
+    // ========== Toast ==========
+    showToast(message, type = 'info') {
+      this.toast.message = message
+      this.toast.type = type
+      this.toast.visible = true
+      setTimeout(() => {
+        this.toast.visible = false
+      }, 3000)
+    }
+  },
+  
+  computed: {
+    toastIcon() {
+      const icons = {
+        success: 'fa fa-check-circle',
+        error: 'fa fa-times-circle',
+        info: 'fa fa-info-circle'
+      }
+      return icons[this.toast.type] || icons.info
+    }
+  },
+  
+  mounted() {
+    this.startAutoSlide()
+    window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('resize', this.handleResize)
+    this.checkMobile()
+    this.$nextTick(() => {
+      this.updateCardWidth()
+      this.updateMaxScroll()
+      this.initAMap()
+    })
+    this.highlightCurrentPage()
+    this.loadFolkList()
+    this.loadTourList()
+    this.checkLoginStatus()
+    document.addEventListener('click', this.closeDropdown)
+  },
+  
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('resize', this.handleResize)
+    // 销毁地图实例，避免内存泄漏
+    if (this.map) {
+      this.map.destroy()
+    }
+    document.removeEventListener('click', this.closeDropdown)
   }
 }).mount('#app')
 </script>
