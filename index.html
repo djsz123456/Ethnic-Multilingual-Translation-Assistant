@@ -2965,14 +2965,42 @@ createApp({
   },
   initAMap() {
     const AMapKey = '6a3c629ed8bb34fb24b2a2185dc2bfb0';
+    this._amapKey = AMapKey;
 
     if (!window.AMap) {
       const script = document.createElement('script');
       script.src = `https://webapi.amap.com/maps?v=1.4.15&key=${AMapKey}`;
       script.onload = () => this.createMap();
+      script.onerror = () => this.renderStaticMap();
+      // 5秒超时降级为静态地图
+      setTimeout(() => { if (!this.map) this.renderStaticMap(); }, 5000);
       document.body.appendChild(script);
     } else {
       this.createMap();
+    }
+  },
+  // 降级：高德静态地图（纯<img>，无需JS，无域名限制）
+  renderStaticMap() {
+    const key = this._amapKey;
+    // 用所有景点坐标生成markers参数，中心点安多核心区
+    const allPlaces = [
+      ...this.qinghaiPlaces,
+      ...this.gannanPlaces,
+      ...this.chuanxiPlaces,
+      ...this.northernTibetPlaces
+    ];
+    const markers = allPlaces.map(p => `mid,0x9B2B25,:${p.lng},${p.lat}`).join('|');
+    const url = `https://restapi.amap.com/v3/staticmap?location=101.5,35.5&zoom=6&size=800*500&markers=${encodeURIComponent(markers)}&key=${key}`;
+    const container = document.getElementById('amap-container');
+    if (container) {
+      container.innerHTML = `
+        <div style="position:relative;width:100%;height:100%;">
+          <img src="${url}" alt="安多旅游地图"
+            style="width:100%;height:100%;object-fit:cover;border-radius:8px;"
+            onerror="this.parentElement.innerHTML='<div style=\\'display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#888;gap:10px;\\'><i class=\\'fa fa-map-o\\' style=\\'font-size:40px;color:#ccc;\\'></i><span>地图暂不可用，请检查网络</span></div>'"
+          />
+          <div style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.5);color:#fff;font-size:11px;padding:4px 8px;border-radius:4px;">静态地图 · 点击右侧列表查看景点</div>
+        </div>`;
     }
   },
   // 创建地图实例
@@ -3039,12 +3067,26 @@ createApp({
   // 点击景点列表项/标记的联动逻辑
   handlePlaceClick(place) {
     this.activePlaceId = place.id;
-    this.map.setCenter([place.lng, place.lat]);
-    this.map.setZoom(12);
-
-    const targetMarker = this.markers.find(m => m.placeId === place.id);
-    if (targetMarker?.infoWindow) {
-      targetMarker.infoWindow.open(this.map, targetMarker.getPosition());
+    if (this.map) {
+      this.map.setCenter([place.lng, place.lat]);
+      this.map.setZoom(12);
+      const targetMarker = this.markers.find(m => m.placeId === place.id);
+      if (targetMarker?.infoWindow) {
+        targetMarker.infoWindow.open(this.map, targetMarker.getPosition());
+      }
+    } else {
+      // 静态地图模式：更新为该景点的静态地图
+      const key = this._amapKey;
+      const url = `https://restapi.amap.com/v3/staticmap?location=${place.lng},${place.lat}&zoom=12&size=800*500&markers=mid,0x9B2B25,A:${place.lng},${place.lat}&key=${key}`;
+      const container = document.getElementById('amap-container');
+      if (container) {
+        container.innerHTML = `
+          <div style="position:relative;width:100%;height:100%;">
+            <img src="${url}" alt="${place.name}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" />
+            <div style="position:absolute;top:8px;left:8px;background:rgba(155,43,37,0.9);color:#fff;font-size:13px;padding:6px 12px;border-radius:6px;font-weight:600;">${place.name}</div>
+            <div style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.5);color:#fff;font-size:11px;padding:4px 8px;border-radius:4px;">静态地图</div>
+          </div>`;
+      }
     }
   },
     checkMobile() {
