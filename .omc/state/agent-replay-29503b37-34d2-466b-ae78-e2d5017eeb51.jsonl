@@ -1,0 +1,5 @@
+{"t":0,"agent":"aadcc28","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aadcc28","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":343460}
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"oh-my-claudecode:autopilot"}
+{"t":0,"agent":"ad06048","agent_type":"debugger","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ad06048","agent_type":"debugger","event":"agent_stop","success":true,"duration_ms":686635}

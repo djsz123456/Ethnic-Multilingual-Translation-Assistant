@@ -3,16 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>民俗详情 - 雪域安多·藏韵传承</title>
-    
-    <link rel="preconnect" href="https://unpkg.com">
+    <title>民俗文化详情 - 雪域安多·藏韵传承</title>
+
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary-red: #9B2B25;
@@ -33,7 +28,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
         }
 
         body {
@@ -43,99 +38,94 @@
             overflow-x: hidden;
         }
 
-        .back-link {
+        /* ===== 顶部导航 ===== */
+        .top-nav {
+            background: linear-gradient(135deg, var(--primary-red) 0%, #7a1f1a 100%);
+            padding: 0 30px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-logo i {
+            color: var(--primary-gold);
+            font-size: 22px;
+        }
+
+        .nav-back {
             display: flex;
             align-items: center;
             gap: 8px;
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 20px;
-            color: var(--primary-red);
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 15px;
+            padding: 8px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
             transition: var(--transition);
         }
 
-        .back-link:hover {
-            color: var(--primary-gold);
-            transform: translateX(-5px);
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-        }
-
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 60vh;
-            gap: 20px;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary-red);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .error-container {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .error-icon {
-            font-size: 48px;
-            color: var(--primary-red);
-            margin-bottom: 20px;
-        }
-
-        .error-message {
-            color: var(--text-secondary);
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .retry-btn {
-            padding: 12px 30px;
-            background: var(--primary-red);
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.15);
             color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ===== 主容器 ===== */
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        /* ===== 错误页 ===== */
+        .error-page {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .error-page .error-icon {
+            font-size: 72px;
+            color: #ddd;
+            margin-bottom: 24px;
+        }
+
+        .error-page h2 {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .error-page p {
             font-size: 16px;
-            transition: var(--transition);
+            color: #aaa;
+            margin-bottom: 30px;
         }
 
-        .retry-btn:hover {
-            background: var(--primary-gold);
-            transform: translateY(-2px);
-        }
-
+        /* ===== Hero Banner ===== */
         .hero-banner {
             position: relative;
             width: 100%;
-            height: 450px;
+            height: 460px;
             overflow: hidden;
             border-radius: var(--radius-md);
-            margin-bottom: 30px;
+            margin-bottom: 36px;
             box-shadow: var(--shadow-lg);
         }
 
@@ -143,667 +133,566 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s ease;
         }
 
         .hero-banner:hover img {
-            transform: scale(1.05);
+            transform: scale(1.04);
         }
 
         .hero-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 30%, rgba(0, 0, 0, 0.72) 100%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 40px 30px;
+            padding: 40px 36px;
+        }
+
+        .hero-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-gold);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            width: fit-content;
+            letter-spacing: 0.5px;
         }
 
         .hero-title {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 700;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
             margin-bottom: 10px;
             line-height: 1.3;
         }
 
         .hero-subtitle {
-            font-size: 18px;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.88);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
 
-        .content-section {
-            background: white;
+        /* ===== 内容卡片 ===== */
+        .card {
+            background: var(--bg-secondary);
             border-radius: var(--radius-md);
-            padding: 40px;
-            margin-bottom: 30px;
+            padding: 36px 40px;
+            margin-bottom: 24px;
             box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--primary-red);
+            transition: var(--transition);
         }
 
-        .section-header {
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--bg-primary);
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--bg-primary);
         }
 
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-red), #b83c2e);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 18px;
+            font-size: 19px;
+            flex-shrink: 0;
         }
 
-        .section-title {
-            font-size: 22px;
+        .card-title {
+            font-size: 21px;
             font-weight: 600;
             color: var(--primary-red);
         }
 
-        .content-text {
-            font-size: 16px;
+        .card-body {
+            font-size: 15.5px;
             line-height: 2;
             color: var(--text-primary);
-            white-space: pre-line;
         }
 
-        .media-section {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        video {
-            width: 100%;
-            border-radius: 8px;
-        }
-
-        .audio-wrapper {
-            background: linear-gradient(135deg, var(--bg-primary), #f0f0f0);
-            border-radius: 8px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .audio-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-red), #B83C2E);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        audio {
-            flex: 1;
-            height: 40px;
-        }
-
-        .comment-section {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 40px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .comment-form {
-            margin-bottom: 30px;
-        }
-
-        .comment-input {
-            width: 100%;
-            min-height: 120px;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 16px;
-            line-height: 1.6;
-            resize: vertical;
-            transition: var(--transition);
-        }
-
-        .comment-input:focus {
-            border-color: var(--primary-red);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(155, 43, 37, 0.1);
-        }
-
-        .comment-input::placeholder {
-            color: #aaa;
-        }
-
-        .submit-btn {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, var(--primary-red), #B83C2E);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .submit-btn:hover {
-            background: linear-gradient(135deg, var(--primary-gold), #E8C84A);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .comment-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .comment-item {
-            padding: 20px;
-            background: var(--bg-primary);
-            border-radius: 8px;
-            border-left: 3px solid var(--primary-gold);
-            transition: var(--transition);
-        }
-
-        .comment-item:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .comment-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary-red), var(--primary-gold));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .user-name {
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .comment-time {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .comment-content {
-            font-size: 15px;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            padding-left: 46px;
-        }
-
-        .empty-comments {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-icon {
-            font-size: 48px;
-            color: #ddd;
-            margin-bottom: 15px;
-        }
-
-        .empty-text {
-            font-size: 16px;
-        }
-
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .skeleton-banner {
-            width: 100%;
-            height: 450px;
-            border-radius: var(--radius-md);
-            margin-bottom: 30px;
-        }
-
-        .skeleton-title {
-            width: 60%;
-            height: 36px;
-            margin-bottom: 20px;
-        }
-
-        .skeleton-content {
-            width: 100%;
-            height: 200px;
-            margin-bottom: 30px;
-        }
-
-        .skeleton-line {
-            width: 100%;
-            height: 16px;
+        .card-body p {
             margin-bottom: 12px;
         }
 
-        .skeleton-line.short {
-            width: 80%;
+        .card-body p:last-child {
+            margin-bottom: 0;
         }
 
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: var(--primary-red);
+        /* ===== 返回按钮 ===== */
+        .back-btn-wrap {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, var(--primary-red), #b83c2e);
             color: white;
-            border-radius: 8px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, var(--primary-gold), #e8c84a);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
         }
 
-        .toast.success {
-            background: #28a745;
-        }
-
-        .toast.error {
-            background: #dc3545;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
+        /* ===== 响应式 ===== */
         @media (max-width: 768px) {
+            .top-nav {
+                padding: 0 16px;
+            }
+
+            .nav-logo span {
+                display: none;
+            }
+
             .hero-banner {
                 height: 300px;
             }
 
             .hero-title {
-                font-size: 28px;
+                font-size: 26px;
             }
 
-            .hero-subtitle {
-                font-size: 16px;
+            .hero-overlay {
+                padding: 24px 20px;
             }
 
-            .content-section,
-            .media-section,
-            .comment-section {
-                padding: 25px;
+            .card {
+                padding: 24px 20px;
             }
 
-            .section-title {
-                font-size: 20px;
-            }
-
-            .content-text {
-                font-size: 15px;
-            }
-
-            .comment-content {
-                padding-left: 0;
-                margin-top: 10px;
+            .container {
+                padding: 24px 14px 60px;
             }
         }
 
         @media (max-width: 480px) {
             .hero-banner {
-                height: 250px;
+                height: 240px;
             }
 
             .hero-title {
-                font-size: 24px;
+                font-size: 22px;
             }
 
-            .hero-overlay {
-                padding: 20px;
-            }
-
-            .back-link {
-                margin: 15px auto;
+            .card-title {
+                font-size: 18px;
             }
         }
     </style>
 </head>
 <body>
-<div id="app">
-    <a href="index.html" class="back-link">
+
+<!-- 顶部导航 -->
+<nav class="top-nav">
+    <a href="index.html" class="nav-logo">
+        <i class="fa fa-snowflake-o"></i>
+        <span>雪域安多·藏韵传承</span>
+    </a>
+    <a href="index.html" class="nav-back">
         <i class="fa fa-arrow-left"></i>
         返回首页
     </a>
+</nav>
 
-    <div class="container">
-        <!-- Loading State -->
-        <div v-if="loading" class="loading-container">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">正在加载民俗详情...</div>
-        </div>
-
-        <!-- Error State -->
-        <div v-else-if="error" class="error-container">
-            <div class="error-icon">
-                <i class="fa fa-exclamation-circle"></i>
-            </div>
-            <div class="error-message">{{ errorMessage }}</div>
-            <button class="retry-btn" @click="loadFolkDetail">
-                <i class="fa fa-refresh"></i> 重新加载
-            </button>
-        </div>
-
-        <!-- Content -->
-        <div v-else>
-            <!-- Hero Banner -->
-            <div class="hero-banner" v-if="folkDetail.cover">
-                <img :src="folkDetail.cover" :alt="folkDetail.title">
-                <div class="hero-overlay">
-                    <h1 class="hero-title">{{ folkDetail.title }}</h1>
-                    <p class="hero-subtitle" v-if="folkDetail.subtitle">{{ folkDetail.subtitle }}</p>
-                </div>
-            </div>
-
-            <!-- Content Section -->
-            <div class="content-section" v-if="folkDetail.content">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fa fa-file-text-o"></i>
-                    </div>
-                    <h2 class="section-title">民俗介绍</h2>
-                </div>
-                <div class="content-text">{{ folkDetail.content }}</div>
-            </div>
-
-            <!-- Media Section -->
-            <div class="media-section" v-if="folkDetail.videoUrl || folkDetail.audioUrl">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fa fa-film"></i>
-                    </div>
-                    <h2 class="section-title">多媒体资料</h2>
-                </div>
-
-                <!-- Video -->
-                <div class="video-wrapper" v-if="folkDetail.videoUrl">
-                    <video controls :poster="folkDetail.cover">
-                        <source :src="folkDetail.videoUrl" type="video/mp4">
-                        您的浏览器不支持视频播放
-                    </video>
-                </div>
-
-                <!-- Audio -->
-                <div class="audio-wrapper" v-if="folkDetail.audioUrl">
-                    <div class="audio-icon">
-                        <i class="fa fa-music"></i>
-                    </div>
-                    <audio controls>
-                        <source :src="folkDetail.audioUrl" type="audio/mpeg">
-                        您的浏览器不支持音频播放
-                    </audio>
-                </div>
-            </div>
-
-            <!-- Comment Section -->
-            <div class="comment-section">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fa fa-comments"></i>
-                    </div>
-                    <h2 class="section-title">网友留言 ({{ commentList.length }})</h2>
-                </div>
-
-                <!-- Comment Form -->
-                <div class="comment-form">
-                    <textarea 
-                        class="comment-input" 
-                        v-model="newComment"
-                        placeholder="分享您对这项民俗文化的看法..."
-                        maxlength="500"
-                    ></textarea>
-                    <button class="submit-btn" @click="submitComment" :disabled="!newComment.trim()">
-                        <i class="fa fa-paper-plane"></i>
-                        提交留言
-                    </button>
-                </div>
-
-                <!-- Comment List -->
-                <div class="comment-list" v-if="commentList.length > 0">
-                    <div class="comment-item" v-for="(comment, index) in commentList" :key="index">
-                        <div class="comment-header">
-                            <div class="comment-user">
-                                <div class="user-avatar">
-                                    {{ getInitial(comment.userName || '匿名用户') }}
-                                </div>
-                                <span class="user-name">{{ comment.userName || '匿名用户' }}</span>
-                            </div>
-                            <span class="comment-time">{{ formatDate(comment.createTime) }}</span>
-                        </div>
-                        <div class="comment-content">{{ comment.content }}</div>
-                    </div>
-                </div>
-
-                <!-- Empty State -->
-                <div v-else class="empty-comments">
-                    <div class="empty-icon">
-                        <i class="fa fa-commenting-o"></i>
-                    </div>
-                    <div class="empty-text">暂无留言，快来抢沙发吧！</div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- 主内容 -->
+<div class="container" id="main-content">
+    <!-- JS 渲染区域 -->
 </div>
 
 <script>
-const { createApp } = Vue;
-
-createApp({
-    data() {
-        return {
-            loading: true,
-            error: false,
-            errorMessage: '',
-            folkId: null,
-            folkDetail: {},
-            commentList: [],
-            newComment: '',
-            toastMessage: '',
-            toastType: 'success'
-        };
-    },
-
-    mounted() {
-        this.getFolkId();
-        if (this.folkId) {
-            this.loadFolkDetail();
-            this.loadCommentList();
-        }
-    },
-
-    methods: {
-        getFolkId() {
-            const urlParams = new URLSearchParams(window.location.search);
-            this.folkId = urlParams.get('id');
-            if (!this.folkId) {
-                this.error = true;
-                this.errorMessage = '未找到民俗ID，请从首页重新进入';
-                this.loading = false;
-            }
-        },
-
-        // 本地民俗数据库（无需后端API）
-        getLocalFolkDatabase() {
-            return {
-                '1':  { id:'1',  title:'藏历新年', subtitle:'洛萨节·安多最隆重的节庆', cover:'minsu/images/losar.jpg', tags:['节庆','新年','传统习俗'], content:'藏历新年（藏语：ལོ་གསར།，Losar）是藏族最重要的传统节日，时间通常在农历正月前后。安多地区的藏历新年庆典持续15天，家家户户制作卡赛（油炸果子）、悬挂经幡、燃放鞭炮，寺院举行盛大的法会和跳神（羌姆）表演，整个村落沉浸在欢乐祥和的气氛中。' },
-                '2':  { id:'2',  title:'赛马节', subtitle:'雅克节·草原上的盛会', cover:'minsu/images/horse.jpg', tags:['赛马','节庆','游牧文化'], content:'赛马节（藏语：རྟ་རྒྱུགས།）是安多藏区最具代表性的传统节庆活动，每年夏季在各地草原举行。节日期间，藏族牧民盛装出席，骑手们策马驰骋，同时还有射箭、摔跤、藏戏表演等丰富活动。果洛州的"格萨尔赛马节"和红原县的"雅克赛马节"是其中最著名的两个。' },
-                '3':  { id:'3',  title:'唐卡艺术', subtitle:'热贡唐卡·藏族绘画瑰宝', cover:'minsu/images/thangka.jpg', tags:['唐卡','非遗','热贡艺术'], content:'唐卡（藏语：ཐང་ཀ།）是藏传佛教特有的绘画艺术，以矿物颜料和金粉绘制于布帛之上。青海黄南同仁市的热贡唐卡享誉世界，已被列入联合国非物质文化遗产名录。一幅精品唐卡需数月乃至数年才能完成，内容涵盖佛教故事、神灵形象和宇宙观等主题。' },
-                '4':  { id:'4',  title:'藏族锅庄舞', subtitle:'围火而舞·集体的欢腾', cover:'minsu/images/guozhuang.jpg', tags:['锅庄舞','歌舞','集体活动'], content:'锅庄舞（藏语：འཆམ་།）是藏族最具代表性的集体歌舞形式，参与者围成圆圈，男女对唱对舞，节奏由慢渐快，气氛热烈。安多地区的锅庄舞曲调高亢嘹亮，歌词多颂扬自然风光、英雄人物和美好生活，是节庆聚会和日常娱乐的重要方式。' },
-                '5':  { id:'5',  title:'藏族婚俗', subtitle:'盛装迎亲·三天的庆典', cover:'minsu/images/wedding.jpg', tags:['婚俗','传统礼仪','安多'], content:'安多藏族婚礼通常持续三天，仪式隆重而热烈。迎亲时，新郎一方骑马前往，新娘身着华丽的藏式礼服，头戴珍珠、珊瑚、松石编织的头饰。婚宴上众人跳锅庄、饮青稞酒、唱祝福歌，长辈为新人献上洁白的哈达，祝福新人白头偕老。' },
-                '6':  { id:'6',  title:'酥油花制作', subtitle:'塔尔寺三绝之一', cover:'minsu/images/suyouhua.jpg', tags:['酥油花','塔尔寺','宗教艺术'], content:'酥油花是以酥油（从牦牛奶中提炼的黄油）为原料，塑造成各种佛像、人物、花卉和故事场景的宗教艺术品，是塔尔寺"三绝"之首。每年藏历正月十五，塔尔寺展出当年制作的酥油花，吸引数万信众和游客观赏。制作酥油花的僧侣需将双手浸在冰水中操作，以保持酥油的硬度，展现了藏族匠人的高超技艺与虔诚信仰。' },
-                '7':  { id:'7',  title:'格萨尔史诗', subtitle:'世界最长史诗·口耳相传', cover:'minsu/images/gesar.jpg', tags:['格萨尔','史诗','非遗'], content:'《格萨尔王传》是世界上最长的英雄史诗，在安多藏区尤其是果洛州广泛流传。史诗讲述了格萨尔王征战四方、降妖伏魔、扶贫济弱的英雄故事，由民间说唱艺人（仲肯）以口头方式代代传承。这部史诗已被列入联合国非物质文化遗产名录，是藏族文化的百科全书。' },
-                '8':  { id:'8',  title:'藏族服饰文化', subtitle:'盛装华服·民族认同的符号', cover:'minsu/images/clothing.jpg', tags:['服饰','传统文化','安多'], content:'安多藏族服饰以宽袍大袖为特征，男性常穿皮袍或氆氇长袍，系腰带，右袒一肩；女性服饰更为华丽，头饰以珊瑚、松石、玛瑙、珍珠串成，色彩鲜艳。不同地区的安多藏族服饰各有特色，是识别地域归属和社会身份的重要符号，也是藏族文化认同的重要载体。' },
-                '9':  { id:'9',  title:'青稞酒文化', subtitle:'吃糌粑·喝青稞酒', cover:'minsu/images/qingke.jpg', tags:['青稞酒','饮食文化','待客之道'], content:'青稞酒（藏语：ཆང་།）是藏族最具代表性的传统饮品，以高原特产青稞为原料酿制，酒精度较低，口感微酸带甜。在安多藏区，青稞酒是待客之道的重要组成部分，宾客来访时主人必以青稞酒相待，饮酒前需用无名指蘸酒弹三下，以示敬奉天地神灵，体现了藏族人对自然的崇敬。' },
-                '10': { id:'10', title:'转经习俗', subtitle:'玛尼石·经幡·信仰之旅', cover:'minsu/images/zhuanjing.jpg', tags:['转经','玛尼石','宗教习俗'], content:'转经（藏语：བསྐོར་བ།）是藏传佛教最重要的宗教修行方式之一。信众手持转经筒，顺时针方向绕寺庙、神山、玛尼石堆而行，每转一圈相当于诵读一遍经文。安多地区的拉卜楞寺拥有世界最长的转经廊，每天清晨信众云集，场面震撼人心。路边随处可见的玛尼石堆和随风飘扬的经幡，是安多藏区最具代表性的宗教景观。' }
-            };
-        },
-
-        loadFolkDetail() {
-            this.loading = true;
-            this.error = false;
-            try {
-                const db = this.getLocalFolkDatabase();
-                const folk = db[String(this.folkId)];
-                if (!folk) {
-                    this.error = true;
-                    this.errorMessage = `未找到ID为 ${this.folkId} 的民俗数据`;
-                    return;
+(function () {
+    // ==========================================
+    // 民俗静态数据（6条）
+    // ==========================================
+    var FOLK_DATA = {
+        1: {
+            id: 1,
+            title: '藏族情歌《拉伊》',
+            subtitle: '安多草原上流传千年的爱情吟唱',
+            category: '非物质文化遗产',
+            image: 'guoluo/images/gl.jpg',
+            sections: [
+                {
+                    icon: 'fa-history',
+                    title: '来源与历史',
+                    content: [
+                        '《拉伊》（藏语：ལ་གཞས།）是流行于青海安多藏区的一种传统民歌，已有数百年历史。"拉伊"字面意思为"山歌"或"野歌"，因多在山野草原间演唱而得名，是藏族青年男女表达爱慕之情的重要方式。',
+                        '安多《拉伊》尤以果洛、黄南、海南等藏族聚居地最为盛行，是藏族口头文学的重要组成部分，已被列入国家级非物质文化遗产名录。'
+                    ]
+                },
+                {
+                    icon: 'fa-music',
+                    title: '表现形式',
+                    content: [
+                        '《拉伊》曲调高亢悠扬，节奏自由舒展，演唱者常以假声（头声）行腔，拖腔绵长，回荡山谷之间。歌词多即兴创作，以比兴手法借助草原、雄鹰、格桑花等自然意象表达内心情感。',
+                        '演唱形式分为独唱和对唱两种，对唱时男女双方轮流吟唱，以歌词机智诙谐、意境深远者为胜，体现了藏族青年的才情与智慧。'
+                    ]
+                },
+                {
+                    icon: 'fa-heart',
+                    title: '文化意义',
+                    content: [
+                        '《拉伊》承载着安多藏族的爱情观与人生哲学，反映了藏族人民对自由、美好生活的热烈向往。它不仅是青年男女的恋爱媒介，更是藏族文化认同与社区凝聚的精神纽带。',
+                        '在藏族社会中，能唱一手好《拉伊》被视为才华与魅力的象征，许多美好姻缘正是通过这种歌唱对话结下的。'
+                    ]
+                },
+                {
+                    icon: 'fa-users',
+                    title: '传承现状',
+                    content: [
+                        '随着现代流行文化的冲击，《拉伊》的传承面临挑战，掌握传统演唱技艺的民间艺人日益减少。目前，青海省已将《拉伊》保护列入重点工程，在玛沁、同仁等地设立传习所，鼓励年轻一代学习演唱。',
+                        '每年夏季的草原歌会和各类民俗节庆活动，仍是《拉伊》展示与传承的重要舞台，吸引大量藏族青年参与，令这一古老艺术焕发新的生命力。'
+                    ]
                 }
-                this.folkDetail = folk;
-            } catch (err) {
-                this.error = true;
-                this.errorMessage = '数据加载失败，请刷新重试';
-            } finally {
-                this.loading = false;
-            }
+            ]
         },
-
-        loadCommentList() {
-            try {
-                const key = `folk_comments_${this.folkId}`;
-                const stored = localStorage.getItem(key);
-                this.commentList = stored ? JSON.parse(stored) : [];
-            } catch (err) {
-                console.error('读取评论失败:', err);
-                this.commentList = [];
-            }
+        2: {
+            id: 2,
+            title: '安多藏戏',
+            subtitle: '高原舞台上活态传承的千年戏剧',
+            category: '传统戏剧',
+            image: 'huangnan/images/hn1.jpg',
+            sections: [
+                {
+                    icon: 'fa-flag',
+                    title: '起源',
+                    content: [
+                        '安多藏戏是藏戏大家族中的重要流派，起源于藏传佛教寺院的宗教仪式表演，后逐渐吸收民间歌舞、杂技等元素，发展为具有完整戏剧结构的舞台艺术，迄今已有数百年历史。',
+                        '与卫藏藏戏（蓝面具戏）相比，安多藏戏在唱腔、表演风格和服饰上独具特色，以黄南同仁、海南贵德为主要传承地，于2006年被列入国家级非物质文化遗产名录。'
+                    ]
+                },
+                {
+                    icon: 'fa-book',
+                    title: '经典剧目',
+                    content: [
+                        '安多藏戏的传统剧目多取材于佛教故事和藏族英雄传说，经典剧目包括《诺桑法王》《卓娃桑姆》《朗萨雯蚌》《顿月顿珠》等八大传统藏戏，以及根据《格萨尔王传》改编的系列剧目。',
+                        '这些剧目以善恶有报、因果轮回为主题，融入藏族历史、文化与价值观，既有教化功能，又具极强的艺术感染力。'
+                    ]
+                },
+                {
+                    icon: 'fa-star',
+                    title: '表演特点',
+                    content: [
+                        '安多藏戏表演综合了唱、念、做、打多种技艺，演员头戴面具（象征不同神灵与人物），身穿色彩鲜艳的戏服，以独特的步法、手势和程式化动作展现角色。演出通常在露天广场进行，配以鼓、钹等打击乐器。',
+                        '唱腔是安多藏戏的灵魂，高亢激越，气势磅礴，一出完整的藏戏演出往往持续一整天甚至数天，场面宏大，观众席地围坐，气氛热烈而虔诚。'
+                    ]
+                },
+                {
+                    icon: 'fa-leaf',
+                    title: '传承',
+                    content: [
+                        '安多藏戏主要依靠师徒口传心授方式传承，黄南州同仁市设有专门的藏戏团，常年进行创作与演出，是安多藏戏传承的核心力量。每年雪顿节、藏历新年等重大节庆期间，藏戏演出是必不可少的重头节目。',
+                        '近年来，借助数字化保护项目，大量珍贵的安多藏戏表演影像和唱腔资料得到系统整理，为这一古老艺术的保护与传播提供了有力支撑。'
+                    ]
+                }
+            ]
         },
-
-        submitComment() {
-            if (!this.newComment.trim()) {
-                this.showToast('请输入留言内容', 'error');
-                return;
-            }
-            try {
-                const key = `folk_comments_${this.folkId}`;
-                const stored = localStorage.getItem(key);
-                const list = stored ? JSON.parse(stored) : [];
-                const newEntry = {
-                    id: Date.now(),
-                    folkId: this.folkId,
-                    content: this.newComment.trim(),
-                    userName: this.getUserName(),
-                    createTime: new Date().toISOString()
-                };
-                list.unshift(newEntry);
-                localStorage.setItem(key, JSON.stringify(list));
-                this.showToast('留言提交成功', 'success');
-                this.newComment = '';
-                this.loadCommentList();
-            } catch (err) {
-                console.error('提交评论失败:', err);
-                this.showToast('提交失败，请稍后重试', 'error');
-            }
+        3: {
+            id: 3,
+            title: '雪顿节',
+            subtitle: '藏区最盛大的节日——酸奶宴与晒佛节',
+            category: '传统节日',
+            image: 'taersi/images/ts1.jpg',
+            sections: [
+                {
+                    icon: 'fa-sun-o',
+                    title: '节日起源',
+                    content: [
+                        '雪顿节（藏语：ཞོ་སྟོན།，Zhoton）藏语意为"酸奶宴"，起源于17世纪藏传佛教寺院制度。按藏传佛教戒律，夏季安居期间僧侣不得外出，以免踩踏土地中的虫蚁。安居期满后，信众以酸奶招待僧侣，逐渐演变为节日。',
+                        '后来，雪顿节与大型藏戏表演、展佛活动相结合，规模不断扩大，成为藏区一年中规模最宏大的综合性传统节日。'
+                    ]
+                },
+                {
+                    icon: 'fa-calendar',
+                    title: '时间',
+                    content: [
+                        '雪顿节一般在藏历六月底至七月初举行，公历通常对应7月下旬至8月上旬。以拉萨的雪顿节最为著名，持续约一周；而塔尔寺的雪顿节亦吸引大批信众和游客。',
+                        '塔尔寺的展佛仪式是青海雪顿节最重要的活动，届时将巨幅释迦牟尼唐卡铺展于山坡之上，供信众瞻仰礼拜，场面极为壮观震撼。'
+                    ]
+                },
+                {
+                    icon: 'fa-star',
+                    title: '活动内容',
+                    content: [
+                        '雪顿节期间活动丰富多彩：展佛——将珍贵巨型唐卡铺展于山坡晾晒供奉；藏戏——各剧团连续演出数天传统藏戏；集市——汇聚各地物产与手工艺品；赛马、射箭、藏族歌舞表演等民俗活动也一应俱全。',
+                        '信众们盛装出席，与家人共食酸奶，互赠祝福，整个节庆期间弥漫着浓厚的宗教氛围与欢乐气息，是藏族文化最集中、最生动的展示舞台。'
+                    ]
+                },
+                {
+                    icon: 'fa-map-marker',
+                    title: '各地习俗',
+                    content: [
+                        '青海塔尔寺的雪顿节以"晒大佛"最为著名，清晨时分，僧侣们将绣有释迦牟尼像的巨幅唐卡徐徐展开，信众叩首跪拜，香烟缭绕，场面令人动容。',
+                        '黄南州同仁的雪顿节则以大型藏戏演出见长，多个藏戏团同台竞技；果洛州的雪顿节与赛马节相结合，融宗教庆典与游牧文化节庆于一体，彰显安多藏区独特的文化风貌。'
+                    ]
+                }
+            ]
         },
-
-        getUserName() {
-            return localStorage.getItem('userName') || `游客${Math.random().toString(36).substr(2, 6)}`;
+        4: {
+            id: 4,
+            title: '转湖习俗',
+            subtitle: '环绕圣湖的朝圣之旅',
+            category: '宗教习俗',
+            image: 'qinghahu/images/nn3.jpg',
+            sections: [
+                {
+                    icon: 'fa-heart',
+                    title: '朝圣意义',
+                    content: [
+                        '转湖（藏语：མཚོ་སྐོར།）是藏传佛教信众围绕圣湖顺时针行走的宗教朝圣活动。藏族人相信，圣湖是神灵居所，绕湖转行能消除业障、积累功德、祈福禳灾。青海湖（藏语：错温波，意为"青色的大湖"）是安多地区最神圣的湖泊，也是藏族人心中的圣地。',
+                        '转湖不仅是一种宗教修行，更是心灵净化与自我超越的旅程，许多信众一生中会多次完成转湖，以示虔诚。'
+                    ]
+                },
+                {
+                    icon: 'fa-road',
+                    title: '转湖线路',
+                    content: [
+                        '青海湖周长约360公里，完整转湖一圈需步行约7至10天。传统徒步转湖路线沿湖岸展开，途经鸟岛、沙岛、二郎剑等著名景点，沿途可见大量玛尼石堆、经幡和嘛呢旗帜。',
+                        '近年来，骑行转湖日趋流行，每年7至8月的青海湖国际公路自行车赛吸引大批骑行爱好者参与环湖骑行，将宗教朝圣传统与现代运动文化相结合。'
+                    ]
+                },
+                {
+                    icon: 'fa-flag',
+                    title: '转湖习俗',
+                    content: [
+                        '转湖途中，朝圣者手持转经筒，口诵六字真言（嗡嘛呢叭咪吽），每隔一段路便向湖面抛洒糌粑粉或风马旗，祈愿随风飘散至天地四方。遇到玛尼堆时，信众会添放石块并绕行三圈。',
+                        '在特定圣地和泉眼处，朝圣者会取水饮用或带回家中，认为圣湖之水具有加持与疗愈之力。同行的朝圣者之间互相扶助、同甘共苦，彰显藏族社区的团结精神。'
+                    ]
+                },
+                {
+                    icon: 'fa-clock-o',
+                    title: '最佳时间',
+                    content: [
+                        '转湖的最佳季节为每年藏历4月至9月，对应公历5月至10月，此时气候温和，湖畔草场青翠，油菜花盛开，风光绝美。其中藏历6月15日（公历7月中下旬）前后是转湖的传统高峰期，信众最为集中。',
+                        '每逢藏历马年，转湖的宗教意义尤为殊胜，信众相信马年转湖一圈的功德相当于平常年份的十二倍，届时来自全国各地的藏族信众蜂拥而至，场面蔚为壮观。'
+                    ]
+                }
+            ]
         },
-
-        getInitial(name) {
-            return name.charAt(0);
+        5: {
+            id: 5,
+            title: '煨桑仪式',
+            subtitle: '以烟为语，与天地神灵沟通的古老礼仪',
+            category: '宗教仪式',
+            image: 'sangkecaoyuan/images/skcy1.jpg',
+            sections: [
+                {
+                    icon: 'fa-history',
+                    title: '仪式背景',
+                    content: [
+                        '煨桑（藏语：བསང་།，Sang）是藏传佛教及苯教传统中一种以烟火祭祀为核心的宗教仪式，历史可追溯至苯教时代，后被藏传佛教吸纳融合，成为藏区最普遍的日常宗教活动之一。',
+                        '"桑"意为"净化"，煨桑仪式通过燃烧芳香植物产生的烟雾，象征向神灵献供、净化污秽、祈求吉祥，是藏族人与天地神灵沟通的重要媒介。'
+                    ]
+                },
+                {
+                    icon: 'fa-list-ol',
+                    title: '仪式步骤',
+                    content: [
+                        '煨桑仪式通常在清晨日出时分举行，选择寺庙外、山顶或水边的专用桑炉处进行。首先由喇嘛或长者点燃桑火，随后依次添加燃料，同时诵念相应的祈祷经文和咒语。',
+                        '信众围绕桑炉顺时针转行，手持哈达和风马旗，向火中抛洒供品，最后将风马旗抛向空中，任其随烟飘散。整个仪式庄严肃穆，参与者心怀虔诚，专注祈愿。'
+                    ]
+                },
+                {
+                    icon: 'fa-leaf',
+                    title: '用料',
+                    content: [
+                        '煨桑的核心燃料为柏树枝（尤以柏枝为最佳），因其清香之气被认为能愉悦神灵。此外还会加入糌粑（炒青稞粉）、酥油、红糖、奶渣、干果、茶叶等食物供品，以及藏香、藏药草等芳香植物。',
+                        '不同的祈愿目的使用不同的配料组合：祈福长寿用菊花、藏红花；消灾驱邪用艾草、杜鹃枝；祈求丰收用五谷；祈求健康用藏医草药。'
+                    ]
+                },
+                {
+                    icon: 'fa-star',
+                    title: '文化意义',
+                    content: [
+                        '煨桑仪式贯穿藏族人的整个生命历程——出生、成年、婚嫁、远行、节庆、丧葬等重要时刻都离不开煨桑，是藏族信仰体系与日常生活深度融合的生动体现。',
+                        '在安多藏区，桑炉是寺庙与村落中最重要的公共宗教设施，每日清晨升腾的桑烟是藏区最典型的文化符号之一，承载着一方百姓对美好生活的期许与对神圣力量的敬畏。'
+                    ]
+                }
+            ]
         },
-
-        formatDate(dateStr) {
-            if (!dateStr) return '';
-            const date = new Date(dateStr);
-            return date.toLocaleString('zh-CN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        },
-
-        showToast(message, type = 'success') {
-            this.toastMessage = message;
-            this.toastType = type;
-            
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
+        6: {
+            id: 6,
+            title: '藏历新年',
+            subtitle: '洛萨节——雪域高原辞旧迎新的盛典',
+            category: '传统节日',
+            image: 'sanjiangyuan/images/sjy.jpg',
+            sections: [
+                {
+                    icon: 'fa-calendar',
+                    title: '时间计算',
+                    content: [
+                        '藏历新年（藏语：ལོ་གསར།，Losar）是藏族一年中最重要的传统节日，时间依据藏历推算，通常在公历2月至3月之间，与汉族春节相近但不完全重合，有时相差数周。',
+                        '藏历以阴阳五行和天干地支为基础结合月相推算，每年的确切日期由各大寺院的天文历算师根据传统方法测定发布，全藏区以此为准。'
+                    ]
+                },
+                {
+                    icon: 'fa-home',
+                    title: '节前准备',
+                    content: [
+                        '藏历十二月下旬，家家户户开始打扫房屋、粉刷墙壁、制作节庆食品。最具代表性的准备工作是制作"卡赛"（油炸糕点）和"切玛"（五谷丰登的盒装供品），以及在屋顶悬挂崭新的经幡。',
+                        '除夕（藏历十二月二十九日）家人共吃"古突"（九宝面疙瘩汤），汤中包有石子、羊毛、辣椒、木炭等不同东西，据说吃到不同的东西预示着不同的运势，气氛欢乐热闹。'
+                    ]
+                },
+                {
+                    icon: 'fa-star',
+                    title: '节日活动',
+                    content: [
+                        '藏历正月初一，家人互赠"洛萨扎西德勒"（新年吉祥如意）的祝福，喝青稞酒、吃卡赛。寺院举行大规模法会，喇嘛们身着盛装诵经祈祷，跳"羌姆"（神舞，亦称跳神），驱邪纳吉。',
+                        '正月初三至初五，村民聚集广场，举行赛马、射箭、拔河、锅庄舞等传统娱乐活动，歌声舞影弥漫整个村落。寺庙的辩经和晒佛活动也是重要节目，信众络绎不绝。'
+                    ]
+                },
+                {
+                    icon: 'fa-map-marker',
+                    title: '各地差异',
+                    content: [
+                        '安多藏区各地的藏历新年习俗各有侧重：果洛州的新年庆典与格萨尔文化紧密相连，民间说唱艺人专门演唱新年版格萨尔故事；黄南州同仁以藏戏表演开年；海南州共和县的煨桑祈福规模尤为盛大。',
+                        '塔尔寺的正月祈愿大法会（毛兰姆）吸引来自各地的数万名信众，寺院内外人山人海，酥油花展、晒佛等活动令人叹为观止，是安多藏历新年最壮观的宗教盛典。'
+                    ]
+                }
+            ]
         }
+    };
+
+    // ==========================================
+    // 图片降级处理
+    // ==========================================
+    var FALLBACK_COLORS = [
+        'linear-gradient(135deg, #9B2B25 0%, #D4AF37 100%)',
+        'linear-gradient(135deg, #2C6E8A 0%, #D4AF37 100%)',
+        'linear-gradient(135deg, #3D7A47 0%, #D4AF37 100%)',
+        'linear-gradient(135deg, #5B3A8E 0%, #E8A87C 100%)',
+        'linear-gradient(135deg, #2C3E50 0%, #9B2B25 100%)',
+        'linear-gradient(135deg, #7a1f1a 0%, #4a7c59 100%)'
+    ];
+
+    function createImgWithFallback(src, alt, id) {
+        var img = document.createElement('img');
+        img.alt = alt;
+        img.onerror = function () {
+            this.style.display = 'none';
+            this.parentElement.style.background = FALLBACK_COLORS[(id - 1) % FALLBACK_COLORS.length];
+        };
+        img.src = src;
+        return img;
     }
-}).mount('#app');
+
+    // ==========================================
+    // 渲染逻辑
+    // ==========================================
+    function getIdFromUrl() {
+        var params = new URLSearchParams(window.location.search);
+        return parseInt(params.get('id'), 10);
+    }
+
+    function renderError(container) {
+        container.innerHTML = [
+            '<div class="error-page">',
+            '  <div class="error-icon"><i class="fa fa-frown-o"></i></div>',
+            '  <h2>未找到该民俗内容</h2>',
+            '  <p>请检查链接是否正确，或返回首页重新选择。</p>',
+            '  <a href="index.html" class="back-btn"><i class="fa fa-home"></i> 返回首页</a>',
+            '</div>'
+        ].join('');
+    }
+
+    function renderFolk(container, folk) {
+        // Hero Banner
+        var banner = document.createElement('div');
+        banner.className = 'hero-banner';
+
+        var img = createImgWithFallback(folk.image, folk.title, folk.id);
+        banner.appendChild(img);
+
+        var overlay = document.createElement('div');
+        overlay.className = 'hero-overlay';
+        overlay.innerHTML = [
+            '<div class="hero-category"><i class="fa fa-certificate"></i> ' + folk.category + '</div>',
+            '<h1 class="hero-title">' + folk.title + '</h1>',
+            '<p class="hero-subtitle">' + folk.subtitle + '</p>'
+        ].join('');
+        banner.appendChild(overlay);
+        container.appendChild(banner);
+
+        // 内容段落卡片
+        var sectionIcons = ['fa-history', 'fa-book', 'fa-heart', 'fa-users'];
+        folk.sections.forEach(function (sec, idx) {
+            var card = document.createElement('div');
+            card.className = 'card';
+
+            var header = document.createElement('div');
+            header.className = 'card-header';
+            header.innerHTML = [
+                '<div class="card-icon"><i class="fa ' + sec.icon + '"></i></div>',
+                '<h2 class="card-title">' + sec.title + '</h2>'
+            ].join('');
+            card.appendChild(header);
+
+            var body = document.createElement('div');
+            body.className = 'card-body';
+            sec.content.forEach(function (para) {
+                var p = document.createElement('p');
+                p.textContent = para;
+                body.appendChild(p);
+            });
+            card.appendChild(body);
+            container.appendChild(card);
+        });
+
+        // 返回按钮
+        var btnWrap = document.createElement('div');
+        btnWrap.className = 'back-btn-wrap';
+        btnWrap.innerHTML = '<a href="index.html" class="back-btn"><i class="fa fa-arrow-left"></i> 返回首页</a>';
+        container.appendChild(btnWrap);
+    }
+
+    // ==========================================
+    // 入口
+    // ==========================================
+    var container = document.getElementById('main-content');
+    var id = getIdFromUrl();
+
+    if (!id || !FOLK_DATA[id]) {
+        renderError(container);
+    } else {
+        renderFolk(container, FOLK_DATA[id]);
+    }
+
+    // 动态更新页面标题
+    if (id && FOLK_DATA[id]) {
+        document.title = FOLK_DATA[id].title + ' - 民俗文化详情 - 雪域安多·藏韵传承';
+    }
+})();
 </script>
 </body>
 </html>

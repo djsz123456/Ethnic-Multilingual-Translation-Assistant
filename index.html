@@ -622,6 +622,20 @@
       color: var(--primary-gold);
     }
 
+    /* 整张卡片可点击 */
+    .card { position: relative; }
+    .card-link {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: inherit;
+    }
+    .card-footer .action-btn,
+    .card-title a {
+      position: relative;
+      z-index: 2;
+    }
+
     .card-desc {
       font-size: 14px;
       color: var(--text-secondary);
@@ -753,6 +767,19 @@
       font-size: 14px;
       color: var(--text-secondary);
       font-family: 'Noto Sans Tibetan', sans-serif;
+    }
+
+    /* 整张工具卡片可点击 */
+    .tool-card { position: relative; }
+    .tool-card .card-link {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: inherit;
+    }
+    .tool-title a {
+      position: relative;
+      z-index: 2;
     }
 
     .footer {
@@ -1730,34 +1757,6 @@
       display: none;
     }
 
-    .nav-main {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      list-style: none;
-      padding: 0;
-    }
-
-    .horizontal-nav {
-      width: 100%;
-      background: linear-gradient(135deg, #9B2B25 0%, #B83C2E 100%);
-      margin: 40px 0;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-      border-radius: 12px;
-      position: relative;
-    }
-
-    @media (max-width: 768px) {
-      .nav-main { flex-direction: column; }
-      .nav-region { max-width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
-      .nav-region-trigger { flex-direction: row; justify-content: space-between; padding: 16px 20px; }
-      .nav-region-trigger-chevron { display: inline-block; font-size: 12px; transition: transform 0.3s; }
-      .nav-region.active .nav-region-trigger-chevron { transform: rotate(180deg); }
-      .nav-submenu { position: static; border-radius: 0; box-shadow: none; background: rgba(0,0,0,0.15); }
-      .nav-submenu-list { flex-direction: column; gap: 4px; padding: 10px 20px; }
-      .nav-submenu-item a { align-items: flex-start; }
-    }
 
     /* 藏地旅游模块样式 */
     .tour-map-section {
@@ -1962,108 +1961,6 @@
     </div>
   </section>
 
-  <nav class="horizontal-nav" aria-label="景点导航">
-    <ul class="nav-main">
-      <li class="nav-region" 
-          :class="{ active: activeRegion === 'qinghai' }"
-          @mouseenter="handleRegionHover('qinghai')"
-          @mouseleave="handleRegionLeave('qinghai')"
-          @click="toggleRegion('qinghai')">
-        <button class="nav-region-trigger" aria-expanded="activeRegion === 'qinghai'">
-          <span>青海安多核心区</span>
-          <span class="nav-region-label">安多文化核心承载区</span>
-          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
-        </button>
-        <div class="nav-submenu">
-          <ul class="nav-submenu-list">
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'riyueshan' }"><a href="riyueshan/riyueshan.html" @click="setActiveScenic('riyueshan')">日月山<span>安多门户</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'qinghaihu' }"><a href="qinghahu/qinghaihu.html" @click="setActiveScenic('qinghaihu')">青海湖<span>圣湖</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'nanzong' }"><a href="nanzong/nanzong.html" @click="setActiveScenic('nanzong')">南宗寺<span>佛教圣地</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'xiaqiong' }"><a href="xiaqiong/xiaqiongsi.html" @click="setActiveScenic('xiaqiong')">夏琼寺<span>宗喀巴祖庭</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'labulengsi' }"><a href="labulengsi/labulengsi.html" @click="setActiveScenic('labulengsi')">拉卜楞寺<span>安多佛教学府</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'taersi' }"><a href="taersi/taersi.html" @click="setActiveScenic('taersi')">塔尔寺<span>藏传佛教名寺</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'xuanshan' }"><a href="xueshan/xueshan.html" @click="setActiveScenic('xuanshan')">阿尼玛沁雪山<span>神山</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sanjiangyuan' }"><a href="sanjiangyuan/sanjiangyuan.html" @click="setActiveScenic('sanjiangyuan')">三江源<span>中华水塔</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'guoluo' }"><a href="guoluo/guoluo.html" @click="setActiveScenic('guoluo')">果洛<span>格萨尔文化之乡</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'huangnan' }"><a href="huangnan/huangnan.html" @click="setActiveScenic('huangnan')">黄南<span>热贡艺术发源地</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'yushu' }"><a href="yushu/yushu.html" @click="setActiveScenic('yushu')">玉树<span>康巴安多交融地</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'guide' }"><a href="guide/guide.html" @click="setActiveScenic('guide')">贵德<span>高原江南</span></a></li>
-          </ul>
-        </div>
-      </li>
-      
-      <li class="nav-region" 
-          :class="{ active: activeRegion === 'gannan' }"
-          @mouseenter="handleRegionHover('gannan')"
-          @mouseleave="handleRegionLeave('gannan')"
-          @click="toggleRegion('gannan')">
-        <button class="nav-region-trigger" aria-expanded="activeRegion === 'gannan'">
-          <span>甘南安多文化区</span>
-          <span class="nav-region-label">安多文化重要传承地</span>
-          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
-        </button>
-        <div class="nav-submenu">
-          <ul class="nav-submenu-list">
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'labulengsi-gn' }"><a href="labulengsi/labulengsi.html" @click="setActiveScenic('labulengsi-gn')">拉卜楞寺<span>核心地标</span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'langmusi' }"><a href="lms/lms.html" @click="setActiveScenic('langmusi')">郎木寺<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'zagan' }"><a href="zgn/zgn.html" @click="setActiveScenic('zagan')">扎尕那<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="sangkecaoyuan/sangkecaoyuan.html" @click="setActiveScenic('sangke')">桑科草原<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="milariba/milariba.html" @click="setActiveScenic('sangke')">米拉日巴佛阁<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="xiahe/xiahe1.html" @click="setActiveScenic('sangke')">夏河 八角城<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="maqu/maqu.html" @click="setActiveScenic('sangke')">玛曲<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'sangke' }"><a href="xiahe/xiahe2.html" @click="setActiveScenic('sangke')">夏河 甘加草原<span></span></a></li>
-          </ul>
-        </div>
-      </li>
-      
-      <li class="nav-region" 
-          :class="{ active: activeRegion === 'chuanxibei' }"
-          @mouseenter="handleRegionHover('chuanxibei')"
-          @mouseleave="handleRegionLeave('chuanxibei')"
-          @click="toggleRegion('chuanxibei')">
-        <button class="nav-region-trigger" aria-expanded="activeRegion === 'chuanxibei'">
-          <span>川西北安多片区</span>
-          <span class="nav-region-label">安多与康巴文化交融区</span>
-          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
-        </button>
-        <div class="nav-submenu">
-          <ul class="nav-submenu-list">
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'aba' }"><a href="aba/aba.html" @click="setActiveScenic('aba')">阿坝州<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'ruorgai' }"><a href="ruoergai/ruoergai.html" @click="setActiveScenic('ruorgai')">若尔盖草原<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'songpan' }"><a href="songpan/songpan.html" @click="setActiveScenic('songpan')">松潘古城<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'nianbaoyuze' }"><a href="nianbaoyuze/nianbaoyuze.html" @click="setActiveScenic('nianbaoyuze')">年宝玉则<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'zhuokeji' }"><a href="zhuokeji/zhuokeji.html" @click="setActiveScenic('zhuokeji')">马尔康卓克基官寨<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'huanghewan' }"><a href="huanghewan/huanghewan.html" @click="setActiveScenic('huanghewan')">九曲黄河第一湾<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'hongyuan' }"><a href="hongyuan/hongyuan.html" @click="setActiveScenic('hongyuan')">红原大草原<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'gemoshi' }"><a href="gemoshi/gemoshi.html" @click="setActiveScenic('gemoshi')">阿坝县各莫寺<span></span></a></li>
-          </ul>
-        </div>
-      </li>
-      
-      <li class="nav-region" 
-          :class="{ active: activeRegion === 'zangbei' }"
-          @mouseenter="handleRegionHover('zangbei')"
-          @mouseleave="handleRegionLeave('zangbei')"
-          @click="toggleRegion('zangbei')">
-        <button class="nav-region-trigger" aria-expanded="activeRegion === 'zangbei'">
-          <span>藏北安多延伸区</span>
-          <span class="nav-region-label">安多文化西向延伸带</span>
-          <i class="fa fa-chevron-down nav-region-trigger-chevron"></i>
-        </button>
-        <div class="nav-submenu">
-          <ul class="nav-submenu-list">
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/naqu.html" @click="setActiveScenic('naqu')">那曲<span></span></a></li>
-            <li class="nav-submenu-item" :class="{ active: currentScenic === 'tangula' }"><a href="naqu/tanggulashankou.html" @click="setActiveScenic('tangula')">唐古拉山口<span></span></a></li>
-             <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/namucuo.html" @click="setActiveScenic('naqu')">纳木措<span></span></a></li>
-              <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/kekexili.html" @click="setActiveScenic('naqu')">可可西里<span></span></a></li>
-               <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/kulouqiang.html" @click="setActiveScenic('naqu')">骷髅墙<span></span></a></li>
-                <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/selincuo.html" @click="setActiveScenic('naqu')">色林错<span></span></a></li>
-                 <li class="nav-submenu-item" :class="{ active: currentScenic === 'naqu' }"><a href="naqu/zandansi.html" @click="setActiveScenic('naqu')">赞丹寺<span></span></a></li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </nav>
 
   <main class="main-container" id="main-content">
     <section id="culture" aria-labelledby="culture-title">
@@ -2082,6 +1979,7 @@
                @touchmove="onDrag($event, 'culture')"
                @touchend="endDrag('culture')">
             <article class="card" v-for="(item,i) in folkList" :key="i">
+              <a :href="`minsu.html?id=${item.id}`" class="card-link" :aria-label="item.title"></a>
               <div class="card-image-wrapper">
                 <img :src="item.img" :alt="item.title" loading="lazy">
                 <div class="card-overlay"></div>
@@ -2132,6 +2030,7 @@
                @touchmove="onDrag($event, 'tour')"
                @touchend="endDrag('tour')">
             <article class="card" v-for="(item,i) in tourList" :key="i">
+              <a :href="item.link || `jingdian.html?id=${item.id}`" class="card-link" :aria-label="item.title"></a>
               <div class="card-image-wrapper">
                 <img :src="item.img" :alt="item.title" loading="lazy">
                 <div class="card-overlay"></div>
@@ -2143,7 +2042,7 @@
                 <div class="card-footer">
                   <span><i class="fa fa-star"></i> 热门景点</span>
                   <span class="card-action">
-                    <a :href="`jingdian.html?id=${item.id}`" class="action-btn">
+                    <a :href="item.link || `jingdian.html?id=${item.id}`" class="action-btn">
                       <i class="fa fa-arrow-right"></i>
                       查看详情
                     </a>
@@ -2261,48 +2160,56 @@
       <h2 class="section-title" id="tools-title">藏文实用工具（ལག་ཆ།）</h2>
       <div class="tools-grid">
         <div class="tool-card">
+          <a href="zangli-master/calendar.html" class="card-link" aria-label="藏文日历"></a>
           <div class="tool-icon"><i class="fa fa-calendar"></i></div>
           <h3 class="tool-title"><a href="zangli-master/calendar.html">藏文日历</a></h3>
           <p class="tool-tibetan">བོད་ཡིག་ལོ་ཐོ།</p>
         </div>
 
         <div class="tool-card">
+          <a href="jianpan/jianpan.html" class="card-link" aria-label="藏族输入法"></a>
           <div class="tool-icon"><i class="fa fa-keyboard-o"></i></div>
           <h3 class="tool-title"><a href="jianpan/jianpan.html">藏族输入法</a></h3>
           <p class="tool-tibetan">བོད་ཡིག་གཏགས་ཐབས</p>
         </div>
 
         <div class="tool-card">
+          <a href="biji/biji.html" class="card-link" aria-label="藏文笔记"></a>
           <div class="tool-icon"><i class="fa fa-pencil"></i></div>
           <h3 class="tool-title"><a href="biji/biji.html">藏文笔记</a></h3>
           <p class="tool-tibetan">བོད་ཡིག་གི་ཟིན་བྲིས།</p>
         </div>
 
         <div class="tool-card">
+          <a href="duanyu/duanyu.html" class="card-link" aria-label="常用短语"></a>
           <div class="tool-icon"><i class="fa fa-comment"></i></div>
           <h3 class="tool-title"><a href="duanyu/duanyu.html">常用短语</a></h3>
           <p class="tool-tibetan">རྒྱུན་བཀོལ་ཚིག་ཐུང་།</p>
         </div>
 
         <div class="tool-card">
+          <a href="zifu/zifu.html" class="card-link" aria-label="藏文字符"></a>
           <div class="tool-icon"><i class="fa fa-font"></i></div>
           <h3 class="tool-title"><a href="zifu/zifu.html">藏文字符</a></h3>
           <p class="tool-tibetan">བོད་ཡིག་ཡིག་འབྲུ།</p>
         </div>
 
         <div class="tool-card">
+          <a href="fanyi/fanyi.html" class="card-link" aria-label="藏文翻译"></a>
           <div class="tool-icon"><i class="fa fa-language"></i></div>
           <h3 class="tool-title"><a href="fanyi/fanyi.html">藏文翻译</a></h3>
           <p class="tool-tibetan">བོད་རྒྱ་རིག་སྒྱུར།</p>
         </div>
 
         <div class="tool-card">
+          <a href="music/music.html" class="card-link" aria-label="传统音乐"></a>
           <div class="tool-icon"><i class="fa fa-music"></i></div>
           <h3 class="tool-title"><a href="music/music.html">传统音乐</a></h3>
           <p class="tool-tibetan">སྲོལ་རྒྱུན་རོལ་དབྱངས</p>
         </div>
 
         <div class="tool-card">
+          <a href="jingdian/jingdian.html" class="card-link" aria-label="藏文经典"></a>
           <div class="tool-icon"><i class="fa fa-book"></i></div>
           <h3 class="tool-title"><a href="jingdian/jingdian.html">藏文经典</a></h3>
           <p class="tool-tibetan">བོད་ཀྱི་གསུང་རབ།</p>
@@ -2327,7 +2234,7 @@
       <div class="footer-section">
         <h3>联系方式</h3>
         <p><i class="fa fa-envelope"></i> contact@tibetan-culture.com</p>
-        <p><i class="fa fa-phone"></i> +86 XXX XXXX XXXX</p>
+        <p><i class="fa fa-phone"></i> +86 400-000-0000</p>
         <p><i class="fa fa-map-marker"></i> 青海省西宁市</p>
       </div>
       <div class="footer-section">
@@ -3074,7 +2981,11 @@ createApp({
         this.showToast('请先登录后再查看详情', 'info')
         return
       }
-      this.showToast(`查看${place.name}详情`, 'info')
+      if (place.link) {
+        window.location.href = place.link
+      } else {
+        this.showToast(`查看${place.name}详情`, 'info')
+      }
     },
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -3236,46 +3147,24 @@ createApp({
       // 简化页面高亮逻辑
     },
     loadFolkList() {
-      fetch('/api/folk/list')
-        .then(res => res.json())
-        .then(data => {
-          if (data.code === 200) {
-            this.folkList = data.data || []
-          }
-        })
-        .catch(err => {
-          console.error('加载民俗列表失败:', err)
-          // Fallback to default data if API fails
-          this.folkList = [
-            { id: 1, title: '藏族情歌《拉伊》', desc: '形式：山间对唱；习俗：青年恋爱交流', img: 'image/mn1.jpg' },
-            { id: 2, title: '安多藏戏', desc: '形式：舞台表演；习俗：节日展演', img: 'image/mn2.jpg' },
-            { id: 3, title: '雪顿节', desc: '形式：晒佛、藏戏、酸奶宴', img: 'image/mn3.jpg' },
-            { id: 4, title: '转湖习俗', desc: '形式：环湖行走；习俗：祈福平安', img: 'image/mn4.jpg' },
-            { id: 5, title: '煨桑仪式', desc: '形式：焚烧柏枝；习俗：祭祀祈福', img: 'image/mn5.jpg' },
-            { id: 6, title: '藏历新年', desc: '形式：家庭团聚、跳神仪式', img: 'image/mn6.jpg' }
-          ]
-        })
+      this.folkList = [
+        { id: 1, title: '藏族情歌《拉伊》', desc: '安多青年在山间以歌声表达爱意，对唱形式流传千年，是游牧民族的浪漫传统。', img: 'guoluo/images/gl.jpg' },
+        { id: 2, title: '安多藏戏', desc: '以面具、唱腔、舞蹈三位一体，每逢节日庆典必演，是藏族最古老的表演艺术。', img: 'huangnan/images/hn1.jpg' },
+        { id: 3, title: '雪顿节', desc: '藏历六七月的晒佛、藏戏、酸奶宴庆典，是安多地区最盛大的传统节日之一。', img: 'taersi/images/ts1.jpg' },
+        { id: 4, title: '转湖习俗', desc: '信众沿青海湖环行祈福，转湖一圈约360公里，是藏传佛教重要的朝圣方式。', img: 'qinghahu/images/nn3.jpg' },
+        { id: 5, title: '煨桑仪式', desc: '焚烧柏枝、糌粑、青稞，烟雾升腾以祭祀山神、祈愿平安，是藏族日常信仰核心。', img: 'sangkecaoyuan/images/skcy1.jpg' },
+        { id: 6, title: '藏历新年', desc: '家庭团聚、跳神驱邪、互赠哈达，热贡地区尤以"於菟"傩舞闻名全国。', img: 'sanjiangyuan/images/sjy.jpg' }
+      ]
     },
     loadTourList() {
-      fetch('/api/tour-spot/list')
-        .then(res => res.json())
-        .then(data => {
-          if (data.code === 200) {
-            this.tourList = data.data || []
-          }
-        })
-        .catch(err => {
-          console.error('加载景点列表失败:', err)
-          // Fallback to default data if API fails
-          this.tourList = [
-            { id: 1, title: '塔尔寺', desc: '青海·西宁｜藏传佛教圣地', img: 'image/nn1.jpg' },
-            { id: 2, title: '青海湖', desc: '青海·海南州｜圣湖转湖', img: 'image/nn2.jpg' },
-            { id: 3, title: '布达拉宫', desc: '西藏·拉萨｜历史建筑', img: 'image/nn3.jpg' },
-            { id: 4, title: '同仁古城', desc: '青海·黄南｜热贡唐卡', img: 'image/nn4.jpg' },
-            { id: 5, title: '日月山', desc: '青海·湟源｜文成公主进藏地标', img: 'image/mn5.jpg' },
-            { id: 6, title: '三江源', desc: '青海·玉树｜长江黄河澜沧江源头', img: 'image/nn6.jpg' }
-          ]
-        })
+      this.tourList = [
+        { id: 1, title: '塔尔寺', desc: '青海·西宁｜格鲁派六大寺之一，宗喀巴大师诞生地，酥油花艺术驰名中外。', img: 'taersi/images/ts1.jpg', link: 'taersi/taersi.html' },
+        { id: 2, title: '青海湖', desc: '青海·海南州｜中国最大内陆咸水湖，藏族心中的圣湖，候鸟天堂。', img: 'qinghahu/images/nn3.jpg', link: 'qinghahu/qinghaihu.html' },
+        { id: 3, title: '拉卜楞寺', desc: '甘南·夏河｜世界最长转经廊，安多藏区最大佛教学府，六大学院完整保存。', img: 'labulengsi/images/lb8.jpg', link: 'labulengsi/labulengsi.html' },
+        { id: 4, title: '黄南热贡', desc: '青海·黄南｜热贡艺术国家级非遗，唐卡、堆绣、泥塑享誉世界。', img: 'huangnan/images/hn1.jpg', link: 'huangnan/huangnan.html' },
+        { id: 5, title: '日月山', desc: '青海·湟源｜文成公主入藏必经地，农耕与游牧文明的地理分界线。', img: 'riyueshan/images/nn2.jpg', link: 'riyueshan/riyueshan.html' },
+        { id: 6, title: '三江源', desc: '青海·玉树｜长江、黄河、澜沧江发源地，中华水塔，世界级生态保护区。', img: 'sanjiangyuan/images/sjy.jpg', link: 'sanjiangyuan/sanjiangyuan.html' }
+      ]
     },
     updateScrollPos(type) {
       const track = this.$refs[type + 'Track']

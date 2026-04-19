@@ -1,184 +1,496 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>藏文30个字母学习工具</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
-        }
-        body {
-            background: #f7f2e9;
-            padding: 30px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #fffaf0;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.08);
-        }
-        h1 {
-            text-align: center;
-            color: #6d3a15;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
-        /* 字母网格 */
-        .letter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-        .letter-card {
-            background: #fff;
-            border: 2px solid #d9b48f;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .letter-card:hover {
-            background: #ffe4b5;
-            border-color: #b97a46;
-            transform: translateY(-3px);
-        }
-        .tibetan-char {
-            font-size: 48px;
-            color: #992620;
-            margin-bottom: 8px;
-        }
-        .phonetic {
-            font-size: 16px;
-            color: #666;
-        }
-        /* 结果展示区 */
-        .result-area {
-            background: #fff;
-            border: 2px solid #b97a46;
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-        }
-        .result-title {
-            font-size: 22px;
-            color: #6d3a15;
-            margin-bottom: 20px;
-        }
-        .syllable-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        .syllable-item {
-            font-size: 56px;
-            color: #992620;
-            padding: 15px;
-            background: #f7f2e9;
-            border-radius: 8px;
-            min-width: 100px;
-        }
-        .empty-tip {
-            font-size: 20px;
-            color: #999;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>藏文30个基本字母 - 雪域安多·藏韵传承</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanstibetan.css">
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f8f5f0;
+    }
+
+    /* 顶部导航栏 */
+    .top-bar {
+      background: var(--primary-red);
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .top-bar a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+
+    .top-bar a:hover {
+      opacity: 1;
+    }
+
+    .top-bar .sep {
+      opacity: 0.5;
+    }
+
+    .top-bar .current {
+      opacity: 1;
+      font-weight: 600;
+      color: var(--primary-gold);
+    }
+
+    /* 主容器 */
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      background: #fffaf8;
+      border-radius: 16px;
+      padding: 36px 30px;
+      box-shadow: 0 4px 20px rgba(155, 43, 37, 0.08);
+    }
+
+    /* 页面标题 */
+    .page-title {
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 30px;
+      font-weight: bold;
+      color: var(--primary-red);
+    }
+
+    .page-subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: #888;
+      margin-bottom: 6px;
+    }
+
+    .page-tibetan {
+      text-align: center;
+      font-size: 20px;
+      color: var(--primary-gold);
+      font-family: "Noto Sans Tibetan", serif;
+      margin-bottom: 32px;
+      letter-spacing: 2px;
+    }
+
+    .divider {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
+      border-radius: 2px;
+      margin: 0 auto 36px;
+    }
+
+    /* 字母网格 */
+    .letter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .letter-card {
+      background: #fff;
+      border: 2px solid #e8d5d4;
+      border-radius: 12px;
+      padding: 18px 10px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .letter-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .letter-card:hover {
+      background: rgba(155, 43, 37, 0.04);
+      border-color: var(--primary-red);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(155, 43, 37, 0.14);
+    }
+
+    .letter-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .letter-card.active {
+      background: rgba(155, 43, 37, 0.06);
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 3px rgba(155, 43, 37, 0.15);
+    }
+
+    .letter-card.active::before {
+      transform: scaleX(1);
+    }
+
+    .tibetan-char {
+      font-size: 44px;
+      color: var(--primary-red);
+      margin-bottom: 6px;
+      line-height: 1.3;
+      font-family: "Noto Sans Tibetan", serif;
+    }
+
+    .phonetic {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+
+    .pronunciation {
+      font-size: 11px;
+      color: #aaa;
+      line-height: 1.4;
+    }
+
+    /* 字母编号徽章 */
+    .letter-num {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-size: 10px;
+      color: var(--primary-gold);
+      font-weight: 600;
+    }
+
+    /* 元音组合展示区 */
+    .result-area {
+      background: #fff;
+      border: 2px solid var(--primary-gold);
+      border-radius: 14px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(212, 175, 55, 0.1);
+    }
+
+    .result-title {
+      font-size: 18px;
+      color: var(--primary-red);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .result-hint {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 24px;
+    }
+
+    .selected-info {
+      display: none;
+      margin-bottom: 20px;
+      padding: 12px 20px;
+      background: rgba(155, 43, 37, 0.06);
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-red);
+      text-align: left;
+    }
+
+    .selected-info.show {
+      display: block;
+    }
+
+    .selected-info-char {
+      font-size: 32px;
+      color: var(--primary-red);
+      font-family: "Noto Sans Tibetan", serif;
+      display: inline-block;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+
+    .selected-info-text {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .selected-info-text .phonetic-label {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .selected-info-text .desc-label {
+      font-size: 13px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .syllable-grid {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .syllable-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 18px 16px;
+      background: #f8f5f0;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      min-width: 90px;
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .syllable-item:hover {
+      border-color: var(--primary-gold);
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    .syllable-char {
+      font-size: 52px;
+      color: var(--primary-red);
+      font-family: "Noto Sans Tibetan", serif;
+      line-height: 1.2;
+    }
+
+    .vowel-label {
+      font-size: 12px;
+      color: var(--primary-gold);
+      font-weight: 600;
+    }
+
+    .empty-tip {
+      font-size: 18px;
+      color: #ccc;
+      padding: 20px 0;
+    }
+
+    /* 说明区 */
+    .info-bar {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      padding: 16px 20px;
+      background: rgba(155, 43, 37, 0.04);
+      border-radius: 10px;
+      border: 1px solid rgba(155, 43, 37, 0.12);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .info-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary-red);
+      flex-shrink: 0;
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .container {
+        margin: 16px;
+        padding: 20px 14px;
+      }
+      .letter-grid {
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+        gap: 10px;
+      }
+      .tibetan-char {
+        font-size: 36px;
+      }
+      .syllable-item {
+        min-width: 72px;
+      }
+      .syllable-char {
+        font-size: 40px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>藏文30个字母学习工具</h1>
 
-        <!-- 30个字母网格 -->
-        <div class="letter-grid" id="letterGrid"></div>
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a href="../index.html">&#8592; 返回首页</a>
+  <span class="sep">|</span>
+  <span class="current">藏文30个基本字母</span>
+</div>
 
-        <!-- 结果展示区 -->
-        <div class="result-area">
-            <div class="result-title">点击上方字母，查看带元音的组合</div>
-            <div class="syllable-grid" id="resultGrid">
-                <div class="empty-tip">请选择一个字母</div>
-            </div>
-        </div>
+<div class="container">
+  <h1 class="page-title">藏文30个基本字母</h1>
+  <p class="page-subtitle">点击字母卡片，查看带元音的音节组合</p>
+  <div class="page-tibetan">བོད་ཡིག་གི་གཞི་བརྟེན་ཡིག་འབྲུ་སུམ་ཅུ།</div>
+  <div class="divider"></div>
+
+  <!-- 提示说明 -->
+  <div class="info-bar">
+    <div class="info-item">
+      <div class="info-dot"></div>
+      藏文字母共30个，称为"康萨"（ཀ་ཁ་ག），是藏文书写的基础
+    </div>
+    <div class="info-item">
+      <div class="info-dot" style="background: var(--primary-gold);"></div>
+      国际音标标注发音，方括号内为IPA转写
+    </div>
+    <div class="info-item">
+      <div class="info-dot" style="background: #888;"></div>
+      点击字母可查看与4个元音符号的组合音节
+    </div>
+  </div>
+
+  <!-- 30个字母网格 -->
+  <div class="letter-grid" id="letterGrid"></div>
+
+  <!-- 元音组合展示区 -->
+  <div class="result-area">
+    <div class="result-title">元音音节组合</div>
+    <div class="result-hint">藏文共4个元音符号：ི（i）、ུ（u）、ེ（e）、ོ（o）</div>
+
+    <!-- 选中字母信息 -->
+    <div class="selected-info" id="selectedInfo">
+      <span class="selected-info-char" id="selectedChar"></span>
+      <span class="selected-info-text">
+        <div class="phonetic-label" id="selectedPhonetic"></div>
+        <div class="desc-label" id="selectedDesc"></div>
+      </span>
     </div>
 
-    <script>
-        // 藏文30个基础字母 + 国际音标（和你提供的字母表完全一致）
-        const tibetanLetters = [
-            { char: 'ཀ', phonetic: 'ka [ka]' },
-            { char: 'ཁ', phonetic: 'kha [kʰa]' },
-            { char: 'ག', phonetic: 'ga [ga]' },
-            { char: 'ང', phonetic: 'nga [ŋa]' },
-            { char: 'ཅ', phonetic: 'ca [tɕa]' },
-            { char: 'ཆ', phonetic: 'cha [tɕʰa]' },
-            { char: 'ཇ', phonetic: 'ja [dʑa]' },
-            { char: 'ཉ', phonetic: 'nya [ɲa]' },
-            { char: 'ཏ', phonetic: 'ta [ta]' },
-            { char: 'ཐ', phonetic: 'tha [tʰa]' }, // 对应图中第二个字母
-            { char: 'ད', phonetic: 'da [da]' },
-            { char: 'ན', phonetic: 'na [na]' },
-            { char: 'པ', phonetic: 'pa [pa]' },
-            { char: 'ཕ', phonetic: 'pha [pʰa]' },
-            { char: 'བ', phonetic: 'ba [ba]' },
-            { char: 'མ', phonetic: 'ma [ma]' },
-            { char: 'ཙ', phonetic: 'tsa [tsa]' },
-            { char: 'ཚ', phonetic: 'tsha [tsʰa]' },
-            { char: 'ཛ', phonetic: 'dza [dza]' },
-            { char: 'ཝ', phonetic: 'wa [wa]' },
-            { char: 'ཞ', phonetic: 'zha [ʒa]' },
-            { char: 'ཟ', phonetic: 'za [za]' },
-            { char: 'འ', phonetic: "'a [a]" },
-            { char: 'ཡ', phonetic: 'ya [ja]' },
-            { char: 'ར', phonetic: 'ra [ra]' },
-            { char: 'ལ', phonetic: 'la [la]' },
-            { char: 'ཤ', phonetic: 'sha [ʃa]' },
-            { char: 'ས', phonetic: 'sa [sa]' },
-            { char: 'ཧ', phonetic: 'ha [ha]' },
-            { char: 'ཨ', phonetic: 'a [a]' }
-        ];
+    <!-- 音节组合 -->
+    <div class="syllable-grid" id="resultGrid">
+      <div class="empty-tip">请点击上方字母卡片</div>
+    </div>
+  </div>
+</div>
 
-        // 4个元音符号
-        const vowels = ['ི', 'ུ', 'ེ', 'ོ'];
+<script>
+  // 藏文30个基础字母，含拼音、国际音标、发音说明
+  const tibetanLetters = [
+    { char: 'ཀ', phonetic: 'ka', ipa: '[ka]',  desc: '清不送气软腭塞音，类似汉语"嘎"' },
+    { char: 'ཁ', phonetic: 'kha', ipa: '[kʰa]', desc: '清送气软腭塞音，类似汉语"卡"' },
+    { char: 'ག', phonetic: 'ga',  ipa: '[ga]',  desc: '浊软腭塞音，类似英语"go"' },
+    { char: 'ང', phonetic: 'nga', ipa: '[ŋa]',  desc: '鼻音，类似汉语"昂"前半段' },
+    { char: 'ཅ', phonetic: 'ca',  ipa: '[tɕa]', desc: '清不送气腭化塞擦音，近似"加"' },
+    { char: 'ཆ', phonetic: 'cha', ipa: '[tɕʰa]',desc: '清送气腭化塞擦音，近似"恰"' },
+    { char: 'ཇ', phonetic: 'ja',  ipa: '[dʑa]', desc: '浊腭化塞擦音，近似"扎"' },
+    { char: 'ཉ', phonetic: 'nya', ipa: '[ɲa]',  desc: '腭鼻音，类似西班牙语"ñ"' },
+    { char: 'ཏ', phonetic: 'ta',  ipa: '[ta]',  desc: '清不送气齿龈塞音，类似汉语"搭"' },
+    { char: 'ཐ', phonetic: 'tha', ipa: '[tʰa]', desc: '清送气齿龈塞音，类似汉语"他"' },
+    { char: 'ད', phonetic: 'da',  ipa: '[da]',  desc: '浊齿龈塞音，类似英语"do"' },
+    { char: 'ན', phonetic: 'na',  ipa: '[na]',  desc: '齿龈鼻音，同汉语"那"' },
+    { char: 'པ', phonetic: 'pa',  ipa: '[pa]',  desc: '清不送气双唇塞音，类似汉语"吧"' },
+    { char: 'ཕ', phonetic: 'pha', ipa: '[pʰa]', desc: '清送气双唇塞音，类似汉语"怕"' },
+    { char: 'བ', phonetic: 'ba',  ipa: '[ba]',  desc: '浊双唇塞音，类似英语"boy"' },
+    { char: 'མ', phonetic: 'ma',  ipa: '[ma]',  desc: '双唇鼻音，同汉语"妈"' },
+    { char: 'ཙ', phonetic: 'tsa', ipa: '[tsa]', desc: '清不送气齿龈塞擦音，类似汉语"杂"' },
+    { char: 'ཚ', phonetic: 'tsha',ipa: '[tsʰa]',desc: '清送气齿龈塞擦音，类似汉语"擦"' },
+    { char: 'ཛ', phonetic: 'dza', ipa: '[dza]', desc: '浊齿龈塞擦音，类似英语"dz"' },
+    { char: 'ཝ', phonetic: 'wa',  ipa: '[wa]',  desc: '圆唇近音，同英语"w"' },
+    { char: 'ཞ', phonetic: 'zha', ipa: '[ʒa]',  desc: '浊腭后摩擦音，类似法语"je"' },
+    { char: 'ཟ', phonetic: 'za',  ipa: '[za]',  desc: '浊齿龈摩擦音，同英语"z"' },
+    { char: 'འ', phonetic: "'a",  ipa: '[ʔa]',  desc: '喉塞音，轻声起始辅音' },
+    { char: 'ཡ', phonetic: 'ya',  ipa: '[ja]',  desc: '腭近音，同英语"y"' },
+    { char: 'ར', phonetic: 'ra',  ipa: '[ra]',  desc: '齿龈颤音或闪音，类似西班牙语"r"' },
+    { char: 'ལ', phonetic: 'la',  ipa: '[la]',  desc: '齿龈边音，同汉语"啦"' },
+    { char: 'ཤ', phonetic: 'sha', ipa: '[ʃa]',  desc: '清腭后摩擦音，类似汉语"沙"' },
+    { char: 'ས', phonetic: 'sa',  ipa: '[sa]',  desc: '清齿龈摩擦音，同汉语"撒"' },
+    { char: 'ཧ', phonetic: 'ha',  ipa: '[ha]',  desc: '清声门摩擦音，同英语"h"' },
+    { char: 'ཨ', phonetic: 'a',   ipa: '[a]',   desc: '开低元音，同汉语"啊"' }
+  ];
 
-        const letterGrid = document.getElementById('letterGrid');
-        const resultGrid = document.getElementById('resultGrid');
+  // 4个元音符号及其名称
+  const vowels = [
+    { mark: 'ི', name: 'i（彝）', ipa: '[i]' },
+    { mark: 'ུ', name: 'u（吴）', ipa: '[u]' },
+    { mark: 'ེ', name: 'e（诶）', ipa: '[e]' },
+    { mark: 'ོ', name: 'o（哦）', ipa: '[o]' }
+  ];
 
-        // 渲染30个字母
-        function renderLetters() {
-            letterGrid.innerHTML = '';
-            tibetanLetters.forEach(letter => {
-                const card = document.createElement('div');
-                card.className = 'letter-card';
-                card.innerHTML = `
-                    <div class="tibetan-char">${letter.char}</div>
-                    <div class="phonetic">${letter.phonetic}</div>
-                `;
-                // 点击事件：生成带元音的组合
-                card.addEventListener('click', () => {
-                    renderSyllables(letter.char);
-                });
-                letterGrid.appendChild(card);
-            });
-        }
+  const letterGrid  = document.getElementById('letterGrid');
+  const resultGrid  = document.getElementById('resultGrid');
+  const selectedInfo    = document.getElementById('selectedInfo');
+  const selectedChar    = document.getElementById('selectedChar');
+  const selectedPhonetic = document.getElementById('selectedPhonetic');
+  const selectedDesc    = document.getElementById('selectedDesc');
 
-        // 渲染「字母+4个元音」的组合
-        function renderSyllables(baseChar) {
-            resultGrid.innerHTML = '';
-            vowels.forEach(vowel => {
-                const item = document.createElement('div');
-                item.className = 'syllable-item';
-                item.textContent = baseChar + vowel;
-                resultGrid.appendChild(item);
-            });
-        }
+  // 渲染30个字母卡片
+  function renderLetters() {
+    tibetanLetters.forEach((letter, idx) => {
+      const card = document.createElement('div');
+      card.className = 'letter-card';
+      card.id = 'card-' + idx;
+      card.innerHTML = `
+        <span class="letter-num">${idx + 1}</span>
+        <div class="tibetan-char">${letter.char}</div>
+        <div class="phonetic">${letter.phonetic} <span style="color:#ccc;">${letter.ipa}</span></div>
+        <div class="pronunciation">${letter.desc.substring(0, 12)}…</div>
+      `;
+      card.addEventListener('click', () => {
+        // 高亮选中
+        document.querySelectorAll('.letter-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        renderSyllables(letter, idx);
+      });
+      letterGrid.appendChild(card);
+    });
+  }
 
-        // 初始化页面
-        renderLetters();
-    </script>
+  // 渲染元音音节组合
+  function renderSyllables(letter, idx) {
+    // 显示选中字母信息
+    selectedChar.textContent = letter.char;
+    selectedPhonetic.textContent = `${letter.phonetic}  ${letter.ipa}`;
+    selectedDesc.textContent = letter.desc;
+    selectedInfo.classList.add('show');
+
+    // 渲染组合音节
+    resultGrid.innerHTML = '';
+    vowels.forEach(vowel => {
+      const item = document.createElement('div');
+      item.className = 'syllable-item';
+      item.innerHTML = `
+        <div class="syllable-char">${letter.char}${vowel.mark}</div>
+        <div class="vowel-label">${vowel.name}</div>
+      `;
+      resultGrid.appendChild(item);
+    });
+  }
+
+  renderLetters();
+</script>
 </body>
 </html>

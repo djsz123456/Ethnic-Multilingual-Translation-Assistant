@@ -1,807 +1,666 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>景点详情 - 雪域安多·藏韵传承</title>
-    
-    <link rel="preconnect" href="https://unpkg.com">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-red: #9B2B25;
-            --primary-gold: #D4AF37;
-            --secondary-orange: #E8A87C;
-            --bg-primary: #FAF9F7;
-            --bg-secondary: #FFFFFF;
-            --text-primary: #2C3E50;
-            --text-secondary: #5D6D7E;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
-            --radius-md: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .back-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 20px;
-            color: var(--primary-red);
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .back-link:hover {
-            color: var(--primary-gold);
-            transform: translateX(-5px);
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-        }
-
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 60vh;
-            gap: 20px;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary-red);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .error-container {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .error-icon {
-            font-size: 48px;
-            color: var(--primary-red);
-            margin-bottom: 20px;
-        }
-
-        .error-message {
-            color: var(--text-secondary);
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .retry-btn {
-            padding: 12px 30px;
-            background: var(--primary-red);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: var(--transition);
-        }
-
-        .retry-btn:hover {
-            background: var(--primary-gold);
-            transform: translateY(-2px);
-        }
-
-        .hero-banner {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            border-radius: var(--radius-md);
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .hero-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .hero-banner:hover img {
-            transform: scale(1.05);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 40px 30px;
-        }
-
-        .hero-title {
-            font-size: 36px;
-            font-weight: 700;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-
-        .hero-subtitle {
-            font-size: 18px;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-
-        .info-tags {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: linear-gradient(135deg, var(--primary-gold), #E8C84A);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 500;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
-        }
-
-        .content-section {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--bg-primary);
-        }
-
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-red), #B83C2E);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-        }
-
-        .section-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--primary-red);
-        }
-
-        .content-text {
-            font-size: 16px;
-            line-height: 2;
-            color: var(--text-primary);
-            white-space: pre-line;
-        }
-
-        .media-section {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        video {
-            width: 100%;
-            border-radius: 8px;
-        }
-
-        .audio-wrapper {
-            background: linear-gradient(135deg, var(--bg-primary), #f0f0f0);
-            border-radius: 8px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .audio-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-red), #B83C2E);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        audio {
-            flex: 1;
-            height: 40px;
-        }
-
-        .comment-section {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 40px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .comment-form {
-            margin-bottom: 30px;
-        }
-
-        .comment-input {
-            width: 100%;
-            min-height: 120px;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 16px;
-            line-height: 1.6;
-            resize: vertical;
-            transition: var(--transition);
-        }
-
-        .comment-input:focus {
-            border-color: var(--primary-red);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(155, 43, 37, 0.1);
-        }
-
-        .comment-input::placeholder {
-            color: #aaa;
-        }
-
-        .submit-btn {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, var(--primary-red), #B83C2E);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .submit-btn:hover {
-            background: linear-gradient(135deg, var(--primary-gold), #E8C84A);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .comment-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .comment-item {
-            padding: 20px;
-            background: var(--bg-primary);
-            border-radius: 8px;
-            border-left: 3px solid var(--primary-gold);
-            transition: var(--transition);
-        }
-
-        .comment-item:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .comment-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary-red), var(--primary-gold));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .user-name {
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .comment-time {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .comment-content {
-            font-size: 15px;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            padding-left: 46px;
-        }
-
-        .empty-comments {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-icon {
-            font-size: 48px;
-            color: #ddd;
-            margin-bottom: 15px;
-        }
-
-        .empty-text {
-            font-size: 16px;
-        }
-
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: var(--primary-red);
-            color: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow-lg);
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-        }
-
-        .toast.success {
-            background: #28a745;
-        }
-
-        .toast.error {
-            background: #dc3545;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-banner {
-                height: 300px;
-            }
-
-            .hero-title {
-                font-size: 28px;
-            }
-
-            .hero-subtitle {
-                font-size: 16px;
-            }
-
-            .content-section,
-            .media-section,
-            .comment-section {
-                padding: 25px;
-            }
-
-            .section-title {
-                font-size: 20px;
-            }
-
-            .content-text {
-                font-size: 15px;
-            }
-
-            .comment-content {
-                padding-left: 0;
-                margin-top: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-banner {
-                height: 250px;
-            }
-
-            .hero-title {
-                font-size: 24px;
-            }
-
-            .hero-overlay {
-                padding: 20px;
-            }
-
-            .back-link {
-                margin: 15px auto;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="雪域安多·藏韵传承 - 景点详情页">
+  <title id="page-title">景点详情 - 雪域安多·藏韵传承</title>
+
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --bg-secondary: #FFFFFF;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    *:focus { outline: none; }
+    *:focus-visible { outline: none; }
+    button { outline: none; }
+    button:focus { outline: none; }
+    a { outline: none; }
+    a:focus { outline: none; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(135deg, var(--primary-red) 0%, #7a1f1a 100%);
+      box-shadow: var(--shadow-md);
+      padding: 0 20px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .navbar-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary-gold), #E8C84A);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .navbar-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .navbar-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 14px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .navbar-back:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 30px 20px 80px;
+    }
+
+    /* ===== LOADING / ERROR ===== */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 55vh;
+      gap: 20px;
+    }
+
+    .loading-spinner {
+      width: 52px;
+      height: 52px;
+      border: 4px solid #f0ece6;
+      border-top: 4px solid var(--primary-red);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .error-container {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .error-icon {
+      font-size: 56px;
+      color: var(--primary-red);
+      margin-bottom: 20px;
+    }
+
+    .error-message {
+      color: var(--text-secondary);
+      font-size: 18px;
+      margin-bottom: 28px;
+      line-height: 1.8;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 32px;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #B83C2E, var(--primary-red));
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ===== HERO BANNER ===== */
+    .hero-banner {
+      position: relative;
+      width: 100%;
+      height: 460px;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .hero-banner:hover img {
+      transform: scale(1.04);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.72) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 36px 36px 32px;
+    }
+
+    .hero-title {
+      font-size: 38px;
+      font-weight: 700;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .hero-address {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212, 175, 55, 0.9);
+      color: #fff;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      align-self: flex-start;
+    }
+
+    /* ===== CONTENT CARDS GRID ===== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .cards-grid.single-col {
+      grid-template-columns: 1fr;
+    }
+
+    .content-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 30px 28px;
+      box-shadow: var(--shadow-sm);
+      border-top: 3px solid var(--primary-gold);
+      transition: var(--transition);
+    }
+
+    .content-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .content-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0ece6;
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary-red);
+    }
+
+    .card-body {
+      font-size: 15px;
+      line-height: 2;
+      color: var(--text-secondary);
+      white-space: pre-line;
+    }
+
+    /* ===== JUMP BUTTON ===== */
+    .action-bar {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .visit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 48px;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: white;
+      text-decoration: none;
+      border-radius: 40px;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 20px rgba(155, 43, 37, 0.35);
+      transition: var(--transition);
+    }
+
+    .visit-btn:hover {
+      background: linear-gradient(135deg, var(--primary-gold), #E8C84A);
+      box-shadow: 0 8px 28px rgba(212, 175, 55, 0.45);
+      transform: translateY(-3px);
+    }
+
+    .visit-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero-banner { height: 300px; }
+      .hero-title { font-size: 28px; }
+      .hero-overlay { padding: 24px 20px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .content-card.full-width { grid-column: 1; }
+      .navbar-title { font-size: 15px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-banner { height: 240px; }
+      .hero-title { font-size: 22px; }
+      .container { padding: 20px 14px 60px; }
+      .visit-btn { padding: 13px 32px; font-size: 15px; }
+    }
+  </style>
 </head>
 <body>
 <div id="app">
-    <a href="index.html" class="back-link">
-        <i class="fa fa-arrow-left"></i>
-        返回首页
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">
+        <i class="fa fa-pagoda" style="font-size:16px;"></i>
+      </div>
+      <span class="navbar-title">雪域安多·藏韵传承</span>
     </a>
+    <a href="index.html" class="navbar-back">
+      <i class="fa fa-home"></i> 返回首页
+    </a>
+  </nav>
 
-    <div class="container">
-        <!-- Loading State -->
-        <div v-if="loading" class="loading-container">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">正在加载景点详情...</div>
-        </div>
+  <!-- ===== MAIN ===== -->
+  <div class="container">
 
-        <!-- Error State -->
-        <div v-else-if="error" class="error-container">
-            <div class="error-icon">
-                <i class="fa fa-exclamation-circle"></i>
-            </div>
-            <div class="error-message">{{ errorMessage }}</div>
-            <button class="retry-btn" @click="loadSpotDetail">
-                <i class="fa fa-refresh"></i> 重新加载
-            </button>
-        </div>
-
-        <!-- Content -->
-        <div v-else>
-            <!-- Hero Banner -->
-            <div class="hero-banner" v-if="spotDetail.cover">
-                <img :src="spotDetail.cover" :alt="spotDetail.title">
-                <div class="hero-overlay">
-                    <h1 class="hero-title">{{ spotDetail.title }}</h1>
-                    <p class="hero-subtitle" v-if="spotDetail.subtitle">{{ spotDetail.subtitle }}</p>
-                </div>
-            </div>
-
-            <!-- Info Tags -->
-            <div class="info-tags" v-if="spotDetail.tags && spotDetail.tags.length > 0">
-                <span class="tag" v-for="(tag, index) in spotDetail.tags" :key="index">{{ tag }}</span>
-            </div>
-
-            <!-- Content Section -->
-            <div class="content-section" v-if="spotDetail.content">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fa fa-map-marker"></i>
-                    </div>
-                    <h2 class="section-title">景点介绍</h2>
-                </div>
-                <div class="content-text">{{ spotDetail.content }}</div>
-            </div>
-
-            <!-- Media Section -->
-            <div class="media-section" v-if="spotDetail.videoUrl || spotDetail.audioUrl">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fa fa-film"></i>
-                    </div>
-                    <h2 class="section-title">多媒体资料</h2>
-                </div>
-
-                <!-- Video -->
-                <div class="video-wrapper" v-if="spotDetail.videoUrl">
-                    <video controls :poster="spotDetail.cover">
-                        <source :src="spotDetail.videoUrl" type="video/mp4">
-                        您的浏览器不支持视频播放
-                    </video>
-                </div>
-
-                <!-- Audio -->
-                <div class="audio-wrapper" v-if="spotDetail.audioUrl">
-                    <div class="audio-icon">
-                        <i class="fa fa-music"></i>
-                    </div>
-                    <audio controls>
-                        <source :src="spotDetail.audioUrl" type="audio/mpeg">
-                        您的浏览器不支持音频播放
-                    </audio>
-                </div>
-            </div>
-
-            <!-- Comment Section -->
-            <div class="comment-section">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fa fa-comments"></i>
-                    </div>
-                    <h2 class="section-title">游客留言 ({{ commentList.length }})</h2>
-                </div>
-
-                <!-- Comment Form -->
-                <div class="comment-form">
-                    <textarea 
-                        class="comment-input" 
-                        v-model="newComment"
-                        placeholder="分享你的游玩体验..."
-                        maxlength="500"
-                    ></textarea>
-                    <button class="submit-btn" @click="submitComment" :disabled="!newComment.trim()">
-                        <i class="fa fa-paper-plane"></i>
-                        提交留言
-                    </button>
-                </div>
-
-                <!-- Comment List -->
-                <div class="comment-list" v-if="commentList.length > 0">
-                    <div class="comment-item" v-for="(comment, index) in commentList" :key="index">
-                        <div class="comment-header">
-                            <div class="comment-user">
-                                <div class="user-avatar">
-                                    {{ getInitial(comment.userName || '匿名用户') }}
-                                </div>
-                                <span class="user-name">{{ comment.userName || '匿名用户' }}</span>
-                            </div>
-                            <span class="comment-time">{{ formatDate(comment.createTime) }}</span>
-                        </div>
-                        <div class="comment-content">{{ comment.content }}</div>
-                    </div>
-                </div>
-
-                <!-- Empty State -->
-                <div v-else class="empty-comments">
-                    <div class="empty-icon">
-                        <i class="fa fa-commenting-o"></i>
-                    </div>
-                    <div class="empty-text">暂无留言，快来抢沙发吧！</div>
-                </div>
-            </div>
-        </div>
+    <!-- Loading -->
+    <div v-if="loading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">正在加载景点详情...</div>
     </div>
+
+    <!-- Error -->
+    <div v-else-if="error" class="error-container">
+      <div class="error-icon"><i class="fa fa-exclamation-circle"></i></div>
+      <div class="error-message">{{ errorMessage }}</div>
+      <a href="index.html" class="back-btn">
+        <i class="fa fa-home"></i> 返回首页
+      </a>
+    </div>
+
+    <!-- Content -->
+    <div v-else>
+
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <img :src="spot.cover" :alt="spot.name" @error="onImgError">
+        <div class="hero-overlay">
+          <h1 class="hero-title">{{ spot.name }}</h1>
+          <span class="hero-address">
+            <i class="fa fa-map-marker"></i>{{ spot.address }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Content Cards -->
+      <div :class="['cards-grid', spot.sections.length === 1 ? 'single-col' : '']">
+        <div
+          v-for="(sec, idx) in spot.sections"
+          :key="idx"
+          :class="['content-card', spot.sections.length % 2 !== 0 && idx === spot.sections.length - 1 ? 'full-width' : '']"
+        >
+          <div class="card-header">
+            <div class="card-icon">
+              <i :class="'fa ' + sec.icon"></i>
+            </div>
+            <h2 class="card-title">{{ sec.title }}</h2>
+          </div>
+          <div class="card-body">{{ sec.content }}</div>
+        </div>
+      </div>
+
+      <!-- Jump Button -->
+      <div class="action-bar" v-if="spot.link">
+        <a :href="spot.link" class="visit-btn">
+          <i class="fa fa-external-link"></i>
+          访问完整页面
+        </a>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script>
 const { createApp } = Vue;
 
+// ===== 本地景点静态数据（6条）=====
+const SPOT_DATABASE = {
+  '1': {
+    id: '1',
+    name: '塔尔寺',
+    address: '青海·西宁',
+    cover: 'taersi/images/ts1.jpg',
+    link: 'taersi/taersi.html',
+    sections: [
+      {
+        icon: 'fa-info-circle',
+        title: '景点简介',
+        content: '塔尔寺（藏语：སྐུ་འབུམ་བྱམས་པ་གླིང་།）位于青海省湟中区，距西宁市约25公里，是藏传佛教格鲁派六大寺院之一，也是宗喀巴大师的诞生地。始建于明朝嘉靖年间，至今已有逾四百年历史，是安多地区规模最大、最具影响力的藏传佛教寺院之一。'
+      },
+      {
+        icon: 'fa-book',
+        title: '历史渊源',
+        content: '宗喀巴大师（1357—1419）是藏传佛教格鲁派的创立者。相传其母觉尊仁钦在大师出生地种下一株菩提树，后人在此建塔纪念，逐渐扩建为今日之塔尔寺。寺名来源于先有大银塔（"塔尔"即藏语"大银塔"之缩译）、后有寺院之建寺历史。'
+      },
+      {
+        icon: 'fa-building',
+        title: '建筑艺术',
+        content: '全寺占地约600余亩，由大金瓦寺、小金瓦寺、大经堂、如意塔等九个殿堂及众多僧舍组成，融藏、汉建筑风格于一体。主殿金顶辉煌，大经堂气势恢宏，是藏汉建筑艺术高度融合的典范。'
+      },
+      {
+        icon: 'fa-star',
+        title: '三绝特色',
+        content: '塔尔寺以"酥油花、壁画、堆绣"三绝驰名中外。\n· 酥油花：以酥油雕塑各种佛像、花卉、人物，精妙绝伦，每年正月十五灯节展出，吸引万人观瞻。\n· 壁画：寺内壁画色彩浓烈、题材丰富，是研究藏族绘画史的重要资料。\n· 堆绣：以彩色绸缎剪贴拼缝而成，立体感强，工艺繁复。'
+      },
+      {
+        icon: 'fa-calendar',
+        title: '旅游信息',
+        content: '开放时间：07:30—18:30（旺季），08:00—17:30（淡季）\n门票：全票80元，优惠票40元\n最佳游览时节：4月—10月，其中农历正月十五（酥油花灯节）、四月法会期间最为热闹\n交通：西宁市区乘坐旅游专线或打车约40分钟可达'
+      }
+    ]
+  },
+  '2': {
+    id: '2',
+    name: '青海湖',
+    address: '青海·海南州',
+    cover: 'qinghahu/images/nn3.jpg',
+    link: 'qinghahu/qinghaihu.html',
+    sections: [
+      {
+        icon: 'fa-tint',
+        title: '圣湖简介',
+        content: '青海湖（藏语：མཚོ་སྔོན་པོ།，意为"蓝色的海"）是中国面积最大的内陆咸水湖，湖面海拔约3196米，面积约4583平方公里，南北宽约63公里，东西长约104公里。在藏族文化中，青海湖被视为神圣之地，是安多藏区重要的宗教朝圣目的地。'
+      },
+      {
+        icon: 'fa-twitter',
+        title: '鸟岛奇观',
+        content: '湖中的海西山（俗称"鸟岛"）是国家级自然保护区，每年4—7月有斑头雁、棕头鸥、鱼鸥、鸬鹚等10余万只候鸟在此繁殖栖息，场面壮观。鸟岛是观赏候鸟种群的最佳地点之一，被誉为"鸟类的王国"。'
+      },
+      {
+        icon: 'fa-bicycle',
+        title: '环湖骑行',
+        content: '环湖公路全长约360公里，沿途经过二郎剑、黑马河、鸟岛、沙岛等著名景点。每年7—8月举办的"环青海湖国际公路自行车赛"是亚洲顶级赛事之一，届时彩旗飘扬，车手与山水相映成趣。'
+      },
+      {
+        icon: 'fa-sun-o',
+        title: '最佳游览时节',
+        content: '最佳旅游时间：6月下旬—8月，此时湖畔油菜花盛开，金黄花海与碧蓝湖水相映，是拍摄大片的绝佳季节。\n清晨及傍晚光线柔和，日出日落景色尤为震撼。\n冬季湖面结冰，银装素裹，别有风味，但需注意保暖。'
+      }
+    ]
+  },
+  '3': {
+    id: '3',
+    name: '拉卜楞寺',
+    address: '甘南·夏河',
+    cover: 'labulengsi/images/lb8.jpg',
+    link: 'labulengsi/labulengsi.html',
+    sections: [
+      {
+        icon: 'fa-university',
+        title: '六大学院',
+        content: '拉卜楞寺（藏语：བླ་བྲང་བཀྲ་ཤིས་འཁྱིལ།）建于清康熙四十八年（1709年），是格鲁派六大寺院之一，也是安多地区最大的藏传佛教寺院群。寺内设有闻思学院、时轮学院、医学院、喜金刚学院、续部下学院、续部上学院六大学院，常住僧侣逾千人，历史上最多时达四千余人。'
+      },
+      {
+        icon: 'fa-repeat',
+        title: '世界最长转经廊',
+        content: '拉卜楞寺拥有世界上最长的转经廊，全长约3公里，共设转经筒1750余个。每天清晨，信众手持转经筒沿廊缓行，口诵经文，场面庄严肃穆，是安多地区最震撼人心的宗教日常图景之一。'
+      },
+      {
+        icon: 'fa-calendar-check-o',
+        title: '宗教节庆活动',
+        content: '拉卜楞寺全年举行多场重要的宗教活动：\n· 正月祈愿大法会（毛兰姆）：展示巨幅唐卡，举行辩经、跳神等仪式\n· 四月法会：宗教舞蹈（跳神）与宗教演出\n· 七月法会：高僧讲经，万人朝圣\n这些法会吸引来自青、甘、川、藏各地的信众前来朝拜。'
+      }
+    ]
+  },
+  '4': {
+    id: '4',
+    name: '黄南热贡',
+    address: '青海·黄南',
+    cover: 'huangnan/images/hn1.jpg',
+    link: 'huangnan/huangnan.html',
+    sections: [
+      {
+        icon: 'fa-paint-brush',
+        title: '热贡艺术',
+        content: '热贡艺术发源于青海省黄南藏族自治州同仁市（隆务镇），已有逾700年历史。2009年被列入联合国教科文组织"人类非物质文化遗产代表作名录"，是藏族传统视觉艺术的集大成者。热贡艺术涵盖唐卡、堆绣、泥塑、建筑彩绘等多种艺术形式，风格细腻、色彩浓烈。'
+      },
+      {
+        icon: 'fa-image',
+        title: '唐卡艺术',
+        content: '唐卡是藏族传统绘画的主要载体，以矿物颜料绘制于棉布或丝绸之上，色彩历经千年不褪。同仁唐卡工艺精湛，线条流畅，人物造型生动，是研究藏传佛教图像学的珍贵资料。当地家家户户皆有从事唐卡创作的传统，可亲访藏族艺人工坊，观看创作过程。'
+      },
+      {
+        icon: 'fa-th-large',
+        title: '堆绣工艺',
+        content: '堆绣是用各色绸缎剪裁成各种形状，经填充后拼贴于布面，形成立体感极强的图案，内容多为佛像、花鸟、历史故事。这一工艺与酥油花、壁画并称"塔尔寺三绝"，也是热贡艺术的重要组成部分。同仁市内设有多处热贡艺术博物馆和工坊，可参观、购买正品艺术品。'
+      }
+    ]
+  },
+  '5': {
+    id: '5',
+    name: '日月山',
+    address: '青海·湟源',
+    cover: 'riyueshan/images/nn2.jpg',
+    link: 'riyueshan/riyueshan.html',
+    sections: [
+      {
+        icon: 'fa-user',
+        title: '文成公主传说',
+        content: '日月山海拔约3520米，是唐朝文成公主入藏途经之地。相传公主行至此处，思念故土，取出皇帝所赐的日月宝镜观看，一时悲从中来，失手将宝镜摔落，化作两山，分别称为"日山"（亦名赤岭）和"月山"，由此得名"日月山"。山顶建有日亭和月亭，供游人凭吊怀古。'
+      },
+      {
+        icon: 'fa-history',
+        title: '历史地位',
+        content: '日月山古称"赤岭"，是唐代唐蕃古道上的重要关口，也是历史上农耕文明与游牧文明的天然分界线——山东为湟水流域的汉族农耕区，山西则是广阔的青藏高原游牧地带。"东边骑马，西边牦牛"之说流传至今。这里也是古代丝绸之路和茶马互市的重要节点。'
+      },
+      {
+        icon: 'fa-tree',
+        title: '景区概况',
+        content: '景区主要看点：\n· 日亭：建于山顶，造型古朴，可俯瞰日月山全貌\n· 月亭：与日亭相对，亭内陈列文成公主入藏历史资料\n· 倒淌河：发源于日月山东麓，是中国少有的自东向西流的河流，与文成公主的传说紧密相连\n· 观光台：可同时俯瞰东西两侧截然不同的地貌景观'
+      }
+    ]
+  },
+  '6': {
+    id: '6',
+    name: '三江源',
+    address: '青海·玉树',
+    cover: 'sanjiangyuan/images/sjy.jpg',
+    link: 'sanjiangyuan/sanjiangyuan.html',
+    sections: [
+      {
+        icon: 'fa-leaf',
+        title: '生态屏障',
+        content: '三江源地区位于青海省南部，平均海拔4000米以上，是长江、黄河、澜沧江三大河流的发源地，被誉为"中华水塔"。这里每年向下游输送近600亿立方米的淡水，滋养了中国及东南亚数亿人口，在全国乃至全球生态格局中占有不可替代的战略地位。'
+      },
+      {
+        icon: 'fa-tint',
+        title: '三江源头',
+        content: '· 长江源：沱沱河（藏语"玛曲"）发源于唐古拉山脉各拉丹冬雪山，海拔约5400米\n· 黄河源：约古宗列曲发源于巴颜喀拉山北麓，高原上无数星罗棋布的小湖泊汇聚成黄河最初的涓涓细流\n· 澜沧江源：扎曲（杂多县境内）发源于唐古拉山北麓，向南奔流出境后成为东南亚的母亲河——湄公河'
+      },
+      {
+        icon: 'fa-shield',
+        title: '国家公园与保护',
+        content: '2021年，三江源国家公园正式设立，成为中国首批国家公园之一，面积约19.07万平方公里，是中国面积最大的国家公园。园内有雪豹、藏羚羊、野牦牛、藏野驴、黑颈鹤等珍稀野生动物，是全球高原生物多样性的重要基因库。目前正在持续实施草地恢复、湿地保护和牧民转产安置工程。'
+      }
+    ]
+  }
+};
+
 createApp({
-    data() {
-        return {
-            loading: true,
-            error: false,
-            errorMessage: '',
-            spotId: null,
-            spotDetail: {},
-            commentList: [],
-            newComment: '',
-            toastMessage: '',
-            toastType: 'success'
-        };
+  data() {
+    return {
+      loading: true,
+      error: false,
+      errorMessage: '',
+      spot: null
+    };
+  },
+
+  mounted() {
+    this.loadSpot();
+  },
+
+  methods: {
+    loadSpot() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+
+      if (!id) {
+        this.errorMessage = '未指定景点 ID，请从首页重新进入。';
+        this.error = true;
+        this.loading = false;
+        return;
+      }
+
+      const spot = SPOT_DATABASE[String(id)];
+
+      if (!spot) {
+        this.errorMessage = `未找到 ID 为 ${id} 的景点数据。`;
+        this.error = true;
+        this.loading = false;
+        return;
+      }
+
+      // 如果有 link，直接跳转
+      if (spot.link) {
+        window.location.href = spot.link;
+        // 保留当前页作为备用：若跳转失败则继续渲染
+        // 设置短暂超时后停止 loading，显示详情
+        setTimeout(() => {
+          this.spot = spot;
+          document.title = spot.name + ' - 雪域安多·藏韵传承';
+          this.loading = false;
+        }, 800);
+        return;
+      }
+
+      this.spot = spot;
+      document.title = spot.name + ' - 雪域安多·藏韵传承';
+      this.loading = false;
     },
 
-    mounted() {
-        this.getSpotId();
-        if (this.spotId) {
-            this.loadSpotDetail();
-            this.loadCommentList();
-        }
-    },
-
-    methods: {
-        getSpotId() {
-            const urlParams = new URLSearchParams(window.location.search);
-            this.spotId = urlParams.get('id');
-            if (!this.spotId) {
-                this.error = true;
-                this.errorMessage = '未找到景点ID，请从首页重新进入';
-                this.loading = false;
-            }
-        },
-
-        // 本地景点数据库（无需后端API）
-        getLocalSpotDatabase() {
-            return {
-                '1':  { id:'1',  title:'日月山', subtitle:'安多门户·农牧分界线', cover:'riyueshan/images/nn2.jpg', tags:['历史遗迹','安多门户','丝绸之路'], content:'日月山位于青海省湟源县，是古代丝绸之路的重要关隘，也是农耕文明与游牧文明的天然分界线。山上建有日亭、月亭，相传文成公主曾在此驻足东望，留下"日月宝镜"的动人传说。每年吸引大量游客前来感受安多文化的历史厚重感。' },
-                '2':  { id:'2',  title:'青海湖', subtitle:'中国最大内陆咸水湖', cover:'qinghahu/images/nn3.jpg', tags:['圣湖','自然风光','候鸟天堂'], content:'青海湖（藏语：མཚོ་སྔོན་པོ།）是中国最大的内陆咸水湖，海拔约3196米。每年夏季，湖边油菜花金黄，斑头雁、棕头鸥等候鸟云集。在安多藏族文化中，青海湖被视为神圣之地，是重要的宗教朝圣目的地。' },
-                '3':  { id:'3',  title:'南宗寺', subtitle:'青海著名佛教圣地', cover:'nanzong/images/nz3.jpg', tags:['寺庙','佛教圣地','修行地'], content:'南宗寺坐落于青海化隆县，依山而建，是安多地区历史悠久的佛教修行圣地。寺院周围山谷幽深，林木葱郁，历代高僧在此闭关修行，留下了深厚的宗教文化底蕴。' },
-                '4':  { id:'4',  title:'夏琼寺', subtitle:'宗喀巴大师祖庭之一', cover:'xiaqiong/images/xq1.jpg', tags:['格鲁派','寺庙','宗喀巴'], content:'夏琼寺位于青海化隆县，是藏传佛教格鲁派创始人宗喀巴大师早年学法之地，被誉为其祖庭之一。寺内保存有珍贵的宗教文物和壁画，是研究格鲁派发展史的重要场所。' },
-                '5':  { id:'5',  title:'拉卜楞寺', subtitle:'安多地区最大佛教学府', cover:'labulengsi/images/lb8.jpg', tags:['格鲁派','佛教学府','转经廊'], content:'拉卜楞寺（藏语：བླ་བྲང་བཀྲ་ཤིས་འཁྱིལ།）位于甘肃夏河，拥有世界上最长的转经廊（约3公里），是安多藏区规模最大、影响最深远的藏传佛教寺院群，也是格鲁派六大寺院之一。' },
-                '6':  { id:'6',  title:'塔尔寺', subtitle:'宗喀巴大师诞生地', cover:'taersi/images/ts1.jpg', tags:['格鲁派','酥油花','藏传佛教'], content:'塔尔寺（藏语：སྐུ་འབུམ་བྱམས་པ་གླིང་།）位于青海湟中，是藏传佛教格鲁派的重要名寺，宗喀巴大师的诞生地。以酥油花、壁画、堆绣"塔尔寺三绝"闻名于世，每年举办的法会吸引数万信众朝拜。' },
-                '7':  { id:'7',  title:'阿尼玛沁雪山', subtitle:'安多藏区神山', cover:'image1/an1.jpg', tags:['神山','雪山','黄河源头'], content:'阿尼玛沁雪山（藏语：མཆེན་རིའི་གངས་དཀར།）位于青海果洛，主峰海拔6282米，是黄河源头地区的重要地标。在藏族传统信仰中，阿尼玛沁是安多地区最重要的神山之一，每年都有大批信众前来转山朝圣。' },
-                '8':  { id:'8',  title:'三江源', subtitle:'中华水塔·长江黄河澜沧江发源地', cover:'sanjiangyuan/images/sjy.jpg', tags:['自然保护区','生态','三江源'], content:'三江源地区位于青海南部，是长江、黄河、澜沧江的发源地，被誉为"中华水塔"。这里平均海拔4000米以上，是中国面积最大的自然保护区，也是青藏高原重要的生态屏障。' },
-                '9':  { id:'9',  title:'果洛', subtitle:'格萨尔文化之乡', cover:'guoluo/images/gl.jpg', tags:['格萨尔','游牧文化','史诗'], content:'果洛藏族自治州位于青海东南部，是史诗《格萨尔王传》的重要流传地，保留了丰富的游牧文化与安多传统习俗。这里的牧民至今仍以天为幕、以地为席，延续着千年游牧生活方式。' },
-                '10': { id:'10', title:'黄南', subtitle:'热贡艺术发源地', cover:'huangnan/images/hn1.jpg', tags:['热贡艺术','唐卡','非遗'], content:'黄南藏族自治州同仁市（隆务镇）是举世闻名的热贡艺术发源地。热贡艺术包括唐卡、堆绣、泥塑等，已被列入联合国非物质文化遗产名录。来此可参观藏族艺人创作，购买正宗唐卡作品。' },
-                '11': { id:'11', title:'贵德', subtitle:'高原江南', cover:'guide/images/gd1.jpg', tags:['丹霞地貌','黄河','高原江南'], content:'贵德县位于青海省海南藏族自治州，黄河穿境而过，兼具丹霞地貌与黄河风光，气候温暖湿润，被誉为青海的"小江南"。每年梨花节吸引大量游客，是感受青藏高原另一面的绝佳去处。' },
-                '12': { id:'12', title:'拉卜楞寺', subtitle:'甘南核心地标', cover:'labulengsi/images/lb8.jpg', tags:['格鲁派','转经廊','甘南'], content:'拉卜楞寺作为甘南藏族自治州夏河县的核心地标，每天清晨信众手持转经筒沿廊而行，是安多地区最震撼人心的宗教场景之一。寺内设有多所藏传佛教学院，培养了大量高僧大德。' },
-                '13': { id:'13', title:'郎木寺', subtitle:'一寺跨甘川两省', cover:'lms/images/lm1.jpg', tags:['寺庙','甘川交界','自然风光'], content:'郎木寺小镇地处甘肃碌曲与四川若尔盖交界处，一条小溪将其分为甘肃寺和四川寺两部分。小镇融合了藏、回、汉多民族文化，自然风光秀美，被誉为"东方小瑞士"。' },
-                '14': { id:'14', title:'扎尕那', subtitle:'最后的伊甸园', cover:'zgn/zg1.jpg', tags:['藏式村落','石山','甘南'], content:'扎尕那（藏语意为"石匣子"）位于甘肃迭部县，是一座被石山环抱的古老藏式村落。垂直的岩壁、茂密的森林与古朴的藏寨浑然天成，被美国《国家地理》杂志誉为"最后的伊甸园"。' },
-                '15': { id:'15', title:'桑科草原', subtitle:'甘南天然牧场', cover:'sangkecaoyuan/sk1.jpg', tags:['草原','游牧','甘南'], content:'桑科草原位于夏河县境内，是甘南最美的天然牧场之一。夏季绿草如茵，牛羊遍野，帐篷星罗棋布，是体验藏区游牧生活、感受安多草原风情的绝佳去处。' },
-                '16': { id:'16', title:'米拉日巴佛阁', subtitle:'九层佛阁·信仰圣地', cover:'image1/ml1.jpg', tags:['佛阁','米拉日巴','甘南'], content:'米拉日巴佛阁位于甘肃合作市，是供奉藏传佛教噶举派祖师米拉日巴大师的九层楼阁式建筑。建筑外观雄伟，内部供奉有大量珍贵佛像和典籍，是安多藏区重要的宗教文化场所。' },
-                '17': { id:'17', title:'夏河八角城', subtitle:'古代丝路边防要塞', cover:'image1/xh1.jpg', tags:['古城','遗址','丝绸之路'], content:'八角城遗址位于甘肃临潭县，城垣平面呈八角形，是中国现存保存最完整的古代八角形城池之一，也是研究古代边防与丝绸之路的重要历史遗存。' },
-                '18': { id:'18', title:'玛曲', subtitle:'黄河第一弯所在地', cover:'image1/mq1.jpg', tags:['黄河','草原湿地','甘南'], content:'玛曲县（藏语意为"黄河"）是黄河上游重要的水源涵养地，以黄河九曲第一湾闻名。广阔的草原湿地孕育了丰富的野生动植物资源，是生态旅游的理想目的地。' },
-                '19': { id:'19', title:'夏河甘加草原', subtitle:'完整藏式游牧文化', cover:'image1/xh2.jpg', tags:['草原','游牧','夏河'], content:'甘加草原位于夏河县甘加乡，保留了完整的藏式游牧文化。这里山水相依，草场辽阔，夏季风光尤为壮丽，是了解安多游牧生活的重要窗口。' },
-                '20': { id:'20', title:'阿坝州', subtitle:'安多与康巴文化交融地', cover:'image1/ab1.jpg', tags:['阿坝','川西北','藏文化'], content:'阿坝藏族羌族自治州位于四川省西北部，是安多与康巴文化的重要交融地带，也是羌族文化的核心区。辖区内有若尔盖草原、黄龙、九寨沟等著名景点，是川西北藏文化的重要传承地。' },
-                '21': { id:'21', title:'若尔盖草原', subtitle:'中国三大湿地之一', cover:'image1/rg1.jpg', tags:['湿地','草原','黄河上游'], content:'若尔盖草原位于四川省阿坝州，是中国三大湿地之一，川西北的高原绿洲。这里是黄河上游重要的生态屏障，也是红军长征经过的重要地区，留下了深厚的红色文化印记。' },
-                '22': { id:'22', title:'松潘古城', subtitle:'茶马古道重要驿站', cover:'image1/sb1.jpg', tags:['古城','茶马古道','历史'], content:'松潘古城位于四川阿坝州，是茶马古道上的重要驿站，古代兵家必争之地。城内保存有完整的明代城墙、寺庙和传统民居，展现了汉、藏、回多民族文化交融的历史面貌。' },
-                '23': { id:'23', title:'年宝玉则', subtitle:'安多藏区神山圣湖', cover:'image1/nb1.jpg', tags:['神山','圣湖','果洛'], content:'年宝玉则位于青海果洛州久治县，以雄峻的雪山、清澈的高原湖泊和原始森林著称，是藏族心中的重要神山圣地。这里的湖泊群星罗棋布，山花烂漫，是探索原始高原生态的胜地。' },
-                '24': { id:'24', title:'马尔康卓克基官寨', subtitle:'嘉绒藏族文化代表建筑', cover:'image1/me1.jpg', tags:['官寨','嘉绒藏族','历史建筑'], content:'卓克基官寨位于四川阿坝州马尔康市，是嘉绒藏族文化的代表性建筑群，也是小说《尘埃落定》的故事原型地。官寨建于明末，融合了藏式与汉式建筑风格，被列为全国重点文物保护单位。' },
-                '25': { id:'25', title:'九曲黄河第一湾', subtitle:'川西北标志性景观', cover:'image1/jq1.jpg', tags:['黄河','湾景','若尔盖'], content:'九曲黄河第一湾位于四川若尔盖县唐克乡，是黄河在四川境内的第一处大拐弯。登上观景台俯瞰，黄河如一条金色飘带蜿蜒其中，尤其日落时分"九曲晚霞"景色绝美，是川西北最具代表性的自然景观。' },
-                '26': { id:'26', title:'红原大草原', subtitle:'红军长征草原·安多牧场', cover:'image1/hy1.jpg', tags:['草原','红色文化','安多'], content:'红原县位于四川阿坝州，是红军长征走过的草原，也是川西北的高原牧场。这里保留了浓郁的安多藏区风情，每年举办的"雅克"赛马节是体验安多游牧文化的重要节庆活动。' },
-                '27': { id:'27', title:'阿坝县各莫寺', subtitle:'川西北重要格鲁派寺院', cover:'image1/gm1.jpg', tags:['格鲁派','寺院','阿坝县'], content:'各莫寺位于四川阿坝县，是阿坝地区重要的格鲁派寺院，建筑宏伟壮观。寺内保存有大量珍贵的宗教典籍、唐卡和法器，是川西北安多藏区重要的宗教文化场所和朝圣地。' }
-            };
-        },
-
-        loadSpotDetail() {
-            this.loading = true;
-            this.error = false;
-            try {
-                const db = this.getLocalSpotDatabase();
-                const spot = db[String(this.spotId)];
-                if (!spot) {
-                    this.error = true;
-                    this.errorMessage = `未找到ID为 ${this.spotId} 的景点数据`;
-                    return;
-                }
-                this.spotDetail = spot;
-            } catch (err) {
-                this.error = true;
-                this.errorMessage = '数据加载失败，请刷新重试';
-            } finally {
-                this.loading = false;
-            }
-        },
-
-        loadCommentList() {
-            try {
-                const key = `spot_comments_${this.spotId}`;
-                const stored = localStorage.getItem(key);
-                this.commentList = stored ? JSON.parse(stored) : [];
-            } catch (err) {
-                console.error('读取评论失败:', err);
-                this.commentList = [];
-            }
-        },
-
-        submitComment() {
-            if (!this.newComment.trim()) {
-                this.showToast('请输入留言内容', 'error');
-                return;
-            }
-            try {
-                const key = `spot_comments_${this.spotId}`;
-                const stored = localStorage.getItem(key);
-                const list = stored ? JSON.parse(stored) : [];
-                const newEntry = {
-                    id: Date.now(),
-                    spotId: this.spotId,
-                    content: this.newComment.trim(),
-                    userName: this.getUserName(),
-                    createTime: new Date().toISOString()
-                };
-                list.unshift(newEntry);
-                localStorage.setItem(key, JSON.stringify(list));
-                this.showToast('留言提交成功', 'success');
-                this.newComment = '';
-                this.loadCommentList();
-            } catch (err) {
-                console.error('提交评论失败:', err);
-                this.showToast('提交失败，请稍后重试', 'error');
-            }
-        },
-
-        getUserName() {
-            return localStorage.getItem('userName') || `游客${Math.random().toString(36).substr(2, 6)}`;
-        },
-
-        getInitial(name) {
-            return name.charAt(0);
-        },
-
-        formatDate(dateStr) {
-            if (!dateStr) return '';
-            const date = new Date(dateStr);
-            return date.toLocaleString('zh-CN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        },
-
-        showToast(message, type = 'success') {
-            this.toastMessage = message;
-            this.toastType = type;
-            
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
+    onImgError(e) {
+      e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="960" height="460"><rect width="100%25" height="100%25" fill="%23f0ece6"/><text x="50%25" y="50%25" font-size="18" fill="%239B2B25" text-anchor="middle" dominant-baseline="middle">图片加载中...</text></svg>';
     }
+  }
 }).mount('#app');
 </script>
 </body>

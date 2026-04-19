@@ -1,0 +1,567 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776581816945,
+  "projectRoot": "D:\\projects\\Qinghai-Amdo-Tibetan-Cultural-Communication-Platform",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "biji": {
+      "path": "biji",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816845,
+      "keyFiles": [
+        "biji.html"
+      ]
+    },
+    "duanyu": {
+      "path": "duanyu",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816845,
+      "keyFiles": [
+        "duanyu.html"
+      ]
+    },
+    "fanyi": {
+      "path": "fanyi",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816846,
+      "keyFiles": [
+        "fanyi.html"
+      ]
+    },
+    "guanyupingtai": {
+      "path": "guanyupingtai",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816846,
+      "keyFiles": [
+        "guanyupingtai.html"
+      ]
+    },
+    "guide": {
+      "path": "guide",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816846,
+      "keyFiles": [
+        "guide.html"
+      ]
+    },
+    "guoluo": {
+      "path": "guoluo",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816847,
+      "keyFiles": [
+        "guoluo.html"
+      ]
+    },
+    "huangnan": {
+      "path": "huangnan",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816847,
+      "keyFiles": [
+        "huangnan.html"
+      ]
+    },
+    "image": {
+      "path": "image",
+      "purpose": null,
+      "fileCount": 21,
+      "lastAccessed": 1776581816848,
+      "keyFiles": [
+        "mm1.jpg",
+        "mm2.jpg",
+        "mm3.jpg",
+        "mm4.jpg",
+        "mm5.jpg"
+      ]
+    },
+    "image1": {
+      "path": "image1",
+      "purpose": null,
+      "fileCount": 20,
+      "lastAccessed": 1776581816848,
+      "keyFiles": [
+        "ab1.jpg",
+        "an1.jpg",
+        "gm1.jpg",
+        "hy1.jpg",
+        "jq1.jpg"
+      ]
+    },
+    "jianpan": {
+      "path": "jianpan",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816848,
+      "keyFiles": [
+        "jianpan.html"
+      ]
+    },
+    "jingdian": {
+      "path": "jingdian",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816849,
+      "keyFiles": [
+        "jingdian.html"
+      ]
+    },
+    "labulengsi": {
+      "path": "labulengsi",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816849,
+      "keyFiles": [
+        "labulengsi.html"
+      ]
+    },
+    "lms": {
+      "path": "lms",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816850,
+      "keyFiles": [
+        "lms.html"
+      ]
+    },
+    "maqu": {
+      "path": "maqu",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816850,
+      "keyFiles": [
+        "maqu.html"
+      ]
+    },
+    "milariba": {
+      "path": "milariba",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816850,
+      "keyFiles": [
+        "milariba.html"
+      ]
+    },
+    "music": {
+      "path": "music",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816851,
+      "keyFiles": [
+        "music.html"
+      ]
+    },
+    "muyu": {
+      "path": "muyu",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816851,
+      "keyFiles": [
+        "muyu.html"
+      ]
+    },
+    "nanzong": {
+      "path": "nanzong",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816851,
+      "keyFiles": [
+        "nanzong.html"
+      ]
+    },
+    "naqu": {
+      "path": "naqu",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1776581816852,
+      "keyFiles": [
+        "kekexili.html",
+        "kulouqiang.html",
+        "namucuo.html",
+        "naqu.html",
+        "selincuo.html"
+      ]
+    },
+    "qinghahu": {
+      "path": "qinghahu",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816852,
+      "keyFiles": [
+        "qinghaihu.html"
+      ]
+    },
+    "rili": {
+      "path": "rili",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816853,
+      "keyFiles": [
+        "rili.html"
+      ]
+    },
+    "riyueshan": {
+      "path": "riyueshan",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816853,
+      "keyFiles": [
+        "riyueshan.html"
+      ]
+    },
+    "sangkecaoyuan": {
+      "path": "sangkecaoyuan",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816853,
+      "keyFiles": [
+        "sangkecaoyuan.html"
+      ]
+    },
+    "sanjiangyuan": {
+      "path": "sanjiangyuan",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816854,
+      "keyFiles": [
+        "sanjiangyuan.html"
+      ]
+    },
+    "taersi": {
+      "path": "taersi",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816854,
+      "keyFiles": [
+        "taersi.html"
+      ]
+    },
+    "xiahe": {
+      "path": "xiahe",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1776581816854,
+      "keyFiles": [
+        "xiahe1.html",
+        "xiahe2.html"
+      ]
+    },
+    "xiaqiong": {
+      "path": "xiaqiong",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816855,
+      "keyFiles": [
+        "xiaqiongsi.html"
+      ]
+    },
+    "xueshan": {
+      "path": "xueshan",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816855,
+      "keyFiles": [
+        "xueshan.html"
+      ]
+    },
+    "yushu": {
+      "path": "yushu",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816855,
+      "keyFiles": [
+        "yushu.html"
+      ]
+    },
+    "zangli-master": {
+      "path": "zangli-master",
+      "purpose": null,
+      "fileCount": 11,
+      "lastAccessed": 1776581816857,
+      "keyFiles": [
+        "calendar.html",
+        "CNAME",
+        "eclipse.html",
+        "eclipse.js",
+        "favicon.ico"
+      ]
+    },
+    "zgn": {
+      "path": "zgn",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1776581816857,
+      "keyFiles": [
+        "zg1.jpg",
+        "zgn.html"
+      ]
+    },
+    "zifu": {
+      "path": "zifu",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776581816858,
+      "keyFiles": [
+        "zifu.html"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "index.html",
+      "accessCount": 83,
+      "lastAccessed": 1776611170223,
+      "type": "file"
+    },
+    {
+      "path": "fanyi\\fanyi.html",
+      "accessCount": 14,
+      "lastAccessed": 1776614337230,
+      "type": "file"
+    },
+    {
+      "path": "jingdian.html",
+      "accessCount": 11,
+      "lastAccessed": 1776608913712,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 10,
+      "lastAccessed": 1776611205409,
+      "type": "directory"
+    },
+    {
+      "path": "minsu.html",
+      "accessCount": 9,
+      "lastAccessed": 1776608940391,
+      "type": "file"
+    },
+    {
+      "path": "guoluo\\guoluo.html",
+      "accessCount": 8,
+      "lastAccessed": 1776608642943,
+      "type": "file"
+    },
+    {
+      "path": "yushu\\yushu.html",
+      "accessCount": 6,
+      "lastAccessed": 1776594074908,
+      "type": "file"
+    },
+    {
+      "path": "qinghahu\\qinghaihu.html",
+      "accessCount": 6,
+      "lastAccessed": 1776594425641,
+      "type": "file"
+    },
+    {
+      "path": "sanjiangyuan\\sanjiangyuan.html",
+      "accessCount": 6,
+      "lastAccessed": 1776594939121,
+      "type": "file"
+    },
+    {
+      "path": "xiahe\\xiahe2.html",
+      "accessCount": 6,
+      "lastAccessed": 1776596154138,
+      "type": "file"
+    },
+    {
+      "path": "duanyu\\duanyu.html",
+      "accessCount": 6,
+      "lastAccessed": 1776608800484,
+      "type": "file"
+    },
+    {
+      "path": "zifu\\zifu.html",
+      "accessCount": 6,
+      "lastAccessed": 1776608878621,
+      "type": "file"
+    },
+    {
+      "path": "huangnan\\huangnan.html",
+      "accessCount": 5,
+      "lastAccessed": 1776594127141,
+      "type": "file"
+    },
+    {
+      "path": "taersi\\taersi.html",
+      "accessCount": 5,
+      "lastAccessed": 1776594132079,
+      "type": "file"
+    },
+    {
+      "path": "milariba\\milariba.html",
+      "accessCount": 5,
+      "lastAccessed": 1776594938504,
+      "type": "file"
+    },
+    {
+      "path": "nanzong\\nanzong.html",
+      "accessCount": 5,
+      "lastAccessed": 1776595053781,
+      "type": "file"
+    },
+    {
+      "path": "xiaqiong\\xiaqiongsi.html",
+      "accessCount": 5,
+      "lastAccessed": 1776595194775,
+      "type": "file"
+    },
+    {
+      "path": "xueshan\\xueshan.html",
+      "accessCount": 5,
+      "lastAccessed": 1776595194885,
+      "type": "file"
+    },
+    {
+      "path": "sangkecaoyuan\\sangkecaoyuan.html",
+      "accessCount": 5,
+      "lastAccessed": 1776595288429,
+      "type": "file"
+    },
+    {
+      "path": "xiahe\\xiahe1.html",
+      "accessCount": 5,
+      "lastAccessed": 1776595410534,
+      "type": "file"
+    },
+    {
+      "path": "riyueshan\\riyueshan.html",
+      "accessCount": 5,
+      "lastAccessed": 1776595641665,
+      "type": "file"
+    },
+    {
+      "path": "guanyupingtai\\guanyupingtai.html",
+      "accessCount": 5,
+      "lastAccessed": 1776608713209,
+      "type": "file"
+    },
+    {
+      "path": "labulengsi\\labulengsi.html",
+      "accessCount": 4,
+      "lastAccessed": 1776593924192,
+      "type": "file"
+    },
+    {
+      "path": "maqu\\maqu.html",
+      "accessCount": 4,
+      "lastAccessed": 1776594362912,
+      "type": "file"
+    },
+    {
+      "path": "SecretKey.csv",
+      "accessCount": 2,
+      "lastAccessed": 1776593023237,
+      "type": "file"
+    },
+    {
+      "path": ".",
+      "accessCount": 2,
+      "lastAccessed": 1776605583471,
+      "type": "directory"
+    },
+    {
+      "path": "guide\\guide.html",
+      "accessCount": 2,
+      "lastAccessed": 1776608892591,
+      "type": "file"
+    },
+    {
+      "path": "C:\\Users\\lenovo\\.claude\\projects\\D--projects-Qinghai-Amdo-Tibetan-Cultural-Communication-Platform\\memory\\MEMORY.md",
+      "accessCount": 1,
+      "lastAccessed": 1776585039180,
+      "type": "file"
+    },
+    {
+      "path": "C:\\Users\\lenovo\\.claude\\projects\\D--projects-Qinghai-Amdo-Tibetan-Cultural-Communication-Platform\\memory\\reference_repo.md",
+      "accessCount": 1,
+      "lastAccessed": 1776585047295,
+      "type": "file"
+    },
+    {
+      "path": "前端修复记录.md",
+      "accessCount": 1,
+      "lastAccessed": 1776585461336,
+      "type": "file"
+    },
+    {
+      "path": "快速启动.md",
+      "accessCount": 1,
+      "lastAccessed": 1776586399865,
+      "type": "file"
+    },
+    {
+      "path": "C:\\Users\\lenovo\\Desktop\\amap-static-demo\\index.html",
+      "accessCount": 1,
+      "lastAccessed": 1776586426029,
+      "type": "file"
+    },
+    {
+      "path": "C:\\Users\\lenovo\\Desktop\\amap-static-demo\\.env",
+      "accessCount": 1,
+      "lastAccessed": 1776586426255,
+      "type": "file"
+    },
+    {
+      "path": "增加内容更新与用户交互.md",
+      "accessCount": 1,
+      "lastAccessed": 1776608582801,
+      "type": "file"
+    },
+    {
+      "path": "网页样式说明书.md",
+      "accessCount": 1,
+      "lastAccessed": 1776608583151,
+      "type": "file"
+    },
+    {
+      "path": "注册功能说明.md",
+      "accessCount": 1,
+      "lastAccessed": 1776608583894,
+      "type": "file"
+    },
+    {
+      "path": "guide",
+      "accessCount": 1,
+      "lastAccessed": 1776608606934,
+      "type": "directory"
+    }
+  ],
+  "userDirectives": []
+}

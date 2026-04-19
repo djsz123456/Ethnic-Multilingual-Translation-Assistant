@@ -1,700 +1,967 @@
-NEW_FILE_CODE
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>玛曲 - 黄河首曲・安多草原中心</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="玛曲 - 黄河首曲・安多草原心脏">
+  <meta name="keywords" content="玛曲,黄河首曲,高原湿地,安多藏族,赛马节">
+  <title>玛曲 - 黄河首曲・安多草原心脏</title>
 
-        body {
-            font-family: 'Source Han Sans CN', 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #8B0000 0%, #5C0000 100%);
-            color: #F5F5DC;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-        /* Header Section */
-        .header {
-            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
-            padding: 40px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 2px solid #FFD700;
-        }
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path d="M0,50 Q50,20 100,50 T200,50" stroke="%23FFD700" stroke-width="1" fill="none" opacity="0.2"/><path d="M0,60 Q50,30 100,60 T200,60" stroke="%231E90FF" stroke-width="0.5" fill="none" opacity="0.1"/></svg>') repeat-x;
-            opacity: 0.3;
-        }
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --bg-secondary: #FFFFFF;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .main-title {
-            font-size: 42px;
-            font-weight: bold;
-            color: #FFD700;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
 
-        .subtitle {
-            font-size: 18px;
-            color: #F5F5DC;
-            font-weight: 500;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 2;
-        }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-        .decorative-line {
-            width: 120px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #FFD700, transparent);
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
+    /* Top Bar */
+    .top-bar {
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(90deg, #f8f8f8 0%, #f0f0f0 100%);
+      border-bottom: 1px solid #e0e0e0;
+      line-height: 40px;
+      padding: 0 30px;
+      font-size: 13px;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        /* Main Content */
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+    .top-bar-text {
+      font-weight: 500;
+    }
 
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-bottom: 50px;
-        }
+    .back-link {
+      color: var(--primary-red);
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 500;
+    }
 
-        .card {
-            background: linear-gradient(135deg, rgba(139, 0, 0, 0.95) 0%, rgba(165, 42, 42, 0.9) 100%);
-            border: 1.5px solid #FFD700;
-            border-radius: 16px;
-            padding: 30px 25px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
+    .back-link:hover {
+      color: var(--primary-gold);
+    }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(30, 144, 255, 0.05) 0%, rgba(50, 205, 50, 0.05) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+    /* Header */
+    .header {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary-red) 0%, #B83C2E 100%);
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
 
-        .card:hover::before {
-            opacity: 1;
-        }
+    .header-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 30px;
+    }
 
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.3);
-            border-color: #FFD700;
-        }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
 
-        .card-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            background: rgba(139, 0, 0, 0.6);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
+    .logo a {
+      color: #fff;
+      text-decoration: none;
+      transition: var(--transition);
+    }
 
-        .card-icon svg {
-            width: 36px;
-            height: 36px;
-            stroke: currentColor;
-            stroke-width: 1.5;
-            fill: none;
-        }
+    .logo a:hover {
+      color: var(--primary-gold);
+    }
 
-        .ecology-icon { color: #1E90FF; }
-        .wetland-icon { color: #32CD32; }
-        .culture-icon { color: #32CD32; }
-        .nomadic-icon { color: #32CD32; }
-        .tourism-icon { color: #1E90FF; }
+    .nav {
+      display: flex;
+      gap: 8px;
+    }
 
-        .card-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #FFD700;
-            text-align: center;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: var(--transition);
+      position: relative;
+    }
 
-        .card-tag {
-            font-size: 15px;
-            color: #F5F5DC;
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: 500;
-            position: relative;
-            z-index: 2;
-            opacity: 0.9;
-        }
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--primary-gold);
+      transition: var(--transition);
+    }
 
-        .card-content {
-            font-size: 15px;
-            color: #F5F5DC;
-            line-height: 1.8;
-            position: relative;
-            z-index: 2;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
-            opacity: 0;
-            margin-top: 0;
-        }
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--primary-gold);
+    }
 
-        .card-content.expanded {
-            max-height: 500px;
-            opacity: 1;
-            margin-top: 20px;
-        }
+    .nav a:hover::after {
+      width: 60%;
+    }
 
-        .card-content p {
-            margin-bottom: 10px;
-        }
+    .nav a.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--primary-gold);
+    }
 
-        .expand-btn {
-            background: none;
-            border: 1.5px solid #FFD700;
-            color: #FFD700;
-            cursor: pointer;
-            font-size: 15px;
-            padding: 10px 24px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-            font-weight: 500;
-            display: inline-block;
-            margin-top: 5px;
-        }
+    /* Banner - 无图片，使用CSS渐变背景 */
+    .banner {
+      width: 100%;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3d 50%, #4a7c59 100%);
+    }
 
-        .expand-btn:hover {
-            background: rgba(255, 215, 0, 0.15);
-            transform: scale(1.05);
-        }
+    .banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(155, 43, 37, 0.6) 0%, rgba(0, 0, 0, 0.5) 100%);
+      z-index: 1;
+    }
 
-        .expand-btn:active {
-            transform: scale(0.98);
-        }
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      max-width: 900px;
+      padding: 0 30px;
+      animation: fadeInUp 1s ease;
+    }
 
-        .expand-icon {
-            display: inline-block;
-            transition: transform 0.3s ease;
-            margin-left: 8px;
-        }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .expand-btn.expanded .expand-icon {
-            transform: rotate(180deg);
-        }
+    .banner h1 {
+      font-size: 52px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+      letter-spacing: 4px;
+    }
 
-        /* Footer Section */
-        .footer {
-            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
-            padding: 50px 20px 30px;
-            text-align: center;
-            position: relative;
-            border-top: 2px solid rgba(255, 215, 0, 0.3);
-        }
+    .banner .subtitle {
+      font-size: 24px;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path d="M0,50 Q50,30 100,50 T200,50" stroke="%23FFD700" stroke-width="0.5" fill="none" opacity="0.1"/></svg>') repeat-x;
-            opacity: 0.2;
-        }
+    .banner .tibetan-name {
+      font-size: 18px;
+      opacity: 0.85;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
 
-        .explore-text {
-            color: #F5F5DC;
-            font-size: 16px;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 2;
-            font-weight: 500;
-        }
+    .banner-stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-top: 30px;
+    }
 
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 35px;
-            position: relative;
-            z-index: 2;
-        }
+    .stat-item {
+      text-align: center;
+    }
 
-        .nav-btn {
-            background: #FFD700;
-            color: #8B0000;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 15px;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
-        }
+    .stat-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary-gold);
+      display: block;
+    }
 
-        .nav-btn:hover {
-            background: #FFF;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
-        }
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
 
-        .cultural-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
-        }
+    /* Main Container */
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 30px;
+    }
 
-        .cultural-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #F5F5DC;
-            text-decoration: none;
-            font-size: 15px;
-            transition: color 0.3s ease;
-            font-weight: 500;
-        }
+    /* Section Styles */
+    .section {
+      margin-bottom: 80px;
+      animation: fadeIn 0.6s ease forwards;
+    }
 
-        .cultural-link:hover {
-            color: #FFD700;
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .cultural-link svg {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
-            stroke-width: 1.5;
-            fill: none;
-        }
+    .section-title {
+      font-size: 36px;
+      color: var(--primary-red);
+      margin-bottom: 30px;
+      padding-left: 20px;
+      border-left: 5px solid var(--primary-gold);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+    }
 
-        .copyright {
-            color: #F5F5DC;
-            font-size: 14px;
-            position: relative;
-            z-index: 2;
-            opacity: 0.8;
-            margin-top: 20px;
-        }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-gold), transparent);
+      margin-left: 20px;
+    }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .cards-container {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
+    .section-title .tibetan {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-left: 15px;
+      font-weight: 400;
+    }
 
-            .main-title {
-                font-size: 32px;
-            }
+    .section-text {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 2;
+      text-align: justify;
+      margin-bottom: 20px;
+      padding: 0 10px;
+    }
 
-            .subtitle {
-                font-size: 16px;
-            }
+    .section-text:last-child {
+      margin-bottom: 0;
+    }
 
-            .card {
-                padding: 25px 20px;
-            }
+    /* Highlight Box */
+    .highlight-box {
+      background: linear-gradient(135deg, #fff9f0 0%, #fff5e6 100%);
+      border-left: 4px solid var(--primary-gold);
+      padding: 25px 30px;
+      margin: 25px 0;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      box-shadow: var(--shadow-sm);
+    }
 
-            .card-title {
-                font-size: 22px;
-            }
+    .highlight-box p {
+      font-size: 16px;
+      color: var(--text-primary);
+      line-height: 1.9;
+      margin-bottom: 15px;
+    }
 
-            .card-icon {
-                width: 60px;
-                height: 60px;
-            }
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
 
-            .card-icon svg {
-                width: 30px;
-                height: 30px;
-            }
+    .highlight-box .label {
+      font-weight: 700;
+      color: var(--primary-red);
+      margin-right: 8px;
+    }
 
-            .nav-buttons {
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
-            }
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
 
-            .nav-btn {
-                width: 220px;
-                text-align: center;
-            }
+    .card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 25px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
 
-            .cultural-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-        }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
 
-        /* Loading Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
 
-        .card {
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
+    .card:hover::before {
+      transform: scaleX(1);
+    }
 
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      box-shadow: var(--shadow-md);
+    }
 
-        /* Share Button */
-        .share-section {
-            text-align: center;
-            margin: 30px 0;
-            position: relative;
-            z-index: 2;
-        }
+    .card-title {
+      font-size: 18px;
+      color: var(--primary-red);
+      margin-bottom: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
 
-        .share-btn {
-            background: rgba(255, 215, 0, 0.15);
-            border: 1.5px solid #FFD700;
-            color: #FFD700;
-            padding: 12px 28px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 15px;
-            font-weight: 500;
-        }
+    .card-content {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      text-align: justify;
+    }
 
-        .share-btn:hover {
-            background: #FFD700;
-            color: #8B0000;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-        }
+    /* Feature List */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
 
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #FFD700, #1E90FF);
-            z-index: 1000;
-            transition: width 0.3s ease;
-        }
-    </style>
+    .feature-list li {
+      padding: 15px 20px 15px 40px;
+      margin-bottom: 12px;
+      background: white;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: var(--transition);
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .feature-list li:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-list li::before {
+      content: '✦';
+      position: absolute;
+      left: 15px;
+      color: var(--primary-gold);
+      font-size: 16px;
+    }
+
+    .feature-list li .label {
+      font-weight: 600;
+      color: var(--primary-red);
+      margin-right: 5px;
+    }
+
+    /* Attraction Cards */
+    .attraction-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .attraction-card {
+      background: white;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .attraction-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .attraction-header {
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: white;
+      padding: 15px 20px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .attraction-body {
+      padding: 20px;
+    }
+
+    .attraction-body p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Tips Box */
+    .tips-box {
+      background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+      border: 1px solid #b3d9f2;
+      border-radius: var(--radius-md);
+      padding: 25px 30px;
+      margin: 25px 0;
+    }
+
+    .tips-box h4 {
+      color: var(--primary-red);
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .tips-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .tips-box ul li {
+      padding: 10px 0 10px 25px;
+      position: relative;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .tips-box ul li::before {
+      content: '⚠';
+      position: absolute;
+      left: 0;
+      color: #e74c3c;
+    }
+
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: var(--primary-red);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 998;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--primary-gold);
+      transform: translateY(-5px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-wrap {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 20px;
+      }
+
+      .logo {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav a {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .banner {
+        height: 400px;
+      }
+
+      .banner h1 {
+        font-size: 36px;
+      }
+
+      .banner .subtitle {
+        font-size: 18px;
+      }
+
+      .banner-stats {
+        gap: 30px;
+      }
+
+      .stat-number {
+        font-size: 24px;
+      }
+
+      .section-title {
+        font-size: 26px;
+      }
+
+      .card-grid,
+      .attraction-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .main-container {
+        padding: 40px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .banner {
+        height: 300px;
+      }
+
+      .banner h1 {
+        font-size: 28px;
+      }
+
+      .banner .subtitle {
+        font-size: 16px;
+      }
+
+      .banner-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Scroll Progress Indicator -->
-    <div class="scroll-indicator" id="scrollIndicator"></div>
+  <div id="app">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-text">
+        🏔️ 雪域安多·藏韵传承 | 玛曲 - 黄河首曲・安多草原心脏
+      </div>
+      <div>
+        <a href="../index.html" class="back-link"><i class="fa fa-home"></i> 返回首页</a>
+      </div>
+    </div>
 
-    <!-- Header Section -->
+    <!-- Header -->
     <header class="header">
-        <h1 class="main-title">玛曲</h1>
-        <p class="subtitle">黄河首曲・安多草原中心</p>
-        <div class="decorative-line"></div>
+      <div class="header-wrap">
+        <div class="logo">
+          <a href="../index.html">གངས་ལྗོངས་ཨ་མདོ།</a>
+        </div>
+        <nav class="nav">
+          <a href="../index.html">首页</a>
+          <a href="../index.html#culture">安多民俗</a>
+          <a href="../index.html#tour">藏地旅游</a>
+          <a href="../index.html#tools">藏文工具</a>
+        </nav>
+      </div>
     </header>
 
+    <!-- Banner（无图片，使用CSS渐变背景） -->
+    <section class="banner">
+      <div class="banner-content">
+        <div class="tibetan-name">རྨ་ཆུ་རྫོང་།</div>
+        <h1>玛曲</h1>
+        <p class="subtitle">黄河首曲・安多草原心脏</p>
+        <div class="banner-stats">
+          <div class="stat-item">
+            <span class="stat-number">433km</span>
+            <div class="stat-label">黄河流经</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">广阔</span>
+            <div class="stat-label">湿地面积</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">约90%</span>
+            <div class="stat-label">藏族人口占比</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">赛马节</span>
+            <div class="stat-label">著名民俗盛会</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="cards-container">
-            <!-- Card 1: Yellow River First Bend -->
-            <div class="card" onclick="toggleCard(this)">
-                <div class="card-icon ecology-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M3,12 Q6,8 9,12 T15,12 T21,12" stroke-linecap="round"/>
-                        <path d="M3,16 Q6,12 9,16 T15,16 T21,16" stroke-linecap="round"/>
-                        <path d="M12,4 L12,8" stroke-linecap="round"/>
-                        <path d="M8,6 L16,6" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <h3 class="card-title">黄河首曲</h3>
-                <p class="card-tag">中华水塔・黄河源头</p>
-                <div class="card-content">
-                    <p>玛曲藏语意为 "孔雀河"，是黄河上游唯一的 "玛曲曲果"（黄河源头）区域，也是黄河流入甘肃的第一站。境内黄河形成著名的 "九曲黄河第一湾"，湿地面积广阔，是黄河上游重要的水源涵养地和生态屏障。</p>
-                    <p>黄河在玛曲县境内蜿蜒流淌，形成了壮丽的河曲景观。每年夏季，黄河两岸绿草如茵，野花遍地，是观赏黄河源头的最佳时节。这里的黄河水清澈见底，被誉为 "黄河之肾"。</p>
-                </div>
-                <button class="expand-btn" onclick="toggleCard(this.parentElement); event.stopPropagation();">
-                    查看详情
-                    <span class="expand-icon">▼</span>
-                </button>
-            </div>
+    <main class="main-container">
 
-            <!-- Card 2: Highland Wetlands -->
-            <div class="card" onclick="toggleCard(this)">
-                <div class="card-icon wetland-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12,2 L15,8 L21,9 L17,14 L18,20 L12,17 L6,20 L7,14 L3,9 L9,8 Z" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3 class="card-title">高原湿地</h3>
-                <p class="card-tag">安多最美湿地草原</p>
-                <div class="card-content">
-                    <p>玛曲拥有全国第一个以保护湿地为主的国家级自然保护区。境内沼泽、湿地、溪流纵横交错，与广袤的玛曲草原融为一体。这里是黑颈鹤、藏羚羊等珍稀野生动物的栖息地。</p>
-                    <p>湿地生态系统为众多候鸟提供了理想的繁殖和迁徙停歇地。每年春季，成千上万的候鸟在此栖息，形成壮观的自然景象。玛曲湿地被誉为 "中国最美湿地" 之一。</p>
-                </div>
-                <button class="expand-btn" onclick="toggleCard(this.parentElement); event.stopPropagation();">
-                    查看详情
-                    <span class="expand-icon">▼</span>
-                </button>
-            </div>
+      <!-- Section 1: 黄河首曲 -->
+      <section class="section" id="yellow-river">
+        <h2 class="section-title">
+          黄河首曲
+          <span class="tibetan">རྨ་ཆུ་འཁྱིལ་བ།</span>
+        </h2>
 
-            <!-- Card 3: Amdo Center -->
-            <div class="card" onclick="toggleCard(this)">
-                <div class="card-icon culture-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12,2 C8.13,2 5,5.13 5,9 C5,14.25 12,22 12,22 C12,22 19,14.25 19,9 C19,5.13 15.87,2 12,2 Z" stroke-linecap="round"/>
-                        <path d="M12,11.5 C10.62,11.5 9.5,10.38 9.5,9 C9.5,7.62 10.62,6.5 12,6.5 C13.38,6.5 14.5,7.62 14.5,9 C14.5,10.38 13.38,11.5 12,11.5 Z" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <h3 class="card-title">安多中心</h3>
-                <p class="card-tag">安多藏区游牧文化核心</p>
-                <div class="card-content">
-                    <p>玛曲地处甘、青、川三省交界，是安多藏区的地理与文化中心。历史上是安多藏族部落的聚居地，也是唐蕃古道的重要枢纽。这里保留了最纯正的安多藏族游牧习俗。</p>
-                    <p>作为安多文化传承的核心腹地，玛曲被誉为 "安多藏区的心脏"。这里的藏族文化保存完整，从服饰、语言到生活方式，都展现了安多藏族的独特魅力。</p>
-                </div>
-                <button class="expand-btn" onclick="toggleCard(this.parentElement); event.stopPropagation();">
-                    查看详情
-                    <span class="expand-icon">▼</span>
-                </button>
-            </div>
-
-            <!-- Card 4: Nomadic Culture -->
-            <div class="card" onclick="toggleCard(this)">
-                <div class="card-icon nomadic-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z" stroke-linecap="round"/>
-                        <path d="M8,10 L10,14 L12,10 L14,14 L16,10" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3 class="card-title">游牧文化</h3>
-                <p class="card-tag">藏乡赛马・游牧天堂</p>
-                <div class="card-content">
-                    <p>玛曲是著名的 "赛马之乡"，每年夏季的 "玛曲赛马会" 是安多藏区规模最大、最隆重的民俗盛会之一。这里保留着传统的藏式帐篷建筑、黑土帐篷文化，以及悠扬的安多藏族民歌。</p>
-                    <p>游牧生活在这里依然鲜活，牧民们逐水草而居，与自然环境和谐共处。赛马、藏戏、锅庄舞等传统活动展现了安多游牧文化的丰富多彩，是体验藏族传统文化的绝佳之地。</p>
-                </div>
-                <button class="expand-btn" onclick="toggleCard(this.parentElement); event.stopPropagation();">
-                    查看详情
-                    <span class="expand-icon">▼</span>
-                </button>
-            </div>
-
-            <!-- Card 5: Tourism Services -->
-            <div class="card" onclick="toggleCard(this)">
-                <div class="card-icon tourism-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12,2 C8.13,2 5,5.13 5,9 C5,14.25 12,22 12,22 C12,22 19,14.25 19,9 C19,5.13 15.87,2 12,2 Z" stroke-linecap="round"/>
-                        <path d="M9,12 L12,15 L15,12" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12,9 L12,15" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <h3 class="card-title">旅游服务</h3>
-                <p class="card-tag">生态文化深度游</p>
-                <div class="card-content">
-                    <p>玛曲为游客提供原生态的自然与文化体验，包含黄河首曲观光、湿地生态探险、安多民俗文化体验等项目。游客可观赏赛马表演、体验藏式帐篷住宿、品尝高原特色美食。</p>
-                    <p>景区提供专业的生态讲解与交通服务，打造绿色生态旅游体验。游客还可以参与当地的民俗活动，深入了解黄河生态保护的重要意义，感受人与自然和谐共处的美好。</p>
-                </div>
-                <button class="expand-btn" onclick="toggleCard(this.parentElement); event.stopPropagation();">
-                    查看详情
-                    <span class="expand-icon">▼</span>
-                </button>
-            </div>
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>中华水塔・黄河源头，玛曲是黄河上游重要的水源涵养地和生态屏障</p>
         </div>
 
-        <!-- Share Section -->
-        <div class="share-section">
-            <button class="share-btn" onclick="sharePage()">📤 分享到社交媒体</button>
+        <p class="section-text">
+          玛曲藏语意为"孔雀河"，是黄河上游唯一的"玛曲曲果"（黄河源头）区域，也是黄河流入甘肃的第一站。境内黄河形成著名的"九曲黄河第一湾"，湿地面积广阔，是黄河上游重要的水源涵养地和生态屏障。
+        </p>
+
+        <p class="section-text">
+          黄河在玛曲县境内蜿蜒流淌，形成了壮丽的河曲景观。每年夏季，黄河两岸绿草如茵，野花遍地，是观赏黄河源头的最佳时节。这里的黄河水清澈见底，被誉为"黄河之肾"。
+        </p>
+
+        <ul class="feature-list">
+          <li>
+            <span class="label">九曲第一湾：</span>玛曲境内黄河蜿蜒曲折，形成著名的"九曲黄河第一湾"壮观景象，是黄河流域最美的河曲景观之一，吸引四方游客前来观览。
+          </li>
+          <li>
+            <span class="label">水源涵养：</span>玛曲湿地是黄河上游最重要的水源涵养区，每年向黄河补水量约占黄河源区总径流量的58.7%，被誉为黄河上游的"蓄水池"。
+          </li>
+          <li>
+            <span class="label">生态屏障：</span>境内广阔的草原与湿地共同构成了黄河上游天然的生态屏障，对维护黄河流域生态安全具有不可替代的战略意义。
+          </li>
+        </ul>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-tint"></i></div>
+            <h3 class="card-title">九曲黄河第一湾</h3>
+            <p class="card-content">黄河在玛曲境内蜿蜒曲折，形成壮丽的河曲景观，夏季两岸绿草如茵，野花遍地，景色绝美。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-leaf"></i></div>
+            <h3 class="card-title">黄河之肾</h3>
+            <p class="card-content">玛曲向黄河补水量约占黄河源区总径流量的58.7%，是黄河上游不可或缺的"蓄水池"与生命之源。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-shield"></i></div>
+            <h3 class="card-title">生态屏障</h3>
+            <p class="card-content">草原与湿地构成黄河上游天然生态屏障，对维护黄河流域生态安全具有不可替代的战略意义。</p>
+          </div>
         </div>
+      </section>
+
+      <!-- Section 2: 高原湿地 -->
+      <section class="section" id="wetland">
+        <h2 class="section-title">
+          高原湿地
+          <span class="tibetan">མཐོ་སྒང་རྩྭ་ཐང་།</span>
+        </h2>
+
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>安多最美湿地草原，全国首个以保护湿地为主的国家级自然保护区所在地</p>
+        </div>
+
+        <p class="section-text">
+          玛曲拥有全国第一个以保护湿地为主的国家级自然保护区。境内沼泽、湿地、溪流纵横交错，与广袤的玛曲草原融为一体。这里是黑颈鹤、藏羚羊等珍稀野生动物的栖息地。
+        </p>
+
+        <p class="section-text">
+          湿地生态系统为众多候鸟提供了理想的繁殖和迁徙停歇地。每年春季，成千上万的候鸟在此栖息，形成壮观的自然景象。玛曲湿地被誉为"中国最美湿地"之一。
+        </p>
+
+        <ul class="feature-list">
+          <li>
+            <span class="label">国家级保护区：</span>玛曲湿地自然保护区是全国第一个以保护湿地为主的国家级自然保护区，保护面积广阔，生态价值极高。
+          </li>
+          <li>
+            <span class="label">珍稀动物家园：</span>黑颈鹤、藏羚羊、雪豹、白唇鹿等国家一级保护动物在此栖息繁衍，是研究高原生物多样性的重要基地。
+          </li>
+          <li>
+            <span class="label">候鸟迁徙驿站：</span>每年春季，成千上万候鸟在玛曲湿地栖息，斑头雁、灰鹤、白鹳等珍贵鸟类翩翩飞翔，蔚为壮观。
+          </li>
+          <li>
+            <span class="label">中国最美湿地：</span>玛曲湿地以其原始壮阔的自然景观、丰富的生物多样性，被誉为"中国最美湿地"之一，吸引众多生态旅游爱好者。
+          </li>
+        </ul>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-envira"></i></div>
+            <h3 class="card-title">湿地保护区</h3>
+            <p class="card-content">全国首个以保护湿地为主的国家级自然保护区，沼泽、湿地、溪流纵横，与广袤草原融为一体。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-paw"></i></div>
+            <h3 class="card-title">珍稀动物</h3>
+            <p class="card-content">黑颈鹤、藏羚羊、雪豹、白唇鹿等国家一级保护动物在此栖息繁衍，生物多样性极为丰富。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-tree"></i></div>
+            <h3 class="card-title">候鸟天堂</h3>
+            <p class="card-content">每年春季万鸟云集，斑头雁、灰鹤、白鹳翩翩飞翔，玛曲湿地是候鸟迁徙的重要驿站。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: 安多中心 -->
+      <section class="section" id="amdo-center">
+        <h2 class="section-title">
+          安多中心
+          <span class="tibetan">ཨ་མདོ་དབུས་གཞུང་།</span>
+        </h2>
+
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>安多藏区游牧文化核心，甘青川三省交界的地理与文化中枢，保留最纯正安多习俗</p>
+        </div>
+
+        <p class="section-text">
+          玛曲地处甘、青、川三省交界，是安多藏区的地理与文化中心。历史上是安多藏族部落的聚居地，也是唐蕃古道的重要枢纽。这里保留了最纯正的安多藏族游牧习俗。
+        </p>
+
+        <p class="section-text">
+          作为安多文化传承的核心腹地，玛曲被誉为"安多藏区的心脏"。这里的藏族文化保存完整，从服饰、语言到生活方式，都展现了安多藏族的独特魅力。
+        </p>
+
+        <ul class="feature-list">
+          <li>
+            <span class="label">三省交界枢纽：</span>玛曲地处甘肃、青海、四川三省交界处，自古以来便是安多藏区的地理中心与交通枢纽，是唐蕃古道的重要节点。
+          </li>
+          <li>
+            <span class="label">部落文化传承：</span>历史上玛曲是安多藏族众多部落的聚居地，各部落独特的习俗、歌谣、服饰至今仍保存完好，是安多部落文化的活态博物馆。
+          </li>
+          <li>
+            <span class="label">语言文化中心：</span>玛曲安多藏语保存最为纯正，是安多藏语研究的重要基地，也是安多藏族文化认同的核心纽带。
+          </li>
+          <li>
+            <span class="label">文化心脏地位：</span>玛曲被誉为"安多藏区的心脏"，从服饰、语言、建筑到生活方式，完整展现了安多藏族游牧文化的独特魅力与精神内核。
+          </li>
+        </ul>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-map-marker"></i></div>
+            <h3 class="card-title">三省交界枢纽</h3>
+            <p class="card-content">地处甘、青、川三省交界，自古是安多藏区地理中心与唐蕃古道重要节点，文化交汇之地。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-users"></i></div>
+            <h3 class="card-title">部落文化</h3>
+            <p class="card-content">安多藏族众多部落世代聚居，各部落独特习俗、歌谣、服饰保存完好，是安多部落文化活态博物馆。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-heart"></i></div>
+            <h3 class="card-title">安多心脏</h3>
+            <p class="card-content">玛曲安多藏语纯正，文化认同深厚，被誉为"安多藏区的心脏"，完整承载安多文化精神内核。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: 游牧文化 -->
+      <section class="section" id="nomadic-culture">
+        <h2 class="section-title">
+          游牧文化
+          <span class="tibetan">འབྲོག་པའི་རིག་གནས།</span>
+        </h2>
+
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>藏乡赛马・游牧天堂，玛曲是著名的"赛马之乡"，保留传统藏式帐篷与游牧生活方式</p>
+        </div>
+
+        <p class="section-text">
+          玛曲是著名的"赛马之乡"，每年夏季的"玛曲赛马会"是安多藏区规模最大、最隆重的民俗盛会之一。这里保留着传统的藏式帐篷建筑、黑土帐篷文化，以及悠扬的安多藏族民歌。
+        </p>
+
+        <p class="section-text">
+          游牧生活在这里依然鲜活，牧民们逐水草而居，与自然环境和谐共处。赛马、藏戏、锅庄舞等传统活动展现了安多游牧文化的丰富多彩，是体验藏族传统文化的绝佳之地。
+        </p>
+
+        <ul class="feature-list">
+          <li>
+            <span class="label">玛曲赛马会：</span>每年夏季举办的玛曲赛马会是安多藏区规模最大、最隆重的民俗盛会之一，届时各部落精骑汇聚，帐篷连绵，歌舞通宵，展现安多游牧文化的豪迈精神。
+          </li>
+          <li>
+            <span class="label">黑土帐篷文化：</span>玛曲牧民世代使用以牦牛毛编织的黑色帐篷（黑土帐篷）为居所，这一传统建筑形式是安多游牧文化的标志性符号，凝聚着高原游牧民族的生存智慧。
+          </li>
+          <li>
+            <span class="label">安多民歌：</span>玛曲安多藏族民歌（拉伊）旋律悠扬，内容涵盖爱情、赞美自然、颂扬英雄等主题，是安多游牧文化情感表达的重要载体。
+          </li>
+          <li>
+            <span class="label">藏戏与锅庄舞：</span>安多藏戏与锅庄舞是玛曲最重要的传统表演艺术，节庆时分男女老少围圈共舞，歌声响彻草原，展现了游牧民族热情豪放的性格。
+          </li>
+          <li>
+            <span class="label">游牧生产方式：</span>玛曲牧民逐水草而居，以牧养牦牛、羊群为生，糌粑、酥油茶、手抓羊肉、酸奶等传统饮食承载着游牧生活的记忆与文化基因。
+          </li>
+        </ul>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-flag"></i></div>
+            <h3 class="card-title">玛曲赛马会</h3>
+            <p class="card-content">安多藏区规模最大的民俗盛会，各部落精骑汇聚，帐篷连绵，歌舞通宵，展现游牧文化豪迈精神。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-home"></i></div>
+            <h3 class="card-title">黑土帐篷文化</h3>
+            <p class="card-content">以牦牛毛编织的黑色帐篷是安多游牧文化的标志性符号，凝聚高原游牧民族的生存智慧与文化记忆。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-music"></i></div>
+            <h3 class="card-title">安多民歌与锅庄</h3>
+            <p class="card-content">悠扬的安多拉伊民歌与热情豪放的锅庄舞，是玛曲游牧文化情感表达与集体认同的重要载体。</p>
+          </div>
+        </div>
+
+        <h3 style="color: var(--primary-red); font-size: 22px; margin: 30px 0 20px 10px;">核心景点与体验推荐</h3>
+        <div class="attraction-grid">
+          <div class="attraction-card">
+            <div class="attraction-header">黄河首曲观景台</div>
+            <div class="attraction-body">
+              <p>俯瞰"九曲黄河第一湾"全貌，壮阔的河曲与碧绿的草原交相辉映，是感受黄河之美的绝佳位置。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">玛曲湿地保护区</div>
+            <div class="attraction-body">
+              <p>全国首个以保护湿地为主的国家级自然保护区，沼泽、草原、溪流相互交织，珍稀动物众多。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">玛曲赛马会</div>
+            <div class="attraction-body">
+              <p>每年夏季举办的安多藏区最盛大民俗活动，观赛马、赏藏戏、体验帐篷住宿，深度感受游牧文化。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">草原生态体验</div>
+            <div class="attraction-body">
+              <p>玛曲草原提供原生态的自然与文化体验，包含黄河首曲观光、湿地生态探险、安多民俗文化体验等项目。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tips-box">
+          <h4><i class="fa fa-exclamation-triangle"></i> 旅游注意事项</h4>
+          <ul>
+            <li>玛曲海拔较高，建议提前做好高原反应预防，携带必要药品；</li>
+            <li>尊重安多藏族游牧文化与宗教信仰，进入牧区、寺院须遵守当地规矩；</li>
+            <li>赛马会期间游客众多，建议提前预订住宿，注意人身安全与财物看管；</li>
+            <li>湿地保护区为生态敏感区域，请勿随意进入核心保护区，遵守生态保护规定。</li>
+          </ul>
+        </div>
+      </section>
+
     </main>
 
-    <!-- Footer Section -->
-    <footer class="footer">
-        <p class="explore-text">探索更多甘南安多文化区</p>
-        
-        <div class="nav-buttons">
-            <a href="../xiahe/xiahe1.html" class="nav-btn">夏河八角城</a>
-            <a href="../ganjia/ganjia.html" class="nav-btn">甘加草原</a>
-            <a href="../labulengsi/labulengsi.html" class="nav-btn">拉卜楞寺</a>
-        </div>
+    <!-- Back to Top Button -->
+    <div class="back-to-top"
+         :class="{ visible: showBackToTop }"
+         @click="scrollToTop"
+         aria-label="返回顶部">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
 
-        <div class="cultural-links">
-            <a href="#" class="cultural-link">
-                <svg viewBox="0 0 24 24">
-                    <path d="M3,12 Q6,8 9,12 T15,12 T21,12" stroke-linecap="round"/>
-                    <path d="M3,16 Q6,12 9,16 T15,16 T21,16" stroke-linecap="round"/>
-                </svg>
-                黄河生态保护
-            </a>
-            <a href="#" class="cultural-link">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12,2 L15,8 L21,9 L17,14 L18,20 L12,17 L6,20 L7,14 L3,9 L9,8 Z" stroke-linecap="round"/>
-                </svg>
-                安多游牧服饰
-            </a>
-            <a href="#" class="cultural-link">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z" stroke-linecap="round"/>
-                    <path d="M8,10 L10,14 L12,10 L14,14 L16,10" stroke-linecap="round"/>
-                </svg>
-                玛曲民歌
-            </a>
-        </div>
+  <script>
+    const { createApp } = Vue
 
-        <p class="copyright">©2026 甘南安多文化区 | 玛曲专题</p>
-    </footer>
-
-    <script>
-        // Toggle card content expansion
-        function toggleCard(card) {
-            const content = card.querySelector('.card-content');
-            const btn = card.querySelector('.expand-btn');
-            const isExpanded = content.classList.contains('expanded');
-            
-            // Close all other cards
-            document.querySelectorAll('.card').forEach(otherCard => {
-                if (otherCard !== card) {
-                    const otherContent = otherCard.querySelector('.card-content');
-                    const otherBtn = otherCard.querySelector('.expand-btn');
-                    otherContent.classList.remove('expanded');
-                    otherBtn.classList.remove('expanded');
-                    otherBtn.querySelector('.expand-icon').textContent = '▼';
-                }
-            });
-            
-            // Toggle current card
-            if (isExpanded) {
-                content.classList.remove('expanded');
-                btn.classList.remove('expanded');
-                btn.querySelector('.expand-icon').textContent = '▼';
-            } else {
-                content.classList.add('expanded');
-                btn.classList.add('expanded');
-                btn.querySelector('.expand-icon').textContent = '▲';
-            }
+    createApp({
+      data() {
+        return {
+          showBackToTop: false
         }
-
-        // Share page functionality
-        function sharePage() {
-            if (navigator.share) {
-                navigator.share({
-                    title: '玛曲 - 黄河首曲・安多草原中心',
-                    text: '探索玛曲的黄河首曲、高原湿地和安多文化中心',
-                    url: window.location.href
-                }).catch(console.error);
-            } else {
-                // Fallback for browsers that don't support Web Share API
-                const tempInput = document.createElement('input');
-                tempInput.value = window.location.href;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                alert('页面链接已复制到剪贴板！');
-            }
+      },
+      mounted() {
+        window.addEventListener('scroll', this.handleScroll)
+      },
+      beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll)
+      },
+      methods: {
+        handleScroll() {
+          this.showBackToTop = window.pageYOffset > 300
+        },
+        scrollToTop() {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
         }
-
-        // Add smooth scrolling for navigation buttons
-        document.querySelectorAll('.nav-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = this.getAttribute('href');
-                if (target && target.startsWith('#')) {
-                    const element = document.querySelector(target);
-                    if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
-                    }
-                } else {
-                    window.location.href = target;
-                }
-            });
-        });
-
-        // Add loading animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all cards for scroll animation
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
-
-        // Scroll progress indicator
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            document.getElementById('scrollIndicator').style.width = scrollPercent + '%';
-        });
-    </script>
+      }
+    }).mount('#app')
+  </script>
 </body>
 </html>
