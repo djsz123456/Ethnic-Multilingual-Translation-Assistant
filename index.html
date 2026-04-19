@@ -1619,6 +1619,146 @@
       right: 10px;
     }
 
+    /* 导航子菜单链接样式 */
+    .nav-submenu-item a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 18px;
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 6px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+    }
+
+    .nav-submenu-item a span {
+      display: block;
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: 2px;
+      font-weight: 400;
+    }
+
+    .nav-submenu-item a:hover {
+      background-color: rgba(212, 175, 55, 0.3);
+      color: var(--primary-gold);
+      transform: translateY(-2px);
+    }
+
+    .nav-submenu-item.active a {
+      font-weight: 700;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: var(--primary-gold);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .nav-submenu-list {
+      list-style: none;
+      padding: 0 20px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 1200px;
+    }
+
+    .nav-submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, #8A2520 0%, #6B1C18 100%);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      z-index: 100;
+      padding: 15px 0;
+    }
+
+    .nav-region.active .nav-submenu {
+      display: block;
+    }
+
+    @media (min-width: 769px) {
+      .nav-region:hover .nav-submenu {
+        display: block;
+      }
+    }
+
+    .nav-region {
+      position: relative;
+      flex: 1;
+      max-width: 350px;
+    }
+
+    .nav-region-trigger {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 22px 24px;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      background: transparent;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .nav-region-trigger:hover,
+    .nav-region.active .nav-region-trigger {
+      background-color: rgba(212, 175, 55, 0.2);
+      color: var(--primary-gold, #D4AF37);
+    }
+
+    .nav-region-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+
+    .nav-region-trigger-chevron {
+      display: none;
+    }
+
+    .nav-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+    }
+
+    .horizontal-nav {
+      width: 100%;
+      background: linear-gradient(135deg, #9B2B25 0%, #B83C2E 100%);
+      margin: 40px 0;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .nav-main { flex-direction: column; }
+      .nav-region { max-width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .nav-region-trigger { flex-direction: row; justify-content: space-between; padding: 16px 20px; }
+      .nav-region-trigger-chevron { display: inline-block; font-size: 12px; transition: transform 0.3s; }
+      .nav-region.active .nav-region-trigger-chevron { transform: rotate(180deg); }
+      .nav-submenu { position: static; border-radius: 0; box-shadow: none; background: rgba(0,0,0,0.15); }
+      .nav-submenu-list { flex-direction: column; gap: 4px; padding: 10px 20px; }
+      .nav-submenu-item a { align-items: flex-start; }
+    }
+
     /* 藏地旅游模块样式 */
     .tour-map-section {
       padding: 60px 20px;
