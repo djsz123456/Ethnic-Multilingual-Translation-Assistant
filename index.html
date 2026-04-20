@@ -1765,14 +1765,19 @@
       border-radius: 10px;
     }
     .region-group {
-      margin-bottom: 25px;
+      margin-bottom: 15px;
     }
     .region-group h3 {
       font-size: 16px;
       color: #9c2020;
-      margin: 0 0 10px;
-      padding-bottom: 6px;
+      margin: 0;
+      padding: 10px 12px;
       border-bottom: 1px solid #eee;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .region-group h3:hover {
+      background: #f0e0e0;
     }
     .place-list {
       list-style: none;
@@ -2045,13 +2050,17 @@
         <div class="place-list-wrapper">
           <!-- 青海 · 安多核心区 -->
           <div class="region-group">
-            <h3>青海 · 安多核心区</h3>
-            <ul class="place-list">
+            <h3 @click="toggleRegion('qinghai')" style="cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;">
+              青海 · 安多核心区
+              <i class="fa" :class="expandedRegions.includes('qinghai') ? 'fa-chevron-up' : 'fa-chevron-down'" style="font-size:12px;"></i>
+            </h3>
+            <ul class="place-list" v-show="expandedRegions.includes('qinghai')">
               <li
                 v-for="place in qinghaiPlaces"
                 :key="place.id"
                 class="place-item"
                 :class="{ active: activePlaceId === place.id }"
+                :data-place-id="place.id"
                 @click="handlePlaceClick(place)"
               >
                 {{ place.name }}
@@ -2061,13 +2070,17 @@
 
           <!-- 甘南 · 安多文化区 -->
           <div class="region-group">
-            <h3>甘南 · 安多文化区</h3>
-            <ul class="place-list">
+            <h3 @click="toggleRegion('gannan')" style="cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;">
+              甘南 · 安多文化区
+              <i class="fa" :class="expandedRegions.includes('gannan') ? 'fa-chevron-up' : 'fa-chevron-down'" style="font-size:12px;"></i>
+            </h3>
+            <ul class="place-list" v-show="expandedRegions.includes('gannan')">
               <li
                 v-for="place in gannanPlaces"
                 :key="place.id"
                 class="place-item"
                 :class="{ active: activePlaceId === place.id }"
+                :data-place-id="place.id"
                 @click="handlePlaceClick(place)"
               >
                 {{ place.name }}
@@ -2077,13 +2090,17 @@
 
           <!-- 川西 · 安多片区 -->
           <div class="region-group">
-            <h3>川西 · 安多片区</h3>
-            <ul class="place-list">
+            <h3 @click="toggleRegion('chuanxi')" style="cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;">
+              川西 · 安多片区
+              <i class="fa" :class="expandedRegions.includes('chuanxi') ? 'fa-chevron-up' : 'fa-chevron-down'" style="font-size:12px;"></i>
+            </h3>
+            <ul class="place-list" v-show="expandedRegions.includes('chuanxi')">
               <li
                 v-for="place in chuanxiPlaces"
                 :key="place.id"
                 class="place-item"
                 :class="{ active: activePlaceId === place.id }"
+                :data-place-id="place.id"
                 @click="handlePlaceClick(place)"
               >
                 {{ place.name }}
@@ -2093,13 +2110,17 @@
 
           <!-- 藏北 · 安多延伸区 -->
           <div class="region-group">
-            <h3>藏北 · 安多延伸区</h3>
-            <ul class="place-list">
+            <h3 @click="toggleRegion('zangbei')" style="cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;">
+              藏北 · 安多延伸区
+              <i class="fa" :class="expandedRegions.includes('zangbei') ? 'fa-chevron-up' : 'fa-chevron-down'" style="font-size:12px;"></i>
+            </h3>
+            <ul class="place-list" v-show="expandedRegions.includes('zangbei')">
               <li
                 v-for="place in northernTibetPlaces"
                 :key="place.id"
                 class="place-item"
                 :class="{ active: activePlaceId === place.id }"
+                :data-place-id="place.id"
                 @click="handlePlaceClick(place)"
               >
                 {{ place.name }}
@@ -2496,6 +2517,7 @@ createApp({
       map: null,
       markers: [],
       activePlaceId: null,
+      expandedRegions: [],
       // --------------------------
       // 1. 青海安多核心区（11个）
       // --------------------------
@@ -2947,6 +2969,21 @@ createApp({
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     },
+    toggleRegion(key) {
+      const idx = this.expandedRegions.indexOf(key);
+      if (idx >= 0) {
+        this.expandedRegions.splice(idx, 1);
+      } else {
+        this.expandedRegions.push(key);
+      }
+    },
+    getRegionKey(placeId) {
+      if (this.qinghaiPlaces.some(p => p.id === placeId)) return 'qinghai';
+      if (this.gannanPlaces.some(p => p.id === placeId)) return 'gannan';
+      if (this.chuanxiPlaces.some(p => p.id === placeId)) return 'chuanxi';
+      if (this.northernTibetPlaces.some(p => p.id === placeId)) return 'zangbei';
+      return null;
+    },
     handleScroll() {
       this.showBackToTop = window.pageYOffset > 300
     },
@@ -3064,7 +3101,22 @@ createApp({
       });
 
       marker.on('click', () => {
-        this.handlePlaceClick(place);
+        this.activePlaceId = place.id;
+        const regionKey = this.getRegionKey(place.id);
+        if (regionKey && !this.expandedRegions.includes(regionKey)) {
+          this.expandedRegions.push(regionKey);
+        }
+        this.$nextTick(() => {
+          const el = document.querySelector(`[data-place-id="${place.id}"]`);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        if (this.map) {
+          this.map.setCenter([place.lng, place.lat]);
+          this.map.setZoom(12);
+          if (marker.infoWindow) {
+            marker.infoWindow.open(this.map, marker.getPosition());
+          }
+        }
       });
 
       marker.infoWindow = infoWindow;
@@ -3075,6 +3127,18 @@ createApp({
   // 点击景点列表项/标记的联动逻辑
   handlePlaceClick(place) {
     this.activePlaceId = place.id;
+    // 自动展开对应区域
+    const regionKey = this.getRegionKey(place.id);
+    if (regionKey && !this.expandedRegions.includes(regionKey)) {
+      this.expandedRegions.push(regionKey);
+    }
+    // 滚动到对应地名
+    this.$nextTick(() => {
+      const el = document.querySelector(`[data-place-id="${place.id}"]`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
     if (this.map) {
       this.map.setCenter([place.lng, place.lat]);
       this.map.setZoom(12);
