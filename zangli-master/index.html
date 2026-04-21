@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset="UTF-8">
+		<meta name="description" content="提供1951年1月8日到2051年1月12日之间到公历藏历对照查询">
+		<meta name="keywords" content="在线,藏历,百年,万年历，藏历月历">
+		<meta name="author"  content="Stone Huang">
+		<style>
+		@media only screen and (max-width:639px ) {
+			body{font-size:x-small}
+			.narrow{display:}
+			.wide{display:none}
+		}
+		@media only screen and (min-width:640px ){
+		.narrow{display:none}
+		.wide{display:}
+		}
+		@media only screen and (max-width:1023px ){
+		.day2{font-size:0.85em;}
+		.day3{font-size:0.8em}
+		}
+		@media only screen and (min-width:1024px ){
+		.day2{font-size:1em}
+		.day3{font-size:0.5em}
+		}
+		th{width:7em}
+		select{font-size:1.1em}
+		.right{text-align:right}
+		.center{text-align:center}
+		.day{font-size:1.2em}
+		.day0{font-size:1em}
+		.day1{font-size:1.3em}
+		.month{color:darkred;/*text-shadow: 0 0 2px orangered;*/ }
+		.month1{color:red}
+		.lunareclipse{background-color:#aaaaff}
+		.solareclipse{background-color:#ffaaaa}
+		</style>
+		<title>百年藏历 - 藏历在线查询</title>
+
+		<script src="zangli.js" async defer charset="UTF-8"></script>
+		<script>
+		function $(id){return document.getElementById(id)}
+		window.onhashchange=zangli_callback;
+		var $m,$y;
+		function zangli_callback(){
+			var h=location.hash;
+			$m=$("month");
+			$y=$("year");
+			var d=h?new Date(h.substr(1)):new Date();
+			if(d<startDate)d=startDate;
+			if(d>endDate)d=endDate;
+			$("selectedDay").innerHTML="公历"+d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日，藏历"+getZangli(d).value;
+			$y.options.length=0;
+			for(var i=1951;i<2052;i++){
+				$y.appendChild(new Option(i));
+			}
+			$m.options.length=0;
+			
+			for(var i=1;i<13;i++){
+				if(!((d.getFullYear()==2051 && i>2)))
+					$m.appendChild(new Option(i));
+			}
+			$y.value=d.getFullYear();
+			$m.value=d.getMonth()+1;
+
+			var tbody=document.getElementsByTagName("tbody")[0];
+			while(tbody.rows.length>1){
+				tbody.deleteRow(tbody.rows.length-1)
+			}
+			var tr,td;
+			var d0=new Date(d.getFullYear(),d.getMonth(),1);//月初
+			var d1=new Date(d.getFullYear(),d.getMonth()+1,0);//月末
+			tr=tbody.insertRow();
+			for(var i=0;i<d0.getDay();i++){
+				td=tr.insertCell();
+			}
+			for(var i=d0.getDate();i<=d1.getDate();i++){
+				var d3=new Date(d.getFullYear(),d.getMonth(),i);
+				if(d3.getDay()==0 ){
+					tr=tbody.insertRow()
+				}
+				var z=getZangli(d3);
+				var ecl = getEclipse(d3);
+				var t=[];
+				if(i==d0.getDate()){
+					t.push("<div class='center day0'><span class=wide>"+d.getFullYear()+"年"+(d.getMonth()+1)+"月1日</span><span class=narrow>"+i+"</span>");
+				}else{
+					t.push("<div class='right day0'>"+i)
+				}
+				t.push("</div><div class='day1 center'>")
+				if(z.day=="初一" || (z.day=="初二" && z.dayMiss))
+					t.push("<b class=month1>"+(z.month=='正'&&!z.monthLeap?z.year+"年<br>":"")+z.month+"月</b><wbr>"+z.day)
+				else
+					if(z.value!="error") t.push(z.day);
+				t.push("</div><div class='center day2 wide'>");
+				t.push(z.extraInfo?z.extraInfo:"&nbsp;")
+				t.push("</div><div class='center day3 wide'>");
+				t.push(ecl.value?(ecl.value+","+ecl.extraInfo.replace(/，/,",<br>")):(z.extraInfo2?z.extraInfo2:"&nbsp;"))
+				t.push("</div>");
+				td=tr.insertCell()
+				td.innerHTML=t.join("");
+				if(z.value!="error")
+				td.title="公历"+d3.getFullYear()+"年"+(d3.getMonth()+1)+"月"+d3.getDate()+"日，藏历"+z.value;
+				if(ecl.value!=""){
+					td.title=td.title+","+ecl.value;
+					if(/日/.test(ecl.value))
+					td.className = "solareclipse"
+					else
+					td.className = "lunareclipse"
+				}
+				if(ecl.extraInfo!=""){
+					td.title=td.title+","+ecl.extraInfo;
+				}
+			}
+			for(var i=d3.getDay();i<6;i++){
+				tr.insertCell();
+			}
+		}
+		function showDay(e){
+			while(e.tagName!="TD" && e.tagName!="TABLE"){
+				e=e.parentNode;
+			}
+			if(e.title){
+				$("selectedDay").innerHTML=e.title;
+			}
+		}
+		function changeDate(code){
+			var m=$m.value;
+			var y=$y.value;
+			if(code==37){
+				m--;
+			}else if(code==38){
+				y--;
+			}else if(code==39){
+				m++;
+			}else if(code==40){
+				y++;
+			}else if(code!="year" && code!="month"){
+				return;
+			}
+			if(m==0){y--;m=12}
+			if(m==13){y++;m=1}
+			location.replace(location.pathname+"#"+y+"/"+m+"/1");
+			window.scrollTo(0,0);
+		}
+		</script>
+	</head>
+	<body onkeyup="changeDate(event.keyCode)">
+		<br>
+		<div class=day id="selectedDay"></div>
+		<div class=day> 选择要查看的公历日期 ： 
+		<select id="year" onchange="changeDate('year')"></select>
+		&nbsp;
+		<select id="month" onchange="changeDate('month')"></select>
+		</div><br>
+		<table cellspacing=1 bgcolor="brown" cellpadding="2em">
+			<tbody bgcolor="white" onclick="showDay(event.srcElement)">
+				<tr bgcolor="darkred" style="color:white">
+					<th><span class="narrow">周</span><span class="wide">星期</span>日</th>
+					<th><span class="narrow">周</span><span class="wide">星期</span>一</th>
+					<th><span class="narrow">周</span><span class="wide">星期</span>二</th>
+					<th><span class="narrow">周</span><span class="wide">星期</span>三</th>
+					<th><span class="narrow">周</span><span class="wide">星期</span>四</th>
+					<th><span class="narrow">周</span><span class="wide">星期</span>五</th>
+					<th><span class="narrow">周</span><span class="wide">星期</span>六</th>
+				</tr>
+			</tbody>
+		</table>
+		
+		<noscript>
+					<p>不支持javascript的浏览器可以直接访问本月历的html版本：<a href="calendar/1952.html">1952年藏历月历</a> <a href="calendar/1953.html">1953年藏历月历</a> <a href="calendar/1954.html">1954年藏历月历</a> <a href="calendar/1955.html">1955年藏历月历</a> <a href="calendar/1956.html">1956年藏历月历</a> <a href="calendar/1957.html">1957年藏历月历</a> <a href="calendar/1958.html">1958年藏历月历</a> <a href="calendar/1959.html">1959年藏历月历</a> <a href="calendar/1960.html">1960年藏历月历</a> <a href="calendar/1961.html">1961年藏历月历</a> <a href="calendar/1962.html">1962年藏历月历</a> <a href="calendar/1963.html">1963年藏历月历</a> <a href="calendar/1964.html">1964年藏历月历</a> <a href="calendar/1965.html">1965年藏历月历</a> <a href="calendar/1966.html">1966年藏历月历</a> <a href="calendar/1967.html">1967年藏历月历</a> <a href="calendar/1968.html">1968年藏历月历</a> <a href="calendar/1969.html">1969年藏历月历</a> <a href="calendar/1970.html">1970年藏历月历</a> <a href="calendar/1971.html">1971年藏历月历</a> <a href="calendar/1972.html">1972年藏历月历</a> <a href="calendar/1973.html">1973年藏历月历</a> <a href="calendar/1974.html">1974年藏历月历</a> <a href="calendar/1975.html">1975年藏历月历</a> <a href="calendar/1976.html">1976年藏历月历</a> <a href="calendar/1977.html">1977年藏历月历</a> <a href="calendar/1978.html">1978年藏历月历</a> <a href="calendar/1979.html">1979年藏历月历</a> <a href="calendar/1980.html">1980年藏历月历</a> <a href="calendar/1981.html">1981年藏历月历</a> <a href="calendar/1982.html">1982年藏历月历</a> <a href="calendar/1983.html">1983年藏历月历</a> <a href="calendar/1984.html">1984年藏历月历</a> <a href="calendar/1985.html">1985年藏历月历</a> <a href="calendar/1986.html">1986年藏历月历</a> <a href="calendar/1987.html">1987年藏历月历</a> <a href="calendar/1988.html">1988年藏历月历</a> <a href="calendar/1989.html">1989年藏历月历</a> <a href="calendar/1990.html">1990年藏历月历</a> <a href="calendar/1991.html">1991年藏历月历</a> <a href="calendar/1992.html">1992年藏历月历</a> <a href="calendar/1993.html">1993年藏历月历</a> <a href="calendar/1994.html">1994年藏历月历</a> <a href="calendar/1995.html">1995年藏历月历</a> <a href="calendar/1996.html">1996年藏历月历</a> <a href="calendar/1997.html">1997年藏历月历</a> <a href="calendar/1998.html">1998年藏历月历</a> <a href="calendar/1999.html">1999年藏历月历</a> <a href="calendar/2000.html">2000年藏历月历</a> <a href="calendar/2001.html">2001年藏历月历</a> <a href="calendar/2002.html">2002年藏历月历</a> <a href="calendar/2003.html">2003年藏历月历</a> <a href="calendar/2004.html">2004年藏历月历</a> <a href="calendar/2005.html">2005年藏历月历</a> <a href="calendar/2006.html">2006年藏历月历</a> <a href="calendar/2007.html">2007年藏历月历</a> <a href="calendar/2008.html">2008年藏历月历</a> <a href="calendar/2009.html">2009年藏历月历</a> <a href="calendar/2010.html">2010年藏历月历</a> <a href="calendar/2011.html">2011年藏历月历</a> <a href="calendar/2012.html">2012年藏历月历</a> <a href="calendar/2013.html">2013年藏历月历</a> <a href="calendar/2014.html">2014年藏历月历</a> <a href="calendar/2015.html">2015年藏历月历</a> <a href="calendar/2016.html">2016年藏历月历</a> <a href="calendar/2017.html">2017年藏历月历</a> <a href="calendar/2018.html">2018年藏历月历</a> <a href="calendar/2019.html">2019年藏历月历</a> <a href="calendar/2020.html">2020年藏历月历</a> <a href="calendar/2021.html">2021年藏历月历</a> <a href="calendar/2022.html">2022年藏历月历</a> <a href="calendar/2023.html">2023年藏历月历</a> <a href="calendar/2024.html">2024年藏历月历</a> <a href="calendar/2025.html">2025年藏历月历</a> <a href="calendar/2026.html">2026年藏历月历</a> <a href="calendar/2027.html">2027年藏历月历</a> <a href="calendar/2028.html">2028年藏历月历</a> <a href="calendar/2029.html">2029年藏历月历</a> <a href="calendar/2030.html">2030年藏历月历</a> <a href="calendar/2031.html">2031年藏历月历</a> <a href="calendar/2032.html">2032年藏历月历</a> <a href="calendar/2033.html">2033年藏历月历</a> <a href="calendar/2034.html">2034年藏历月历</a> <a href="calendar/2035.html">2035年藏历月历</a> <a href="calendar/2036.html">2036年藏历月历</a> <a href="calendar/2037.html">2037年藏历月历</a> <a href="calendar/2038.html">2038年藏历月历</a> <a href="calendar/2039.html">2039年藏历月历</a> <a href="calendar/2040.html">2040年藏历月历</a> <a href="calendar/2041.html">2041年藏历月历</a> <a href="calendar/2042.html">2042年藏历月历</a> <a href="calendar/2043.html">2043年藏历月历</a> <a href="calendar/2044.html">2044年藏历月历</a> <a href="calendar/2045.html">2045年藏历月历</a> <a href="calendar/2046.html">2046年藏历月历</a> <a href="calendar/2047.html">2047年藏历月历</a> <a href="calendar/2048.html">2048年藏历月历</a> <a href="calendar/2049.html">2049年藏历月历</a> <a href="calendar/2050.html">2050年藏历月历</a>
+		</noscript>
+	</body>
+</html>

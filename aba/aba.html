@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>阿坝县 - 安多藏区秘境・高原净土</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.15);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Noto Sans SC',"Microsoft YaHei",sans-serif; }
+    body { background:var(--bg-primary); color:var(--text-primary); line-height:1.7; overflow-x:hidden; }
+
+    .top-bar { width:100%; height:40px; background:linear-gradient(90deg,#f8f8f8,#f0f0f0); border-bottom:1px solid #e0e0e0; line-height:40px; padding:0 30px; font-size:13px; color:#666; display:flex; justify-content:space-between; align-items:center; }
+    .back-link { color:var(--primary-red); text-decoration:none; font-weight:500; transition:var(--transition); }
+    .back-link:hover { color:var(--primary-gold); }
+
+    .header { width:100%; background:linear-gradient(135deg,var(--primary-red) 0%,#B83C2E 100%); box-shadow:var(--shadow-md); position:sticky; top:0; z-index:999; }
+    .header-wrap { max-width:1400px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:80px; padding:0 30px; }
+    .logo { font-size:22px; font-weight:bold; color:#fff; }
+    .logo a { color:#fff; text-decoration:none; transition:var(--transition); }
+    .logo a:hover { color:var(--primary-gold); }
+    .nav { display:flex; gap:8px; }
+    .nav a { color:#fff; text-decoration:none; padding:10px 18px; font-size:15px; font-weight:500; border-radius:8px; transition:var(--transition); }
+    .nav a:hover { background:rgba(255,255,255,0.15); color:var(--primary-gold); }
+
+    .banner { width:100%; height:500px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0a1a2a 0%,#1a3a2a 50%,#2a5a3a 100%); }
+    .banner::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(155,43,37,0.6),rgba(0,0,0,0.5)); z-index:1; }
+    .banner-content { position:relative; z-index:2; text-align:center; color:#fff; max-width:900px; padding:0 30px; animation:fadeInUp 1s ease; }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .banner h1 { font-size:52px; margin-bottom:20px; font-weight:700; text-shadow:3px 3px 6px rgba(0,0,0,0.5); letter-spacing:4px; }
+    .banner .subtitle { font-size:24px; margin-bottom:30px; text-shadow:2px 2px 4px rgba(0,0,0,0.5); font-weight:300; letter-spacing:2px; }
+    .banner .tibetan-name { font-size:18px; opacity:0.85; margin-bottom:20px; font-style:italic; }
+    .banner-stats { display:flex; justify-content:center; gap:60px; margin-top:30px; }
+    .stat-item { text-align:center; }
+    .stat-number { font-size:32px; font-weight:700; color:var(--primary-gold); display:block; }
+    .stat-label { font-size:14px; opacity:0.9; margin-top:5px; }
+
+    .main-container { max-width:1400px; margin:0 auto; padding:60px 30px; }
+    .section { margin-bottom:80px; }
+    .section-title { font-size:36px; color:var(--primary-red); margin-bottom:30px; padding-left:20px; border-left:5px solid var(--primary-gold); font-weight:700; display:flex; align-items:center; letter-spacing:1px; }
+    .section-title::after { content:''; flex:1; height:2px; background:linear-gradient(90deg,var(--primary-gold),transparent); margin-left:20px; }
+    .section-title .tibetan { font-size:18px; color:var(--text-secondary); margin-left:15px; font-weight:400; }
+    .section-text { font-size:16px; color:var(--text-secondary); line-height:2; text-align:justify; margin-bottom:20px; padding:0 10px; }
+
+    .highlight-box { background:linear-gradient(135deg,#fff9f0,#fff5e6); border-left:4px solid var(--primary-gold); padding:25px 30px; margin:25px 0; border-radius:0 var(--radius-md) var(--radius-md) 0; box-shadow:var(--shadow-sm); }
+    .highlight-box p { font-size:16px; color:var(--text-primary); line-height:1.9; margin-bottom:15px; }
+    .highlight-box p:last-child { margin-bottom:0; }
+    .highlight-box .label { font-weight:700; color:var(--primary-red); margin-right:8px; }
+
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:25px; margin:30px 0; }
+    .card { background:#fff; border-radius:var(--radius-md); padding:25px; box-shadow:var(--shadow-sm); transition:var(--transition); border:1px solid rgba(0,0,0,0.05); position:relative; overflow:hidden; }
+    .card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--primary-red),var(--primary-gold)); transform:scaleX(0); transition:var(--transition); }
+    .card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
+    .card:hover::before { transform:scaleX(1); }
+    .card-icon { width:60px; height:60px; margin:0 auto 20px; background:linear-gradient(135deg,var(--primary-red),#B83C2E); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px; box-shadow:var(--shadow-md); }
+    .card-title { font-size:18px; color:var(--primary-red); margin-bottom:12px; font-weight:600; text-align:center; }
+    .card-content { font-size:15px; color:var(--text-secondary); line-height:1.8; text-align:justify; }
+
+    .feature-list { list-style:none; padding:0; margin:20px 0; }
+    .feature-list li { padding:15px 20px 15px 40px; margin-bottom:12px; background:#fff; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); position:relative; transition:var(--transition); font-size:15px; color:var(--text-secondary); line-height:1.7; }
+    .feature-list li:hover { transform:translateX(5px); box-shadow:var(--shadow-md); }
+    .feature-list li::before { content:'✦'; position:absolute; left:15px; color:var(--primary-gold); font-size:16px; }
+    .feature-list li .label { font-weight:600; color:var(--primary-red); margin-right:5px; }
+
+    .attraction-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; margin:30px 0; }
+    .attraction-card { background:#fff; border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); }
+    .attraction-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+    .attraction-header { background:linear-gradient(135deg,var(--primary-red),#B83C2E); color:#fff; padding:15px 20px; font-size:16px; font-weight:600; }
+    .attraction-body { padding:20px; }
+    .attraction-body p { font-size:14px; color:var(--text-secondary); line-height:1.7; }
+
+    .tips-box { background:linear-gradient(135deg,#f0f7ff,#e8f4fd); border:1px solid #b3d9f2; border-radius:var(--radius-md); padding:25px 30px; margin:25px 0; }
+    .tips-box h4 { color:var(--primary-red); margin-bottom:15px; font-size:18px; }
+    .tips-box ul { list-style:none; padding:0; }
+    .tips-box ul li { padding:10px 0 10px 25px; position:relative; font-size:15px; color:var(--text-secondary); line-height:1.7; }
+    .tips-box ul li::before { content:'⚠'; position:absolute; left:0; color:#e74c3c; }
+
+    footer { background:var(--primary-red); color:rgba(255,255,255,0.85); text-align:center; padding:30px 20px; font-size:14px; }
+
+    .back-to-top { position:fixed; bottom:30px; right:30px; width:50px; height:50px; background:var(--primary-red); color:#fff; border-radius:50%; display:none; align-items:center; justify-content:center; font-size:20px; cursor:pointer; box-shadow:var(--shadow-lg); transition:var(--transition); z-index:998; border:none; }
+    .back-to-top.visible { display:flex; }
+    .back-to-top:hover { background:var(--primary-gold); transform:translateY(-5px); }
+
+    @media (max-width:768px) {
+      .header-wrap { flex-direction:column; height:auto; padding:15px 20px; }
+      .logo { font-size:18px; margin-bottom:10px; }
+      .nav { flex-wrap:wrap; justify-content:center; }
+      .banner { height:400px; }
+      .banner h1 { font-size:36px; }
+      .banner .subtitle { font-size:18px; }
+      .banner-stats { gap:30px; }
+      .stat-number { font-size:24px; }
+      .section-title { font-size:26px; }
+      .card-grid, .attraction-grid { grid-template-columns:1fr; }
+      .main-container { padding:40px 20px; }
+    }
+    @media (max-width:480px) {
+      .banner { height:300px; }
+      .banner h1 { font-size:28px; }
+      .banner .subtitle { font-size:16px; }
+      .banner-stats { flex-direction:column; gap:15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div>🏔️ 雪域安多·藏韵传承 | 阿坝县 - 安多藏区秘境</div>
+    <a href="../index.html" class="back-link"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+
+  <header class="header">
+    <div class="header-wrap">
+      <div class="logo"><a href="../index.html">གངས་ལྗོངས་ཨ་མདོ།</a></div>
+      <nav class="nav">
+        <a href="../index.html">首页</a>
+        <a href="../index.html#culture">安多民俗</a>
+        <a href="../index.html#tour">藏地旅游</a>
+        <a href="../index.html#tools">藏文工具</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="banner">
+    <div class="banner-content">
+      <div class="tibetan-name">ཨ་བ་རྫོང་།</div>
+      <h1>阿坝县</h1>
+      <p class="subtitle">安多藏区秘境・高原净土</p>
+      <div class="banner-stats">
+        <div class="stat-item"><span class="stat-number">3,300m</span><div class="stat-label">平均海拔</div></div>
+        <div class="stat-item"><span class="stat-number">42座</span><div class="stat-label">藏传佛教寺院</div></div>
+        <div class="stat-item"><span class="stat-number">千年</span><div class="stat-label">安多文化</div></div>
+        <div class="stat-item"><span class="stat-number">原生态</span><div class="stat-label">高原湿地</div></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-container">
+    <section class="section" id="nature">
+      <h2 class="section-title">自然风貌<span class="tibetan">རང་བྱུང་མཛེས་ལྗོངས།</span></h2>
+      <div class="highlight-box">
+        <p><span class="label">核心定位：</span>阿坝县位于四川省阿坝藏族羌族自治州西北部，青藏高原东南缘，是川甘青三省交界处的安多藏区核心腹地。境内草原辽阔、湿地密布，是长江、黄河上游的重要水源涵养区。</p>
+      </div>
+      <p class="section-text">阿坝县地势高亢，平均海拔3300米以上，境内有莲宝叶则神山、曼扎塘湿地等壮美自然景观。草原面积广袤，是安多藏区重要的天然牧场，春夏花海连天、牛羊遍野，秋冬银装素裹、壮阔苍凉。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-mountain"></i></div>
+          <h3 class="card-title">莲宝叶则</h3>
+          <p class="card-content">藏语意为"尊严的玉石之峰"，是安多藏区著名的神山圣地。山峰嶙峋、冰川遗迹遍布，被誉为"天神的后花园"，是户外探险与朝圣的绝佳目的地。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-tint"></i></div>
+          <h3 class="card-title">曼扎塘湿地</h3>
+          <p class="card-content">中国最大的高原湿地之一，是黑颈鹤等珍稀鸟类的栖息地。湿地水草丰茂，与蓝天雪山交相辉映，构成了高原生态的壮丽画卷。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-leaf"></i></div>
+          <h3 class="card-title">高原草甸</h3>
+          <p class="card-content">阿坝县拥有大面积的高山草甸和亚高山草原，是传统畜牧业的核心区域。四季更替间呈现出截然不同的壮美景象。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="history">
+      <h2 class="section-title">历史人文<span class="tibetan">ལོ་རྒྱུས་རིག་གནས།</span></h2>
+      <p class="section-text">阿坝县是安多藏区历史最悠久的聚居地之一，拥有深厚的藏传佛教文化底蕴。境内寺院林立，以郎依寺、赛格寺最为著名，是格鲁派与觉囊派的重要道场。</p>
+      <ul class="feature-list">
+        <li><span class="label">郎依寺：</span>始建于1357年，是目前藏区规模最大的觉囊派寺院。寺院保存有珍贵的壁画、唐卡和藏经，是研究觉囊派教义的重要学术圣地。</li>
+        <li><span class="label">赛格寺：</span>格鲁派重要寺院之一，建筑恢弘壮丽，寺内收藏大量珍贵佛像与法器，是阿坝地区宗教文化的核心载体。</li>
+        <li><span class="label">神座村：</span>被《中国国家地理》评为中国最美丽的村庄之一，世代保留着传统的安多藏族生活方式与建筑风貌。</li>
+      </ul>
+    </section>
+
+    <section class="section" id="culture">
+      <h2 class="section-title">文化意义<span class="tibetan">རིག་གནས་ཀྱི་དོན་སྙིང་།</span></h2>
+      <p class="section-text">阿坝县是安多藏族文化传承最完整的地区之一，保留着丰富的游牧文化、宗教仪轨和民俗节庆，被誉为"安多文化的活化石"。</p>
+      <ul class="feature-list">
+        <li><span class="label">莫郎节：</span>藏历正月的盛大宗教庆典，各寺院举行展佛、辩经、金刚法舞等仪式，吸引周边数万信众参与，是感受安多藏族信仰力量的最佳时机。</li>
+        <li><span class="label">游牧传承：</span>阿坝牧民至今保持着传统的逐水草而居的生活方式，帐篷文化、酥油茶制作、牦牛放牧等都是鲜活的非遗传承。</li>
+        <li><span class="label">藏族手工艺：</span>阿坝地区以精美的唐卡绘制、金银器打造和藏式服饰制作闻名，传统工艺代代相传。</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tourism">
+      <h2 class="section-title">文化地位与旅游服务<span class="tibetan">རིག་གནས་གོ་གནས་དང་ཡུལ་སྐོར།</span></h2>
+      <div class="highlight-box">
+        <p><span class="label">区域地位：</span>阿坝县是川西北安多藏区的文化核心，与若尔盖、红原共同构成了四川安多文化走廊，是展示安多藏区宗教文化、游牧传统与高原生态的重要窗口。</p>
+      </div>
+      <h3 style="color:var(--primary-red);font-size:22px;margin:30px 0 20px 10px;">核心景点推荐</h3>
+      <div class="attraction-grid">
+        <div class="attraction-card">
+          <div class="attraction-header">莲宝叶则神山</div>
+          <div class="attraction-body"><p>安多藏区著名神山，奇峰林立、冰川遗迹壮观，被誉为"天神后花园"，适合徒步探险与摄影创作。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">郎依寺</div>
+          <div class="attraction-body"><p>藏区最大的觉囊派寺院，建于1357年，寺内壁画唐卡精美绝伦，是了解觉囊派教义的学术圣地。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">曼扎塘湿地</div>
+          <div class="attraction-body"><p>中国重要高原湿地，黑颈鹤等珍稀鸟类栖息地，水草丰茂与雪山辉映，是生态观光胜地。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">神座村</div>
+          <div class="attraction-body"><p>"中国最美村庄"之一，世代保留安多藏族传统生活方式，原始森林环绕，宁静祥和。</p></div>
+        </div>
+      </div>
+      <div class="tips-box">
+        <h4><i class="fa fa-exclamation-triangle"></i> 旅游注意事项</h4>
+        <ul>
+          <li>阿坝县海拔较高（3300m+），注意高原反应，建议提前服用红景天；</li>
+          <li>尊重藏族宗教信仰与民俗，进入寺院请脱帽、顺时针转经；</li>
+          <li>高原紫外线强烈，做好防晒保暖准备；</li>
+          <li>部分景区道路条件有限，建议自驾或包车出行。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 探寻安多秘境，传承藏韵文化</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fa fa-arrow-up"></i>
+  </button>
+  <script>
+    window.addEventListener('scroll', function() {
+      document.getElementById('backToTop').classList.toggle('visible', window.pageYOffset > 300);
+    });
+  </script>
+</body>
+</html>

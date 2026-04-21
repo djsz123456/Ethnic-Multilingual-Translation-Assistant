@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="青海湖 - 中国最大内陆湖・高原明珠">
+  <meta name="keywords" content="青海湖,错温波,安多,藏族,高原明珠,祭海">
+  <title>青海湖 - 中国最大内陆湖・高原明珠</title>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --bg-primary: #FAF9F7;
+      --bg-secondary: #FFFFFF;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.15);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(90deg, #f8f8f8 0%, #f0f0f0 100%);
+      border-bottom: 1px solid #e0e0e0;
+      line-height: 40px;
+      padding: 0 30px;
+      font-size: 13px;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar-text { font-weight: 500; }
+
+    .back-link {
+      color: var(--primary-red);
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .back-link:hover { color: var(--primary-gold); }
+
+    /* Header */
+    .header {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary-red) 0%, #B83C2E 100%);
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .header-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 30px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .logo a {
+      color: #fff;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .logo a:hover { color: var(--primary-gold); }
+
+    .nav { display: flex; gap: 8px; }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--primary-gold);
+      transition: var(--transition);
+    }
+
+    .nav a:hover {
+      background: rgba(255,255,255,0.15);
+      color: var(--primary-gold);
+    }
+
+    .nav a:hover::after { width: 60%; }
+
+    /* Banner */
+    .banner {
+      width: 100%;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0a2a3a 0%, #154060 50%, #1a6080 100%);
+    }
+
+    .banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(10,50,80,0.65) 0%, rgba(0,0,0,0.5) 100%);
+      z-index: 1;
+    }
+
+    .banner img {
+      width: 100%; height: 100%;
+      position: absolute; top: 0; left: 0;
+      object-fit: cover; z-index: 0;
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      max-width: 900px;
+      padding: 0 30px;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .banner h1 {
+      font-size: 52px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+      letter-spacing: 4px;
+    }
+
+    .banner .subtitle {
+      font-size: 24px;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .banner .tibetan-name {
+      font-size: 18px;
+      opacity: 0.85;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .banner-stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-top: 30px;
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary-gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 30px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 80px;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 36px;
+      color: var(--primary-red);
+      margin-bottom: 30px;
+      padding-left: 20px;
+      border-left: 5px solid var(--primary-gold);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-gold), transparent);
+      margin-left: 20px;
+    }
+
+    .section-title .tibetan {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-left: 15px;
+      font-weight: 400;
+    }
+
+    .section-text {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 2;
+      text-align: justify;
+      margin-bottom: 20px;
+      padding: 0 10px;
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+      background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+      border-left: 4px solid var(--primary-gold);
+      padding: 25px 30px;
+      margin: 25px 0;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .highlight-box p {
+      font-size: 16px;
+      color: var(--text-primary);
+      line-height: 1.9;
+      margin-bottom: 15px;
+    }
+
+    .highlight-box p:last-child { margin-bottom: 0; }
+
+    .highlight-box .label {
+      font-weight: 700;
+      color: var(--primary-red);
+      margin-right: 8px;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 25px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      width: 60px; height: 60px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-title {
+      font-size: 18px;
+      color: var(--primary-red);
+      margin-bottom: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .card-content {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    /* Tibetan Quote */
+    .tibetan-quote {
+      background: linear-gradient(135deg, #fff9f0 0%, #fff5e6 100%);
+      border-left: 3px solid var(--primary-gold);
+      padding: 12px 16px;
+      margin-top: 12px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    /* Feature List */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .feature-list li {
+      padding: 15px 20px 15px 40px;
+      margin-bottom: 12px;
+      background: white;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: var(--transition);
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .feature-list li:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-list li::before {
+      content: '✦';
+      position: absolute;
+      left: 15px;
+      color: var(--primary-gold);
+      font-size: 16px;
+    }
+
+    .feature-list li .label {
+      font-weight: 600;
+      color: var(--primary-red);
+      margin-right: 5px;
+    }
+
+    /* Attraction Cards */
+    .attraction-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .attraction-card {
+      background: white;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .attraction-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .attraction-header {
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: white;
+      padding: 15px 20px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .attraction-body { padding: 20px; }
+
+    .attraction-body p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Tips Box */
+    .tips-box {
+      background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+      border: 1px solid #b3d9f2;
+      border-radius: var(--radius-md);
+      padding: 25px 30px;
+      margin: 25px 0;
+    }
+
+    .tips-box h4 {
+      color: var(--primary-red);
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .tips-box ul { list-style: none; padding: 0; }
+
+    .tips-box ul li {
+      padding: 10px 0 10px 25px;
+      position: relative;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .tips-box ul li::before {
+      content: '⚠';
+      position: absolute;
+      left: 0;
+      color: #e74c3c;
+    }
+
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px; right: 30px;
+      width: 50px; height: 50px;
+      background: var(--primary-red);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 998;
+    }
+
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+
+    .back-to-top:hover {
+      background: var(--primary-gold);
+      transform: translateY(-5px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-wrap { flex-direction: column; height: auto; padding: 15px 20px; }
+      .logo { font-size: 18px; margin-bottom: 10px; }
+      .nav { flex-wrap: wrap; justify-content: center; }
+      .nav a { padding: 8px 12px; font-size: 14px; }
+      .banner { height: 400px; }
+      .banner h1 { font-size: 36px; }
+      .banner .subtitle { font-size: 18px; }
+      .banner-stats { gap: 30px; }
+      .stat-number { font-size: 24px; }
+      .section-title { font-size: 26px; }
+      .card-grid, .attraction-grid { grid-template-columns: 1fr; }
+      .main-container { padding: 40px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .banner { height: 300px; }
+      .banner h1 { font-size: 28px; }
+      .banner .subtitle { font-size: 16px; }
+      .banner-stats { flex-direction: column; gap: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-text">
+        <i class="fa fa-tint"></i> 雪域安多·藏韵传承 | 青海湖 - 中国最大内陆湖・高原明珠
+      </div>
+      <div>
+        <a href="../index.html" class="back-link"><i class="fa fa-home"></i> 返回首页</a>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-wrap">
+        <div class="logo">
+          <a href="../index.html">གངས་ལྗོངས་ཨ་མདོ།</a>
+        </div>
+        <nav class="nav">
+          <a href="../index.html">首页</a>
+          <a href="../index.html#culture">安多民俗</a>
+          <a href="../index.html#tour">藏地旅游</a>
+          <a href="../index.html#tools">藏文工具</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Banner -->
+    <section class="banner">
+      <img src="images/mm1.jpg" alt="青海湖" loading="lazy">
+      <div class="banner-content">
+        <div class="tibetan-name">མཚོ་སྔོན་པོ།</div>
+        <h1>青海湖</h1>
+        <p class="subtitle">中国最大内陆湖・高原明珠</p>
+        <div class="banner-stats">
+          <div class="stat-item">
+            <span class="stat-number">4543km²</span>
+            <div class="stat-label">湖泊面积</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">3196米</span>
+            <div class="stat-label">平均海拔</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">230+种</span>
+            <div class="stat-label">候鸟种类</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">5A</span>
+            <div class="stat-label">国家级景区</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+      <!-- Section 1: 湖泊简介 -->
+      <section class="section" id="intro">
+        <h2 class="section-title">
+          湖泊简介
+          <span class="tibetan">མཚོ་སྔོན་པོའི་ངོ་སྤྲོད།</span>
+        </h2>
+
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>青海湖是中国最大的内陆咸水湖，安多藏语称"错温波"（མཚོ་སྔོན་བོ），意为"青色的海"，是安多藏族人民心中的神圣母湖，高原明珠。</p>
+        </div>
+
+        <p class="section-text">
+          青海湖，安多藏语称"错温波"（མཚོ་སྔོན་བོ），意为"青色的海"，是中国最大的内陆咸水湖，也是青藏高原的东极明珠，安多藏文化的核心纽带，承载着安多藏区的历史与信仰。
+        </p>
+
+        <p class="section-text">
+          青海湖位于青海省东北部，湖面面积约4543平方公里，平均海拔3196米，是名副其实的高原明珠。它不仅是中国最大的内陆咸水湖，更是安多藏民心中的精神圣地，每年吸引着无数信徒前来朝拜。
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-tint"></i></div>
+            <h3 class="card-title">安多藏区的蓝宝石</h3>
+            <p class="card-content">青海湖是青藏高原的东极明珠，安多藏文化的核心纽带，承载着安多藏区的历史与信仰，是安多藏族人民心中的神圣母湖。</p>
+            <div class="tibetan-quote">མཚོ་སྔོན་པོའི་མིང་ལ་ཨ་མདོ་བོད་སྐད་དུ་མཚོ་ཆུང་ཟེར་ཞིང་དེ་ནི་མདོ་སྨད་བོད་རིགས་མི་དམངས་ཀྱི་སེམས་ཀྱི་གནས་མཆོག་མཚོ་མོ་ཡིན།དེ་ནི་མཚོ་བོད་ས་མཐོའི་ཤར་སྣེའི་མུ་ཏིག་ལྟ་བུ་དང་མདོ་སྨད་བོད་ཀྱི་རིག་གནས་ཀྱི་སྲོག་ཤིང་ལྟ་བུ་ཡིན།</div>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-globe"></i></div>
+            <h3 class="card-title">中国最大内陆咸水湖</h3>
+            <p class="card-content">青海湖不仅是中国最大的内陆咸水湖，更是安多藏民心中的精神圣地，每年吸引着无数信徒前来朝拜，是名副其实的高原明珠。</p>
+            <div class="tibetan-quote">མཚོ་སྔོན་པོ་ནི་ཀྲུང་གོའི་སྐམ་སའི་དབུས་ཁུལ་གྱི་ཚྭ་མཚོ་ཆེ་ཤོས་ཡིན་པ་མ་ཟད།དེ་བས་ཨ་མདོའི་བོད་རིགས་མང་ཚོགས་ཀྱི་བསམ་པའི་གནས་མཆོག་ཅིག་ཡིན།</div>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-link"></i></div>
+            <h3 class="card-title">安多文化的核心纽带</h3>
+            <p class="card-content">青海湖在安多藏区具有重要的文化地位，是连接安多藏族人民情感的精神纽带，也是安多文化传承的重要载体。</p>
+            <div class="tibetan-quote">མཚོ་སྔོན་པོ་ནི་ཨ་མདོ་བོད་རིགས་ས་ཁུལ་དུ་རིག་གནས་ཀྱི་གནས་བབ་གལ་ཆེན་ལྡན་པ་དང་།ཨ་མདོའི་བོད་རིགས་མི་དམངས་ཀྱི་བརྩེ་སེམས་ཟབ་མོ་འབྲེལ་བའི་བསམ་པའི་སྒྲོག་ཐག་ལྟ་བུ་ཡིན།</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: 错温波传说 -->
+      <section class="section" id="legend">
+        <h2 class="section-title">
+          错温波传说
+          <span class="tibetan">མཚོ་སྔོན་བོའི་གནས་ལུགས།</span>
+        </h2>
+
+        <p class="section-text">
+          在安多藏族人民的口耳相传中，青海湖有着无数动人的传说，其中最广为人知的是文成公主与青海湖的故事，以及"错温波"名称的由来。
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-star"></i></div>
+            <h3 class="card-title">文成公主与青海湖</h3>
+            <p class="card-content">相传文成公主入藏途经安多草原，在此驻足。她遥望长安，思乡之情化作万顷碧波。在安多藏民心中，青海湖不仅是水域，更是公主带来的"汉藏和合"之象征，是安多草原上永不干涸的生命之泉。</p>
+            <div class="tibetan-quote">བོད་རིགས་ཀྱི་སེམས་ནང་མཚོ་སྔོན་པོ་ནི་ཆུ་ཁོངས་ཤིག་ཡིན་པ་མ་ཟད།ད་དུང་བཙུན་མོ་འུན་ཤིང་ཀོང་ཇོས་ཁྲང་ཨན་ལ་བལྟ་བའི་སྐབས་སུ་བསྐྱོད་པའི་བོད་དང་རྒྱ་རིགས་གཉིས་མཉམ་འདྲེས་ཀྱི་མཚོན་ཚུལ་ཞིག་དང་ཨ་མདོའི་རྩྭ་ཐང་ཐོག་ནམ་ཡང་སྐམ་རྒྱུ་མེད་པའི་ཚེ་སྲོག་གི་ཆུ་མིག་ཅིག་རེད།</div>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-language"></i></div>
+            <h3 class="card-title">错温波的含义</h3>
+            <p class="card-content">安多藏语中，青海湖被称为"错温波"（Mtsho-sdong-po），意为"青色的海"或"广阔的海"，这个称谓已经沿用了千年。</p>
+            <div class="tibetan-quote">ཨ་མདོའི་བོད་སྐད་དུ་མཚོ་སྔོན་པོ་ལ་མཚོ་སྔོན་པོ་ཞེས་ཟེར་བ་དང་།དེའི་དོན་ནི་སྔོ་མདོག་གི་མཚོ་དང་ཡང་ན་རྒྱ་ཆེ་བའི་མཚོ་ཞེས་པའི་དོན་ཡིན་པ་དང་།མཚོ་སྔོན་པོའི་མིང་འདི་ལོ་ངོ་སྟོང་ཕྲག་གི་རིང་ལ་བརྒྱུད་ཡོད་པ་རེད།</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: 祭海仪式 -->
+      <section class="section" id="ceremony">
+        <h2 class="section-title">
+          祭海仪式
+          <span class="tibetan">མཚོ་སྔོན་བོའི་བསམ་གཞུང་རྒྱུན།</span>
+        </h2>
+
+        <p class="section-text">
+          祭海是青海湖最具安多特色的传统仪式，承载着安多藏族对自然神灵的敬畏与感恩，是安多藏文化中最神圣的民俗活动之一。每年农历四月初八，安多藏民会在湖边举行盛大的祭海活动。
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-flag"></i></div>
+            <h3 class="card-title">传统祭海仪式</h3>
+            <p class="card-content">祭海是青海湖最具安多特色的传统仪式，每年农历四月初八，安多藏民会在湖边举行盛大的祭海活动。仪式包括"拉卜则"（挂经幡）、"煨桑"、"祭湖"等环节。</p>
+            <div class="tibetan-quote">མཚོ་མཆོད་ནི་མཚོ་སྔོན་པོའི་ཨ་མདོའི་ཁྱད་ཆོས་ལྡན་པའི་སྲོལ་རྒྱུན་གྱི་བྱེད་སྒོ་ཞིག་ཡིན་པ་དང་ལོ་ལྟར་གྱི་ཟླ་བ་བཞི་པའི་ཚེས་བརྒྱད་ཉིན་ཨ་མདོའི་བོད་རིགས་མང་ཚོགས་ཀྱིས་མཚོ་འགྲམ་དུ་གཟབ་རྒྱས་ཆེ་བའི་མཚོ་མཆོད་བྱེད་སྒོ་སྤེལ་གྱི་ཡོད།</div>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-gift"></i></div>
+            <h3 class="card-title">祭品与祈福</h3>
+            <p class="card-content">藏民们会向湖中投放哈达、青稞酒、酥油等祭品，祈求风调雨顺、人畜兴旺。</p>
+            <div class="tibetan-quote">བོད་མི་ཚོས་མཚོ་ནང་དུ་ཁ་བཏགས་དང་།ཆང་།མར་སོགས་མཆོད་རྫས་བསྒྲེངས་ནས་ཆར་ཆུ་དུས་སུ་འབབ་པ་དང་མི་དང་ཕྱུགས་རིགས་འཚོ་སྡུག་ལེགས་པའི་སྨོན་ལམ་རྒྱག་གི་ཡོད།</div>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-leaf"></i></div>
+            <h3 class="card-title">宗教意义</h3>
+            <p class="card-content">在安多藏传佛教中，青海湖被视为西海龙王居所，是安多地区风调雨顺的守护神，祭海仪式是对自然神灵的敬畏与感恩。</p>
+            <div class="tibetan-quote">ཨ་མདོའི་བོད་བརྒྱུད་ནང་བསྟན་གྱི་ཁྲོད་དུ་མཚོ་སྔོན་པོ་ནི་ནུབ་མཚོའི་ཀླུའི་གཞིས་ཀ་ཡིན་པས་ཨ་མདོ་ས་ཁུལ་གྱི་ཆར་ཆུ་དུས་སུ་འབབ་པའི་སྲུང་མ་ཡིན།མཚོ་མཆོད་ནི་རང་བྱུང་ལྷ་ལ་དད་གུས་དང་བཀའ་དྲིན་ཞུ་བའི་མཛད་སྒོ་ཞིག་རེད།</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: 环湖藏寺 -->
+      <section class="section" id="temples">
+        <h2 class="section-title">
+          环湖藏寺
+          <span class="tibetan">མཚོ་སྔོན་བོའི་དགོན་པ།</span>
+        </h2>
+
+        <p class="section-text">
+          青海湖周边分布着众多藏传佛教寺院，这些寺院是安多藏民的精神家园，也是安多藏文化的重要载体。
+        </p>
+
+        <ul class="feature-list">
+          <li>
+            <span class="label">环湖寺院分布：</span>青海湖周边分布着众多藏传佛教寺院，如二郎剑周边的寺院遗址、刚察地区的寺院等，这些寺院是安多藏民的精神家园。
+          </li>
+          <li>
+            <span class="label">文化载体：</span>环湖藏寺不仅是宗教活动的场所，也是安多藏文化的重要载体，承载着安多藏民的信仰与智慧。
+          </li>
+          <li>
+            <span class="label">朝圣之路：</span>每年夏季，来自各地的信徒会沿着环湖路线朝拜这些寺院，形成了独特的宗教文化景观。
+          </li>
+        </ul>
+
+        <h3 style="color: var(--primary-red); font-size: 22px; margin: 30px 0 20px 10px;">核心景点推荐</h3>
+        <div class="attraction-grid">
+          <div class="attraction-card">
+            <div class="attraction-header">鸟岛</div>
+            <div class="attraction-body">
+              <p>青海湖西部的鸟岛是青藏高原上最重要的候鸟栖息地之一，每年春夏季节，数十万只候鸟在此繁殖筑巢，场面蔚为壮观，是观鸟胜地。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">沙岛</div>
+            <div class="attraction-body">
+              <p>沙岛位于青海湖东部，是湖中最大的天然沙岛，拥有高原沙漠与湖泊的奇特景观，被誉为"高原沙漠奇观"。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">二郎剑景区</div>
+            <div class="attraction-body">
+              <p>二郎剑是深入青海湖中的一条细长沙坝，景区内可近距离欣赏青海湖的壮阔景色，是环湖旅游的重要节点。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">环湖骑行</div>
+            <div class="attraction-body">
+              <p>全程约360公里的环湖骑行路线是中国最著名的骑行路线之一，每年举办的青海湖国际公路自行车赛吸引世界各地选手参与。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tips-box">
+          <h4><i class="fa fa-exclamation-triangle"></i> 旅游注意事项</h4>
+          <ul>
+            <li>青海湖地区海拔约3196米，初次进入高原地区的游客需注意高原反应，建议提前服用防高反药物；</li>
+            <li>湖区气候多变，早晚温差大，请携带足够的保暖衣物；</li>
+            <li>尊重当地藏族宗教文化，不污染湖水，不干扰野生动物；</li>
+            <li>祭海仪式期间游客较多，建议提前规划行程，合理安排游览时间；</li>
+            <li>鸟岛参观须遵守景区规定，保持安静，不得驱赶或投喂鸟类。</li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top"
+         :class="{ visible: showBackToTop }"
+         @click="scrollToTop"
+         aria-label="返回顶部">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          showBackToTop: false
+        }
+      },
+      mounted() {
+        window.addEventListener('scroll', this.handleScroll)
+      },
+      beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll)
+      },
+      methods: {
+        handleScroll() {
+          this.showBackToTop = window.pageYOffset > 300
+        },
+        scrollToTop() {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扎尕那 - 雪域安多·藏韵传承</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Han Sans CN', 'Microsoft YaHei', sans-serif;
+            background-color: #8B0000;
+            color: #F5F5DC;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Pattern - Tibetan scroll pattern + topographic lines */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,100 Q25,80 50,100 T100,100 T150,100 T200,100 M0,120 Q25,100 50,120 T100,120 T150,120 T200,120 M0,140 Q25,120 50,140 T100,140 T150,140 T200,140' stroke='%23FFFFFF' stroke-width='0.6' fill='none' opacity='0.06'/%3E%3Cpath d='M20,50 Q40,30 60,50 T100,50 T140,50 T180,50 M30,70 Q50,50 70,70 T110,70 T150,70 T190,70' stroke='%234682B4' stroke-width='0.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        /* Header Section with misty stone city background */
+        .header {
+            background: linear-gradient(180deg, rgba(139, 0, 0, 0.95) 0%, rgba(165, 42, 42, 0.9) 100%);
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='300' viewBox='0 0 400 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,200 L50,120 L100,180 L150,100 L200,160 L250,90 L300,150 L350,110 L400,170 L400,300 L0,300 Z' fill='%234682B4' opacity='0.08'/%3E%3Cpath d='M0,220 Q100,180 200,210 T400,200' stroke='%23FFFFFF' stroke-width='1' fill='none' opacity='0.06'/%3E%3Cpath d='M0,240 Q100,200 200,230 T400,220' stroke='%23FFFFFF' stroke-width='1' fill='none' opacity='0.05'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .decorative-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .decorative-line svg {
+            width: 60px;
+            height: 30px;
+            stroke: #FFD700;
+            stroke-width: 1.5;
+            fill: none;
+            opacity: 0.7;
+        }
+
+        .main-title {
+            font-size: 36px;
+            font-weight: 900;
+            color: #FFD700;
+            margin-bottom: 15px;
+            letter-spacing: 4px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .sub-title {
+            font-size: 18px;
+            color: #F5F5DC;
+            font-weight: 600;
+            opacity: 0.95;
+            letter-spacing: 2px;
+        }
+
+        /* Main Content Area */
+        .content {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        /* Card Grid Layout - Responsive 2 columns for 4 cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: linear-gradient(145deg, #8B0000, #A52A2A);
+            border: 1.5px solid #FFD700;
+            border-radius: 12px;
+            padding: 28px 22px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.25);
+            border-color: #FFE44D;
+            filter: brightness(1.05);
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(34, 139, 34, 0.1);
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .card-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #228B22;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFD700;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .card-tag {
+            font-size: 13px;
+            color: #F5F5DC;
+            text-align: center;
+            opacity: 0.85;
+            margin-bottom: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: #F5F5DC;
+            text-align: justify;
+            line-height: 1.8;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            padding: 0 5px;
+        }
+
+        .card.expanded .card-description {
+            opacity: 1;
+            max-height: 300px;
+            margin-top: 15px;
+            padding: 10px 5px;
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .expand-btn {
+            display: block;
+            margin: 15px auto 0;
+            padding: 8px 22px;
+            background: transparent;
+            border: 1.5px solid #FFD700;
+            color: #FFD700;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .expand-btn:hover {
+            background: #FFD700;
+            color: #8B0000;
+            transform: scale(1.05);
+        }
+
+        /* Divider with Tibetan lotus pattern */
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            margin: 45px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '❀';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFD700;
+            font-size: 26px;
+            background: #8B0000;
+            padding: 0 18px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Footer Navigation */
+        .footer {
+            background: linear-gradient(0deg, #8B0000 0%, #A52A2A 100%);
+            padding: 45px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='150' height='150' viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30,30 Q60,10 90,30 T150,30 M30,75 Q60,55 90,75 T150,75 M30,120 Q60,100 90,120 T150,120' stroke='%23FFD700' stroke-width='0.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-text {
+            font-size: 14px;
+            color: #F5F5DC;
+            margin-bottom: 22px;
+            letter-spacing: 1px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .nav-btn {
+            padding: 11px 24px;
+            background: #FFD700;
+            color: #8B0000;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: #FFE44D;
+            transform: scale(1.08);
+            box-shadow: 0 6px 18px rgba(255, 215, 0, 0.35);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #F5F5DC;
+            opacity: 0.75;
+            letter-spacing: 0.5px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.15s; }
+        .card:nth-child(2) { animation-delay: 0.3s; }
+        .card:nth-child(3) { animation-delay: 0.45s; }
+        .card:nth-child(4) { animation-delay: 0.6s; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 30px;
+                letter-spacing: 3px;
+            }
+
+            .sub-title {
+                font-size: 16px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card {
+                padding: 22px 18px;
+            }
+
+            .card-icon {
+                width: 55px;
+                height: 55px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-btn {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 35px 15px;
+            }
+
+            .main-title {
+                font-size: 28px;
+            }
+
+            .sub-title {
+                font-size: 14px;
+            }
+
+            .content {
+                margin: 35px auto;
+                padding: 0 15px;
+            }
+
+            .card-title {
+                font-size: 18px;
+            }
+
+            .card-tag {
+                font-size: 12px;
+            }
+
+            .card-description {
+                font-size: 13px;
+                line-height: 1.7;
+            }
+
+            .expand-btn {
+                font-size: 12px;
+                padding: 7px 18px;
+            }
+        }
+
+        /* Share Button */
+        .share-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 215, 0, 0.15);
+            border: 1.5px solid #FFD700;
+            color: #FFD700;
+            border-radius: 25px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 215, 0, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .share-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: #FFD700;
+            stroke-width: 2;
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <div class="decorative-line">
+                <svg viewBox="0 0 100 50">
+                    <path d="M10,25 Q30,10 50,25 T90,25"/>
+                    <path d="M10,30 Q30,15 50,30 T90,30"/>
+                    <circle cx="20" cy="25" r="2" fill="#FFD700"/>
+                    <circle cx="50" cy="25" r="2" fill="#FFD700"/>
+                    <circle cx="80" cy="25" r="2" fill="#FFD700"/>
+                </svg>
+            </div>
+            <h1 class="main-title">扎尕那</h1>
+            <p class="sub-title">甘南最后的石城秘境</p>
+            <div class="decorative-line">
+                <svg viewBox="0 0 100 50">
+                    <path d="M10,25 Q30,40 50,25 T90,25"/>
+                    <path d="M10,20 Q30,35 50,20 T90,20"/>
+                    <circle cx="20" cy="25" r="2" fill="#FFD700"/>
+                    <circle cx="50" cy="25" r="2" fill="#FFD700"/>
+                    <circle cx="80" cy="25" r="2" fill="#FFD700"/>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+        <div class="card-grid">
+            <!-- Card 1: Geological Wonder -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-icon">
+                    <svg viewBox="0 0 100 100">
+                        <!-- Mountain/Canyon Icon -->
+                        <path d="M10,80 L25,45 L40,80"/>
+                        <path d="M35,80 L50,35 L65,80"/>
+                        <path d="M60,80 L75,50 L90,80"/>
+                        <path d="M15,85 Q30,75 45,85 T75,85 T95,85" stroke-width="1.5"/>
+                        <line x1="25" y1="55" x2="35" y2="65"/>
+                        <line x1="50" y1="45" x2="60" y2="55"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">地质奇观・扎尕那石城</h2>
+                <p class="card-tag">天然岩壁迷宫</p>
+                <p class="card-description">
+                    扎尕那藏语意为"石匣子"，是一座完整的天然"石城"。这里由呈锯齿状的石灰岩山体构成，四面环山，奇峰罗列，形成了独特的峡谷与盆地地貌，被誉为"上帝的伊甸园"。石城地形险峻壮观，云雾缭绕时宛如仙境，是大自然鬼斧神工的杰作。
+                </p>
+                <button class="expand-btn">查看详情</button>
+            </div>
+
+            <!-- Card 2: Tibetan Village Folklore -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-icon">
+                    <svg viewBox="0 0 100 100">
+                        <!-- Tibetan House/Prayer Flag Icon -->
+                        <rect x="25" y="45" width="50" height="35" rx="2"/>
+                        <polygon points="20,45 50,25 80,45"/>
+                        <line x1="30" y1="55" x2="30" y2="70"/>
+                        <line x1="40" y1="55" x2="40" y2="70"/>
+                        <line x1="50" y1="55" x2="50" y2="70"/>
+                        <line x1="60" y1="55" x2="60" y2="70"/>
+                        <line x1="70" y1="55" x2="70" y2="70"/>
+                        <path d="M25,35 L30,30 L35,35 L40,30 L45,35 L50,30 L55,35 L60,30 L65,35 L70,30 L75,35" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">藏寨民俗・仙女滩与藏村</h2>
+                <p class="card-tag">东哇村・仙女滩</p>
+                <p class="card-description">
+                    景区内保留着原始的藏族村落（东哇村），藏式民居依山而建。周边的仙女滩、仙女湖是高山草甸与溪流的胜地，春夏绿草如茵，野花盛开，与藏乡风情融为一体，是安多藏区罕见的高山田园景观。这里的藏族人民保持着传统的生活方式，热情好客，民俗文化丰富多彩。
+                </p>
+                <button class="expand-btn">查看详情</button>
+            </div>
+
+            <!-- Card 3: Red Memory & History -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-icon">
+                    <svg viewBox="0 0 100 100">
+                        <!-- Ancient Path/Historical Site Icon -->
+                        <path d="M15,80 Q30,65 45,75 T75,70 T90,60" stroke-width="2"/>
+                        <path d="M15,85 Q30,70 45,80 T75,75 T90,65" stroke-width="2"/>
+                        <rect x="35" y="30" width="30" height="25" rx="2"/>
+                        <polygon points="30,30 50,15 70,30"/>
+                        <line x1="40" y1="40" x2="40" y2="50"/>
+                        <line x1="50" y1="40" x2="50" y2="50"/>
+                        <line x1="60" y1="40" x2="60" y2="50"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">红色记忆与人文历史</h2>
+                <p class="card-tag">洛克之路・红色秘境</p>
+                <p class="card-description">
+                    扎尕那是美国植物学家约瑟夫·洛克的发现地，其游记让这里闻名世界。同时，这里保留了珍贵的安多藏族传统民俗、宗教仪式，以及历史悠久的茶马古道遗迹，是历史与自然交汇的重镇。红军长征也曾经过此地，留下了宝贵的红色记忆。
+                </p>
+                <button class="expand-btn">查看详情</button>
+            </div>
+
+            <!-- Card 4: Ecology & Religion -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-icon">
+                    <svg viewBox="0 0 100 100">
+                        <!-- Prayer Wheel/Forest Icon -->
+                        <circle cx="50" cy="45" r="20"/>
+                        <circle cx="50" cy="45" r="15"/>
+                        <circle cx="50" cy="45" r="10"/>
+                        <circle cx="50" cy="45" r="5"/>
+                        <line x1="50" y1="25" x2="50" y2="15"/>
+                        <line x1="50" y1="65" x2="50" y2="75"/>
+                        <line x1="30" y1="45" x2="20" y2="45"/>
+                        <line x1="70" y1="45" x2="80" y2="45"/>
+                        <path d="M25,80 L30,65 L35,80"/>
+                        <path d="M45,80 L50,60 L55,80"/>
+                        <path d="M65,80 L70,65 L75,80"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">生态与宗教（全景视角）</h2>
+                <p class="card-tag">神山圣境</p>
+                <p class="card-description">
+                    扎尕那不仅是自然宝库，也是藏传佛教文化的传承地。境内寺院与神山相依，民众信仰虔诚，完美诠释了"人与自然和谐共生"的安多文化理念。这里的生态环境保护完好，是众多珍稀动植物的栖息地，同时也是朝圣者心中的圣地。
+                </p>
+                <button class="expand-btn">查看详情</button>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Share Section -->
+        <div class="share-section">
+            <a href="#" class="share-btn" onclick="sharePage(event)">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="18" cy="5" r="3"/>
+                    <circle cx="6" cy="12" r="3"/>
+                    <circle cx="18" cy="19" r="3"/>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+                分享到社交媒体
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer Navigation -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="nav-text">探索甘南安多文化区</p>
+            <div class="nav-buttons">
+                <a href="../labulengsi/labulengsi.html" class="nav-btn">拉卜楞寺</a>
+                <a href="../xiaqiong/xiaqiongsi.html" class="nav-btn">郎木寺</a>
+                <a href="../sangke/sangke.html" class="nav-btn">桑科草原</a>
+            </div>
+            <p class="copyright">©2026 甘南安多文化区 | 扎尕那石城专题</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle card expansion
+        function toggleCard(card) {
+            // Close other cards
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('expanded');
+                    const btn = c.querySelector('.expand-btn');
+                    if (btn) btn.textContent = '查看详情';
+                }
+            });
+            
+            // Toggle current card
+            card.classList.toggle('expanded');
+            
+            // Update button text
+            const btn = card.querySelector('.expand-btn');
+            if (card.classList.contains('expanded')) {
+                btn.textContent = '收起详情';
+            } else {
+                btn.textContent = '查看详情';
+            }
+        }
+
+        // Smooth scroll for navigation buttons
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('href');
+                window.location.href = target;
+            });
+        });
+
+        // Share functionality
+        function sharePage(event) {
+            event.preventDefault();
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: '扎尕那 - 甘南最后的石城秘境',
+                    text: '探索扎尕那石城奇观、藏寨民俗和红色历史的独特魅力',
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('分享失败:', err);
+                    fallbackShare();
+                });
+            } else {
+                fallbackShare();
+            }
+        }
+
+        function fallbackShare() {
+            // Copy URL to clipboard
+            const url = window.location.href;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('页面链接已复制到剪贴板，您可以粘贴分享给朋友！');
+                }).catch(err => {
+                    console.error('复制失败:', err);
+                    prompt('请手动复制链接：', url);
+                });
+            } else {
+                prompt('请手动复制链接：', url);
+            }
+        }
+
+        // Add loading animation on page load
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

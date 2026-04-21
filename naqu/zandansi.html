@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="赞丹寺 - 藏北小布达拉宫・格鲁派名刹・雪域庄严圣地，展示那曲索县赞丹寺的宏伟建筑与宗教文化">
+  <meta name="keywords" content="赞丹寺,小布达拉宫,格鲁派,那曲,索县,藏传佛教,红宫白宫,金顶">
+  <title>赞丹寺 - 雪域安多·藏韵传承</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Top Bar & Header */
+    .top-bar {
+      background: #444;
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 30px;
+      font-size: 13px;
+    }
+    .top-bar a { color: rgba(255,255,255,0.7); text-decoration: none; }
+    .top-bar a:hover { color: #D4AF37; }
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #9B2B25, #B83C2E);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header .logo { color: #fff; font-size: 20px; font-weight: 700; text-decoration: none; }
+    .header nav a { color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 25px; font-size: 15px; }
+    .header nav a:hover { color: #D4AF37; }
+
+    /* Banner */
+    .banner {
+      height: 500px;
+      background: linear-gradient(135deg, #3a1a0a, #6b2e15, #9b4a25);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .banner h1 { font-size: 48px; font-weight: 700; color: #fff; letter-spacing: 4px; }
+    .banner .subtitle { font-size: 16px; color: rgba(255,255,255,0.85); margin-top: 12px; }
+
+    /* Main Container */
+    .main-container { max-width: 1200px; margin: 0 auto; padding: 60px 30px; }
+    .main-container section { margin-bottom: 60px; }
+    .section-title { font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 30px; padding-left: 16px; border-left: 4px solid var(--primary-red); }
+    .highlight-box { background: #fff; border-left: 4px solid #D4AF37; padding: 20px 24px; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-bottom: 30px; color: var(--text-secondary); box-shadow: var(--shadow-sm); line-height: 1.8; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card { background: #fff; border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm); transition: var(--transition); }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .card-icon { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-red), #B83C2E); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 16px; }
+    .card h3 { font-size: 17px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+    .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .feature-list { list-style: none; padding: 0; }
+    .feature-list li { padding: 10px 0; padding-left: 24px; position: relative; color: var(--text-secondary); line-height: 1.7; }
+    .feature-list li::before { content: '◆'; position: absolute; left: 0; color: #D4AF37; font-size: 10px; }
+
+    /* Image placeholder */
+    .img-placeholder {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #f0e6d6, #e8d5c0);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 14px;
+    }
+
+    /* Two-column layout */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .text-block p { margin-bottom: 16px; font-size: 15px; color: var(--text-secondary); line-height: 1.8; text-indent: 2em; }
+
+    /* Back to top */
+    .back-to-top.show { opacity: 1; visibility: visible; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner h1 { font-size: 32px; }
+      .banner .subtitle { font-size: 14px; }
+      .two-col { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr; }
+      .header nav { display: none; }
+      .main-container { padding: 30px 16px; }
+      .section-title { font-size: 22px; }
+    }
+  </style>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <!-- Top Bar & Header -->
+  <div class="top-bar">
+    <span>雪域安多·藏韵传承 — 青海安多藏族文化传播平台</span>
+    <a href="../index.html"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+  <div class="header">
+    <a href="../index.html" class="logo">གངས་ལྗོངས་ཨ་མདོ།</a>
+    <nav>
+      <a href="../index.html">首页</a>
+      <a href="../minsu.html">安多民俗</a>
+      <a href="../jingdian.html">藏地旅游</a>
+      <a href="../fanyi/fanyi.html">藏文工具</a>
+    </nav>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div>
+      <h1>赞丹寺</h1>
+      <p class="subtitle">藏北小布达拉宫・格鲁派名刹・雪域庄严圣地</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-container">
+
+    <!-- Overview Cards -->
+    <section>
+      <h2 class="section-title">景点速览</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-university"></i></div>
+          <h3>寺院概况</h3>
+          <p>藏北最大古建筑群</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-building"></i></div>
+          <h3>建筑艺术</h3>
+          <p>小布达拉宫格局</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-columns"></i></div>
+          <h3>红宫与白宫</h3>
+          <p>红白相间的庄严</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-history"></i></div>
+          <h3>历史沿革</h3>
+          <p>始建于1667年</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-paint-brush"></i></div>
+          <h3>佛像唐卡</h3>
+          <p>千年瑰宝传承</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-book"></i></div>
+          <h3>格萨尔王传说</h3>
+          <p>史诗文化印记</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-refresh"></i></div>
+          <h3>转经朝圣</h3>
+          <p>1.5公里转经道</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-map-signs"></i></div>
+          <h3>游览指南</h3>
+          <p>实用出行信息</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cultural Introduction -->
+    <section>
+      <h2 class="section-title">赞丹寺・藏北高原的庄严宫堡</h2>
+      <div class="two-col">
+        <div>
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+        </div>
+        <div class="text-block">
+          <p>赞丹寺，位于西藏自治区那曲市索县亚拉镇，海拔4100米，依山而建，索曲河环绕。作为藏北地区最早建立的格鲁派寺庙和最大的古建筑群，赞丹寺被誉为"藏北小布达拉宫"，是自治区级文物保护单位。</p>
+          <p>寺院始建于1667年（五世达赖喇嘛时期），为哲蚌寺属寺，历经多次修缮扩建，形成了如今红白两宫错落有致、石木交错的宏伟建筑群。整体布局仿照布达拉宫，红宫居中为主体，白宫分列两侧，金顶辉煌，在高原阳光下庄严夺目。</p>
+          <p>赞丹寺不仅是宗教圣地，更是藏北文化的象征。寺内供奉着6米高的强巴贡布佛像，珍藏精美壁画、历代唐卡、藏经印册等文物，承载着格鲁派的信仰传承与藏北人民的精神寄托。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section>
+      <h2 class="section-title">红白金顶・藏北布达拉</h2>
+      <div class="two-col">
+        <div>
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+        </div>
+        <div class="text-block">
+          <p><strong>红宫：</strong>居于建筑群中心，是寺院的核心主体，内设佛殿、经堂，顶部覆盖鎏金铜瓦，殿内供奉强巴佛像，是僧众诵经修行的重要场所。</p>
+          <p><strong>白宫：</strong>分列红宫两侧，主要为僧舍和生活区，石木墙体层层叠叠，依山势而建，形成错落有致的宫殿式布局。</p>
+          <p><strong>建筑特色：</strong>整体建筑群以藏红色为主调，搭配白色墙体和金色屋顶，石木结构交错，完美融合了藏式碉楼与宫殿建筑风格。在蓝天白云和雪山映衬下，红白黑三色分明，金顶闪耀，气势磅礴，宛如布达拉宫再现于藏北高原。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Treasures -->
+    <section>
+      <h2 class="section-title">千年瑰宝・信仰传承</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>强巴贡布佛像</h3>
+          <p>寺内主供佛，高达6米的强巴贡布（弥勒佛）佛像，庄严肃穆，是赞丹寺最重要的宗教圣物，吸引着无数信徒前来朝拜祈福。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>精美壁画</h3>
+          <p>寺内墙壁绘有大量佛教故事和历史题材壁画，色彩鲜艳，线条流畅，展现了藏族画师高超的艺术造诣和深厚的宗教情怀。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>历代唐卡</h3>
+          <p>收藏有多幅珍贵的格鲁派传承唐卡，宗教题材丰富，工艺精湛，是研究藏传佛教艺术和格鲁派历史的重要实物资料。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>藏经印册与法器</h3>
+          <p>寺内珍藏大量藏文经典、印册以及檀香木柱等法器。其中檀香木柱为"赞丹"得名由来，见证了寺院的历史变迁与文化传承。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- History & Legends -->
+    <section>
+      <h2 class="section-title">千年传承・雪域传说</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>历史脉络</h3>
+          <p><strong>1232年：</strong>初建为噶举派寺庙<br><strong>1667年：</strong>改建为格鲁派，成为哲蚌寺属寺<br><strong>清代至今：</strong>历代修缮扩建，形成现有规模<br><strong>现代：</strong>被列为自治区级文物保护单位</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>建寺传说</h3>
+          <p>相传建寺时仿照布达拉宫绘制图纸，但在施工过程中图纸遗失，工匠们凭借记忆和经验继续建造，最终形成了与布达拉宫神似却又独具特色的建筑群，成为藏北高原的独特景观。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>格萨尔王传说</h3>
+          <p>索县被认为是格萨尔王妃珠姆的故乡，赞丹寺周边流传着众多格萨尔王的英雄史诗传说。寺院内也保存有相关的文化元素，体现了藏族史诗文化与宗教信仰的深度融合。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pilgrimage -->
+    <section>
+      <h2 class="section-title">转经朝圣・心灵修行</h2>
+      <div class="highlight-box">
+        <p>赞丹寺转经道绕山而建，顺时针朝圣，是藏北信徒重要的修行方式</p>
+      </div>
+      <div class="highlight-box">
+        <p style="text-align:center;font-weight:600;margin-bottom:12px;">转经路线示意</p>
+        <p style="text-align:center;">起点：寺院正门 → 沿山势顺时针绕行 → 经筒长廊 → 玛尼堆 → 返回寺院<br>全程约1.5公里 | 徒步需时：1-2小时 | 全年可朝圣</p>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-heart"></i></div>
+          <h3>转经意义</h3>
+          <p>藏民相信转经可以积累功德、净化心灵，表达对佛祖的虔诚敬意，祈求平安吉祥。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-circle-o-notch"></i></div>
+          <h3>经筒长廊</h3>
+          <p>转经道旁设有经筒长廊，信徒边转经边转动经筒，诵经祈祷，场面庄严肃穆。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-calendar"></i></div>
+          <h3>法会活动</h3>
+          <p>每年藏历四月举行大法会，日常有诵经和祈福仪式，是体验藏传佛教文化的最佳时机。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Travel Guide -->
+    <section>
+      <h2 class="section-title">赞丹寺游览与朝圣指南</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-map-marker"></i></div>
+          <h3>位置交通</h3>
+          <ul class="feature-list">
+            <li>位于<strong>那曲市索县亚拉镇</strong></li>
+            <li>距索县县城约1公里</li>
+            <li>317国道旁，交通便利</li>
+            <li>可从那曲市包车或自驾前往</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-clock-o"></i></div>
+          <h3>开放时间与门票</h3>
+          <ul class="feature-list">
+            <li>开放时间：<strong>全天开放</strong></li>
+            <li>门票：<strong>免费</strong></li>
+            <li>建议游玩时间：2-3小时</li>
+            <li>法会期间游客较多，建议提前规划</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-calendar"></i></div>
+          <h3>最佳游览季节</h3>
+          <ul class="feature-list">
+            <li><strong>5-10月</strong>为最佳旅游季节</li>
+            <li>夏季气候温和，景色优美</li>
+            <li>冬季寒冷但游客较少，更显静谧</li>
+            <li>藏历四月法会期间最具文化氛围</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-heartbeat"></i></div>
+          <h3>高反与保暖</h3>
+          <ul class="feature-list">
+            <li>海拔<strong>4100米</strong>，注意预防高反</li>
+            <li>建议在低海拔地区适应后再前往</li>
+            <li>昼夜温差大，需准备厚外套</li>
+            <li>携带氧气瓶和抗高反药物</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-users"></i></div>
+          <h3>参观礼仪</h3>
+          <ul class="feature-list">
+            <li>进入佛殿<strong>脱帽、不拍照</strong></li>
+            <li>保持安静，尊重僧人修行</li>
+            <li>顺时针方向参观和转经</li>
+            <li>不要触摸佛像和文物</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-camera"></i></div>
+          <h3>摄影注意事项</h3>
+          <ul class="feature-list">
+            <li>外部建筑可自由拍摄</li>
+            <li>殿内<strong>禁止拍照</strong></li>
+            <li>拍摄僧人需事先征得同意</li>
+            <li>清晨和黄昏光线最佳</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Back to Top (Vue) -->
+  <div id="app">
+    <button class="back-to-top" :class="{show: showTop}" @click="scrollTop" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;background:#9B2B25;color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 2px 10px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transition:all 0.3s;display:flex;align-items:center;justify-content:center;">
+      <i class="fa fa-chevron-up"></i>
+    </button>
+  </div>
+  <script>
+  Vue.createApp({
+    data() { return { showTop: false } },
+    mounted() { window.addEventListener('scroll', () => { this.showTop = window.scrollY > 300 }) },
+    methods: { scrollTop() { window.scrollTo({top:0,behavior:'smooth'}) } }
+  }).mount('#app')
+  </script>
+</body>
+</html>

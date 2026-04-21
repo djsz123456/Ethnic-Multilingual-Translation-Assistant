@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>若尔盖 - 川西北高原湿地・黄河九曲</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.15);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Noto Sans SC',"Microsoft YaHei",sans-serif; }
+    body { background:var(--bg-primary); color:var(--text-primary); line-height:1.7; overflow-x:hidden; }
+
+    .top-bar { width:100%; height:40px; background:linear-gradient(90deg,#f8f8f8,#f0f0f0); border-bottom:1px solid #e0e0e0; line-height:40px; padding:0 30px; font-size:13px; color:#666; display:flex; justify-content:space-between; align-items:center; }
+    .back-link { color:var(--primary-red); text-decoration:none; font-weight:500; transition:var(--transition); }
+    .back-link:hover { color:var(--primary-gold); }
+
+    .header { width:100%; background:linear-gradient(135deg,var(--primary-red) 0%,#B83C2E 100%); box-shadow:var(--shadow-md); position:sticky; top:0; z-index:999; }
+    .header-wrap { max-width:1400px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:80px; padding:0 30px; }
+    .logo { font-size:22px; font-weight:bold; color:#fff; }
+    .logo a { color:#fff; text-decoration:none; transition:var(--transition); }
+    .logo a:hover { color:var(--primary-gold); }
+    .nav { display:flex; gap:8px; }
+    .nav a { color:#fff; text-decoration:none; padding:10px 18px; font-size:15px; font-weight:500; border-radius:8px; transition:var(--transition); }
+    .nav a:hover { background:rgba(255,255,255,0.15); color:var(--primary-gold); }
+
+    .banner { width:100%; height:500px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0a1a2a 0%,#1a3a2a 50%,#2a5a3a 100%); }
+    .banner::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(155,43,37,0.6),rgba(0,0,0,0.5)); z-index:1; }
+    .banner-content { position:relative; z-index:2; text-align:center; color:#fff; max-width:900px; padding:0 30px; animation:fadeInUp 1s ease; }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .banner h1 { font-size:52px; margin-bottom:20px; font-weight:700; text-shadow:3px 3px 6px rgba(0,0,0,0.5); letter-spacing:4px; }
+    .banner .subtitle { font-size:24px; margin-bottom:30px; text-shadow:2px 2px 4px rgba(0,0,0,0.5); font-weight:300; letter-spacing:2px; }
+    .banner .tibetan-name { font-size:18px; opacity:0.85; margin-bottom:20px; font-style:italic; }
+    .banner-stats { display:flex; justify-content:center; gap:60px; margin-top:30px; }
+    .stat-item { text-align:center; }
+    .stat-number { font-size:32px; font-weight:700; color:var(--primary-gold); display:block; }
+    .stat-label { font-size:14px; opacity:0.9; margin-top:5px; }
+
+    .main-container { max-width:1400px; margin:0 auto; padding:60px 30px; }
+    .section { margin-bottom:80px; }
+    .section-title { font-size:36px; color:var(--primary-red); margin-bottom:30px; padding-left:20px; border-left:5px solid var(--primary-gold); font-weight:700; display:flex; align-items:center; letter-spacing:1px; }
+    .section-title::after { content:''; flex:1; height:2px; background:linear-gradient(90deg,var(--primary-gold),transparent); margin-left:20px; }
+    .section-title .tibetan { font-size:18px; color:var(--text-secondary); margin-left:15px; font-weight:400; }
+    .section-text { font-size:16px; color:var(--text-secondary); line-height:2; text-align:justify; margin-bottom:20px; padding:0 10px; }
+
+    .highlight-box { background:linear-gradient(135deg,#fff9f0,#fff5e6); border-left:4px solid var(--primary-gold); padding:25px 30px; margin:25px 0; border-radius:0 var(--radius-md) var(--radius-md) 0; box-shadow:var(--shadow-sm); }
+    .highlight-box p { font-size:16px; color:var(--text-primary); line-height:1.9; margin-bottom:15px; }
+    .highlight-box p:last-child { margin-bottom:0; }
+    .highlight-box .label { font-weight:700; color:var(--primary-red); margin-right:8px; }
+
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:25px; margin:30px 0; }
+    .card { background:#fff; border-radius:var(--radius-md); padding:25px; box-shadow:var(--shadow-sm); transition:var(--transition); border:1px solid rgba(0,0,0,0.05); position:relative; overflow:hidden; }
+    .card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--primary-red),var(--primary-gold)); transform:scaleX(0); transition:var(--transition); }
+    .card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
+    .card:hover::before { transform:scaleX(1); }
+    .card-icon { width:60px; height:60px; margin:0 auto 20px; background:linear-gradient(135deg,var(--primary-red),#B83C2E); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px; box-shadow:var(--shadow-md); }
+    .card-title { font-size:18px; color:var(--primary-red); margin-bottom:12px; font-weight:600; text-align:center; }
+    .card-content { font-size:15px; color:var(--text-secondary); line-height:1.8; text-align:justify; }
+
+    .feature-list { list-style:none; padding:0; margin:20px 0; }
+    .feature-list li { padding:15px 20px 15px 40px; margin-bottom:12px; background:#fff; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); position:relative; transition:var(--transition); font-size:15px; color:var(--text-secondary); line-height:1.7; }
+    .feature-list li:hover { transform:translateX(5px); box-shadow:var(--shadow-md); }
+    .feature-list li::before { content:'✦'; position:absolute; left:15px; color:var(--primary-gold); font-size:16px; }
+    .feature-list li .label { font-weight:600; color:var(--primary-red); margin-right:5px; }
+
+    .attraction-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; margin:30px 0; }
+    .attraction-card { background:#fff; border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); }
+    .attraction-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+    .attraction-header { background:linear-gradient(135deg,var(--primary-red),#B83C2E); color:#fff; padding:15px 20px; font-size:16px; font-weight:600; }
+    .attraction-body { padding:20px; }
+    .attraction-body p { font-size:14px; color:var(--text-secondary); line-height:1.7; }
+
+    .tips-box { background:linear-gradient(135deg,#f0f7ff,#e8f4fd); border:1px solid #b3d9f2; border-radius:var(--radius-md); padding:25px 30px; margin:25px 0; }
+    .tips-box h4 { color:var(--primary-red); margin-bottom:15px; font-size:18px; }
+    .tips-box ul { list-style:none; padding:0; }
+    .tips-box ul li { padding:10px 0 10px 25px; position:relative; font-size:15px; color:var(--text-secondary); line-height:1.7; }
+    .tips-box ul li::before { content:'⚠'; position:absolute; left:0; color:#e74c3c; }
+
+    footer { background:var(--primary-red); color:rgba(255,255,255,0.85); text-align:center; padding:30px 20px; font-size:14px; }
+
+    .back-to-top { position:fixed; bottom:30px; right:30px; width:50px; height:50px; background:var(--primary-red); color:#fff; border-radius:50%; display:none; align-items:center; justify-content:center; font-size:20px; cursor:pointer; box-shadow:var(--shadow-lg); transition:var(--transition); z-index:998; border:none; }
+    .back-to-top.visible { display:flex; }
+    .back-to-top:hover { background:var(--primary-gold); transform:translateY(-5px); }
+
+    @media (max-width:768px) {
+      .header-wrap { flex-direction:column; height:auto; padding:15px 20px; }
+      .logo { font-size:18px; margin-bottom:10px; }
+      .nav { flex-wrap:wrap; justify-content:center; }
+      .banner { height:400px; }
+      .banner h1 { font-size:36px; }
+      .banner .subtitle { font-size:18px; }
+      .banner-stats { gap:30px; }
+      .stat-number { font-size:24px; }
+      .section-title { font-size:26px; }
+      .card-grid, .attraction-grid { grid-template-columns:1fr; }
+      .main-container { padding:40px 20px; }
+    }
+    @media (max-width:480px) {
+      .banner { height:300px; }
+      .banner h1 { font-size:28px; }
+      .banner .subtitle { font-size:16px; }
+      .banner-stats { flex-direction:column; gap:15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div>🏔️ 雪域安多·藏韵传承 | 若尔盖 - 川西北高原湿地</div>
+    <a href="../index.html" class="back-link"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+
+  <header class="header">
+    <div class="header-wrap">
+      <div class="logo"><a href="../index.html">གངས་ལྗོངས་ཨ་མདོ།</a></div>
+      <nav class="nav">
+        <a href="../index.html">首页</a>
+        <a href="../index.html#culture">安多民俗</a>
+        <a href="../index.html#tour">藏地旅游</a>
+        <a href="../index.html#tools">藏文工具</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="banner">
+    <div class="banner-content">
+      <div class="tibetan-name">མཛོད་དགེ་རྫོང་།</div>
+      <h1>若尔盖</h1>
+      <p class="subtitle">川西北高原湿地・黄河九曲第一湾</p>
+      <div class="banner-stats">
+        <div class="stat-item"><span class="stat-number">3,500m</span><div class="stat-label">平均海拔</div></div>
+        <div class="stat-item"><span class="stat-number">花湖</span><div class="stat-label">高原明珠</div></div>
+        <div class="stat-item"><span class="stat-number">九曲</span><div class="stat-label">黄河第一湾</div></div>
+        <div class="stat-item"><span class="stat-number">最大</span><div class="stat-label">高原泥炭沼泽</div></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-container">
+    <section class="section" id="nature">
+      <h2 class="section-title">自然风貌<span class="tibetan">རང་བྱུང་མཛེས་ལྗོངས།</span></h2>
+      <div class="highlight-box">
+        <p><span class="label">核心定位：</span>若尔盖县位于四川省阿坝州北部，地处青藏高原东缘，拥有中国最大的高原泥炭沼泽湿地——若尔盖湿地，是黄河上游最重要的水源涵养地和生态屏障。</p>
+      </div>
+      <p class="section-text">若尔盖大草原是中国五大草原之一，面积近3万平方公里，海拔3300-3600米。草原上河流蜿蜒、湖泊星罗棋布，花湖、九曲黄河等景观举世闻名。这里是候鸟迁徙的重要驿站，也是黑颈鹤、白天鹅等珍稀鸟类的重要繁殖地。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-tint"></i></div>
+          <h3 class="card-title">花湖</h3>
+          <p class="card-content">若尔盖热尔大坝草原上的天然海子，湖面辽阔，水天一色。夏季湖中水草繁茂、野花盛开，水鸟翩翩，被誉为"高原上的绿宝石"。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-map"></i></div>
+          <h3 class="card-title">九曲黄河第一湾</h3>
+          <p class="card-content">黄河在若尔盖唐克镇形成壮美的九曲回环，河水如银色哈达蜿蜒于草原之上。日落时分金光洒满河面，是摄影爱好者的天堂。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-leaf"></i></div>
+          <h3 class="card-title">若尔盖湿地</h3>
+          <p class="card-content">中国最大的高原泥炭沼泽湿地，面积超过3万公顷，是全球生物多样性保护的关键区域，被列入国际重要湿地名录。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="history">
+      <h2 class="section-title">历史人文<span class="tibetan">ལོ་རྒྱུས་རིག་གནས།</span></h2>
+      <p class="section-text">若尔盖地处安多藏区腹地，是藏、羌、回、汉等多民族文化交融之地。红军长征曾经过此地的茫茫草地，留下了可歌可泣的革命故事。同时这里也是安多藏族游牧文化的重要传承区。</p>
+      <ul class="feature-list">
+        <li><span class="label">达扎寺：</span>若尔盖县城内的格鲁派寺院，始建于清康熙年间，是当地最大的藏传佛教寺院，寺内保存有珍贵的佛像和经卷。</li>
+        <li><span class="label">长征历史：</span>1935年红军长征穿越若尔盖草地，经历了艰苦卓绝的草地行军。巴西会议旧址等红色遗迹是重要的爱国主义教育基地。</li>
+        <li><span class="label">唐克古镇：</span>黄河九曲第一湾所在地，自古是安多藏区的商贸重镇与文化交汇点，至今保留着浓郁的藏族风情。</li>
+      </ul>
+    </section>
+
+    <section class="section" id="culture">
+      <h2 class="section-title">文化意义<span class="tibetan">རིག་གནས་ཀྱི་དོན་སྙིང་།</span></h2>
+      <p class="section-text">若尔盖是安多藏族游牧文化与高原湿地生态完美结合的典范，保留着丰富的民俗传统与宗教文化。</p>
+      <ul class="feature-list">
+        <li><span class="label">游牧文化：</span>若尔盖草原上的藏族牧民世代以放牧牦牛、藏羊为生，帐篷生活、酥油茶制作、奶制品加工等传统技艺代代相传。</li>
+        <li><span class="label">锅庄舞：</span>若尔盖藏族的传统集体舞蹈，在节庆聚会时围篝火而舞，舞姿豪放热烈，是安多藏族最具代表性的文化符号之一。</li>
+        <li><span class="label">藏医药：</span>若尔盖地区拥有丰富的高原药材资源，藏医药学传统深厚，当地藏医世家在草原上传承着古老的医疗智慧。</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tourism">
+      <h2 class="section-title">文化地位与旅游服务<span class="tibetan">རིག་གནས་གོ་གནས་དང་ཡུལ་སྐོར།</span></h2>
+      <div class="highlight-box">
+        <p><span class="label">区域地位：</span>若尔盖是川西北大草原的核心，与红原、阿坝共同构成四川安多文化走廊。花湖、九曲黄河第一湾是国内顶级自然景观，每年吸引数百万游客前来领略高原草原的壮美。</p>
+      </div>
+      <h3 style="color:var(--primary-red);font-size:22px;margin:30px 0 20px 10px;">核心景点推荐</h3>
+      <div class="attraction-grid">
+        <div class="attraction-card">
+          <div class="attraction-header">花湖景区</div>
+          <div class="attraction-body"><p>若尔盖热尔大坝上的天然海子，夏季水草丰茂、野花烂漫，是观鸟摄影和高原徒步的绝佳目的地。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">九曲黄河第一湾</div>
+          <div class="attraction-body"><p>黄河在唐克镇蜿蜒九曲，日落时分金光洒河，壮美无比。登观景台可俯瞰黄河全貌。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">若尔盖大草原</div>
+          <div class="attraction-body"><p>中国五大草原之一，辽阔无垠，牛羊成群。可体验骑马驰骋、藏家做客、草原露营等特色活动。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">达扎寺</div>
+          <div class="attraction-body"><p>若尔盖最大的格鲁派寺院，建筑庄严、佛像精美，是了解安多藏传佛教文化的重要窗口。</p></div>
+        </div>
+      </div>
+      <div class="tips-box">
+        <h4><i class="fa fa-exclamation-triangle"></i> 旅游注意事项</h4>
+        <ul>
+          <li>若尔盖海拔3500m左右，初到高原注意休息，避免剧烈运动；</li>
+          <li>草原天气变化快，须随身携带防雨和保暖衣物；</li>
+          <li>花湖景区为湿地保护区，请沿栈道行走，勿踩踏草地；</li>
+          <li>九曲黄河最佳观赏时间为日落前1-2小时。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 探寻安多秘境，传承藏韵文化</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fa fa-arrow-up"></i>
+  </button>
+  <script>
+    window.addEventListener('scroll', function() {
+      document.getElementById('backToTop').classList.toggle('visible', window.pageYOffset > 300);
+    });
+  </script>
+</body>
+</html>

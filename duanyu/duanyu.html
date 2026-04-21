@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安多藏语常用短语 - 雪域安多·藏韵传承</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanstibetan.css">
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Noto Sans Tibetan", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #f8f5f0;
+    }
+
+    /* 顶部导航栏 */
+    .top-bar {
+      background: var(--primary-red);
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .top-bar a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+
+    .top-bar a:hover {
+      opacity: 1;
+    }
+
+    .top-bar .sep {
+      opacity: 0.5;
+    }
+
+    .top-bar .current {
+      opacity: 1;
+      font-weight: 600;
+      color: var(--primary-gold);
+    }
+
+    /* 页面容器 */
+    .phrase-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* 顶部标题区 */
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
+      border-bottom: 2px solid var(--primary-gold);
+    }
+
+    .main-title {
+      font-size: 28px;
+      color: var(--primary-red);
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .title-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary-red);
+      border-radius: 50%;
+      clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+    }
+
+    .subtitle-tibetan {
+      font-size: 22px;
+      color: var(--primary-red);
+      margin-top: 10px;
+      letter-spacing: 2px;
+    }
+
+    /* 分类筛选栏 */
+    .category-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .category-item {
+      padding: 8px 20px;
+      border: 1px solid #d0c8c0;
+      border-radius: 20px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    .category-item.active {
+      background: var(--primary-red);
+      color: #fff;
+      border-color: var(--primary-red);
+    }
+
+    /* 搜索栏 */
+    .search-bar {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .search-input {
+      width: 80%;
+      max-width: 500px;
+      padding: 12px 20px;
+      border: 2px solid #ddd;
+      border-radius: 25px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary-red);
+    }
+
+    /* 短语列表区 */
+    .phrase-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    /* 单个短语卡片 */
+    .phrase-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+      border-left: 4px solid var(--primary-red);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .phrase-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(155, 43, 37, 0.12);
+    }
+
+    /* 分类标签 */
+    .phrase-tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 10px;
+      background: rgba(155, 43, 37, 0.1);
+      color: var(--primary-red);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    /* 藏文文本 */
+    .tibetan-text {
+      font-size: 22px;
+      line-height: 1.8;
+      color: var(--primary-red);
+      margin-bottom: 4px;
+      min-height: 40px;
+      font-family: "Noto Sans Tibetan", serif;
+    }
+
+    /* 拼音 */
+    .pinyin-text {
+      font-size: 13px;
+      color: #8B6914;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+
+    /* 中文释义 */
+    .chinese-text {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 14px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    /* 操作按钮区 */
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn-audio {
+      padding: 6px 14px;
+      background: #f0e8e0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.2s;
+    }
+
+    .btn-audio:hover {
+      background: #e0d0c8;
+    }
+
+    .btn-collect {
+      padding: 6px 14px;
+      background: #fff;
+      border: 1px solid var(--primary-red);
+      color: var(--primary-red);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .btn-collect.collected {
+      background: var(--primary-red);
+      color: #fff;
+    }
+
+    /* 空状态 */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-size: 16px;
+      grid-column: 1 / -1;
+    }
+
+    /* 提示弹窗 */
+    .toast {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #28a745;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 6px;
+      font-size: 15px;
+      display: none;
+      z-index: 999;
+    }
+
+    .toast.show {
+      display: block;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* 统计栏 */
+    .stats-bar {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .stats-bar span {
+      color: var(--primary-red);
+      font-weight: bold;
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .phrase-list {
+        grid-template-columns: 1fr;
+      }
+      .main-title {
+        font-size: 22px;
+      }
+      .top-bar {
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+      .category-bar {
+        gap: 6px;
+        padding: 0 10px;
+      }
+    }
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 18px;
+      }
+      .search-input {
+        width: 90%;
+        font-size: 14px;
+      }
+      .phrase-card {
+        padding: 14px;
+      }
+      .tibetan-text {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a href="../index.html">&#8592; 返回首页</a>
+  <span class="sep">|</span>
+  <span class="current">安多藏语常用短语</span>
+</div>
+
+<div id="app" class="phrase-container">
+  <!-- 顶部标题 -->
+  <div class="page-header">
+    <div class="main-title">
+      <span class="title-icon"></span>
+      安多藏语常用短语
+    </div>
+    <div class="subtitle-tibetan">ཨ་མདོའི་བོད་སྐད་ཀྱི་ཚིག་གྲུབ་སྤྱི་ཆེར་མཁོ་བ།</div>
+  </div>
+
+  <!-- 搜索栏 -->
+  <div class="search-bar">
+    <input
+      v-model="searchKeyword"
+      type="text"
+      class="search-input"
+      placeholder="输入中文/拼音搜索常用短语..."
+    >
+  </div>
+
+  <!-- 分类筛选 -->
+  <div class="category-bar">
+    <div
+      v-for="cat in categories"
+      :key="cat.id"
+      class="category-item"
+      :class="{active: currentCategory === cat.id}"
+      @click="currentCategory = cat.id"
+    >
+      {{ cat.name }}
+    </div>
+  </div>
+
+  <!-- 统计 -->
+  <div class="stats-bar">
+    共 <span>{{ filteredPhrases.length }}</span> 条短语
+  </div>
+
+  <!-- 短语列表 -->
+  <div class="phrase-list">
+    <div
+      v-for="(item, index) in filteredPhrases"
+      :key="index"
+      class="phrase-card"
+    >
+      <div class="phrase-tag">{{ item.categoryLabel }}</div>
+      <div class="tibetan-text">{{ item.tibetan }}</div>
+      <div class="pinyin-text">{{ item.pinyin }}</div>
+      <div class="chinese-text">{{ item.chinese }}</div>
+      <div class="card-actions">
+        <button class="btn-audio" @click="playAudio(item)">&#128266; 发音</button>
+        <button
+          class="btn-collect"
+          :class="{collected: item.collected}"
+          @click="toggleCollect(item)"
+        >
+          {{ item.collected ? '已收藏' : '收藏' }}
+        </button>
+      </div>
+    </div>
+    <div v-if="filteredPhrases.length === 0" class="empty-state">
+      暂无匹配短语，请换个关键词试试
+    </div>
+  </div>
+
+  <!-- 提示弹窗 -->
+  <div class="toast" :class="{show: toastShow}">{{ toastText }}</div>
+</div>
+
+<script>
+const { createApp } = Vue
+
+createApp({
+  data() {
+    return {
+      categories: [
+        { id: 'all',      name: '全部' },
+        { id: 'greeting', name: '问候礼仪' },
+        { id: 'daily',    name: '日常用语' },
+        { id: 'travel',   name: '旅游出行' },
+        { id: 'food',     name: '餐饮美食' },
+        { id: 'shopping', name: '购物砍价' },
+        { id: 'number',   name: '数字时间' }
+      ],
+      currentCategory: 'all',
+      searchKeyword: '',
+      phrases: [
+        // 问候礼仪
+        { tibetan: 'བཀྲ་ཤིས་བདེ་ལེགས།', pinyin: 'Tashi Delek', chinese: '你好 / 吉祥如意', category: 'greeting', categoryLabel: '问候礼仪', collected: false },
+        { tibetan: 'ཁྱེད་རང་བདེ་པོ་ཡིན་ནམ།', pinyin: 'Khyerang depoi yinnam?', chinese: '你好吗？', category: 'greeting', categoryLabel: '问候礼仪', collected: false },
+        { tibetan: 'ང་བདེ་པོ་ཡིན།', pinyin: 'Nga depoi yin', chinese: '我很好', category: 'greeting', categoryLabel: '问候礼仪', collected: false },
+        { tibetan: 'ཐུགས་རྗེ་ཆེ།', pinyin: 'Thugje che', chinese: '谢谢', category: 'greeting', categoryLabel: '问候礼仪', collected: false },
+        { tibetan: 'གལ་ཆེ་མི་འདུག', pinyin: 'Galche midug', chinese: '不客气', category: 'greeting', categoryLabel: '问候礼仪', collected: false },
+        { tibetan: 'གཞི་མི་འདུག', pinyin: 'Zhimi adug', chinese: '对不起 / 抱歉', category: 'greeting', categoryLabel: '问候礼仪', collected: false },
+        { tibetan: 'ལགས་སོ།', pinyin: 'Lakso', chinese: '是的 / 好的', category: 'greeting', categoryLabel: '问候礼仪', collected: false },
+        { tibetan: 'མིན།', pinyin: 'Min', chinese: '不是 / 不', category: 'greeting', categoryLabel: '问候礼仪', collected: false },
+        // 日常用语
+        { tibetan: 'ཁྱེད་རང་གི་མིང་ལ་ཅི་ཟེར།', pinyin: "Khyerang gi ming la chi zer?", chinese: '你叫什么名字？', category: 'daily', categoryLabel: '日常用语', collected: false },
+        { tibetan: 'ང་གི་མིང་ལ་... ཟེར།', pinyin: 'Nga gi ming la ... zer', chinese: '我叫……', category: 'daily', categoryLabel: '日常用语', collected: false },
+        { tibetan: 'ཁྱེད་རང་གང་ནས་ཡིན།', pinyin: 'Khyerang gang ne yin?', chinese: '你是哪里人？', category: 'daily', categoryLabel: '日常用语', collected: false },
+        { tibetan: 'ང་རྒྱ་གར་མི་ཡིན།', pinyin: 'Nga gyami yin', chinese: '我是中国人', category: 'daily', categoryLabel: '日常用语', collected: false },
+        // 旅游出行
+        { tibetan: '... གང་དུ་འདུག', pinyin: '... gang du adug?', chinese: '……在哪里？', category: 'travel', categoryLabel: '旅游出行', collected: false },
+        { tibetan: '... ལ་འགྲོ་ན་ཇི་ལྟར་འགྲོ།', pinyin: '... la dro na jitar dro?', chinese: '去……怎么走？', category: 'travel', categoryLabel: '旅游出行', collected: false },
+        { tibetan: 'སྙིང་མཐའ་ལ་འགྲོ་གི་ཡིན།', pinyin: 'Nyingtha la drogi yin', chinese: '我要去湖边', category: 'travel', categoryLabel: '旅游出行', collected: false },
+        { tibetan: 'འདིར་མཛེས་སྡུག་ཆེ།', pinyin: "Adir dze dug che", chinese: '这里很美', category: 'travel', categoryLabel: '旅游出行', collected: false },
+        // 餐饮美食
+        { tibetan: 'བཏང་བ་ཡག་པོ་འདུག', pinyin: 'Tamba yakpo adug', chinese: '食物很好吃', category: 'food', categoryLabel: '餐饮美食', collected: false },
+        { tibetan: 'བཞེས་རོགས་གནང།', pinyin: 'Zhe rok nang', chinese: '请吃饭', category: 'food', categoryLabel: '餐饮美食', collected: false },
+        { tibetan: 'ཆང་གཅིག་ཁ་འཐུང།', pinyin: 'Chang chig kha thung', chinese: '喝一杯青稞酒', category: 'food', categoryLabel: '餐饮美食', collected: false },
+        { tibetan: 'བོད་ཇ་ཞིམ་པོ་འདུག', pinyin: 'Böja zhimpo adug', chinese: '酥油茶真香', category: 'food', categoryLabel: '餐饮美食', collected: false },
+        // 购物砍价
+        { tibetan: 'འདི་ག་ཚད་རེད།', pinyin: "Adi gatshe re?", chinese: '这个多少钱？', category: 'shopping', categoryLabel: '购物砍价', collected: false },
+        { tibetan: 'གོང་ཆུང་ཆུང་གནང་།', pinyin: 'Gong chung chung nang', chinese: '便宜一点', category: 'shopping', categoryLabel: '购物砍价', collected: false },
+        { tibetan: 'ལེན་གི་ཡིན།', pinyin: 'Len gi yin', chinese: '我要买', category: 'shopping', categoryLabel: '购物砍价', collected: false },
+        // 数字时间
+        { tibetan: 'གཅིག', pinyin: 'Chig', chinese: '一（1）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'གཉིས', pinyin: 'Nyi', chinese: '二（2）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'གསུམ', pinyin: 'Sum', chinese: '三（3）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'བཞི', pinyin: 'Zhi', chinese: '四（4）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'ལྔ', pinyin: 'Nga', chinese: '五（5）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'དྲུག', pinyin: 'Drug', chinese: '六（6）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'བདུན', pinyin: 'Dün', chinese: '七（7）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'བརྒྱད', pinyin: 'Gye', chinese: '八（8）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'དགུ', pinyin: 'Gu', chinese: '九（9）', category: 'number', categoryLabel: '数字时间', collected: false },
+        { tibetan: 'བཅུ', pinyin: 'Chu', chinese: '十（10）', category: 'number', categoryLabel: '数字时间', collected: false }
+      ],
+      toastShow: false,
+      toastText: ''
+    }
+  },
+  computed: {
+    filteredPhrases() {
+      return this.phrases.filter(item => {
+        const matchCategory = this.currentCategory === 'all' || item.category === this.currentCategory
+        const keyword = this.searchKeyword.trim()
+        const matchSearch = !keyword ||
+          item.chinese.includes(keyword) ||
+          item.pinyin.toLowerCase().includes(keyword.toLowerCase()) ||
+          item.tibetan.includes(keyword)
+        return matchCategory && matchSearch
+      })
+    }
+  },
+  methods: {
+    playAudio(item) {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(item.chinese)
+        utter.lang = 'zh-CN'
+        utter.rate = 0.85
+        window.speechSynthesis.speak(utter)
+        this.showToast('正在播放中文发音...')
+      } else {
+        this.showToast('当前浏览器不支持语音播放')
+      }
+    },
+    toggleCollect(item) {
+      item.collected = !item.collected
+      this.showToast(item.collected ? '已收藏' : '已取消收藏')
+    },
+    showToast(text) {
+      this.toastText = text
+      this.toastShow = true
+      setTimeout(() => {
+        this.toastShow = false
+      }, 2000)
+    }
+  }
+}).mount('#app')
+</script>
+
+<footer style="background:#9B2B25;color:rgba(255,255,255,0.85);text-align:center;padding:24px 20px;font-size:14px;">
+  <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 探寻安多秘境，传承藏韵文化</p>
+</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:50px;height:50px;background:#9B2B25;color:#fff;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.15);border:none;z-index:998;transition:all 0.3s;" aria-label="返回顶部">
+  <i class="fa fa-arrow-up"></i>
+</button>
+<script>
+window.addEventListener('scroll',function(){var b=document.getElementById('backToTop');b.style.display=window.pageYOffset>300?'flex':'none';});
+</script>
+
+</body>
+</html>

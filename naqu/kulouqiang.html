@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="达姆寺骷髅墙 - 藏北生死奇观・生命静观圣地，展示那曲比如县达姆寺天葬台的独特丧葬文化">
+  <meta name="keywords" content="骷髅墙,达姆寺,天葬台,比如县,藏北,生死文化,头骨墙,佛教文化">
+  <title>骷髅墙 - 雪域安多·藏韵传承</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Top Bar & Header */
+    .top-bar {
+      background: #444;
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 30px;
+      font-size: 13px;
+    }
+    .top-bar a { color: rgba(255,255,255,0.7); text-decoration: none; }
+    .top-bar a:hover { color: #D4AF37; }
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #9B2B25, #B83C2E);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header .logo { color: #fff; font-size: 20px; font-weight: 700; text-decoration: none; }
+    .header nav a { color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 25px; font-size: 15px; }
+    .header nav a:hover { color: #D4AF37; }
+
+    /* Banner */
+    .banner {
+      height: 500px;
+      background: linear-gradient(135deg, #3a1a0a, #6b2e15, #9b4a25);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .banner h1 { font-size: 48px; font-weight: 700; color: #fff; letter-spacing: 4px; }
+    .banner .subtitle { font-size: 16px; color: rgba(255,255,255,0.85); margin-top: 12px; }
+
+    /* Main Container */
+    .main-container { max-width: 1200px; margin: 0 auto; padding: 60px 30px; }
+    .main-container section { margin-bottom: 60px; }
+    .section-title { font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 30px; padding-left: 16px; border-left: 4px solid var(--primary-red); }
+    .highlight-box { background: #fff; border-left: 4px solid #D4AF37; padding: 20px 24px; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-bottom: 30px; color: var(--text-secondary); box-shadow: var(--shadow-sm); line-height: 1.8; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card { background: #fff; border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm); transition: var(--transition); }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .card-icon { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-red), #B83C2E); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 16px; }
+    .card h3 { font-size: 17px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+    .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .feature-list { list-style: none; padding: 0; }
+    .feature-list li { padding: 10px 0; padding-left: 24px; position: relative; color: var(--text-secondary); line-height: 1.7; }
+    .feature-list li::before { content: '◆'; position: absolute; left: 0; color: #D4AF37; font-size: 10px; }
+
+    /* Two-column layout */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .text-block p { margin-bottom: 16px; font-size: 15px; color: var(--text-secondary); line-height: 1.8; text-indent: 2em; }
+
+    /* Philosophy quote */
+    .philosophy-quote {
+      font-style: italic;
+      font-size: 16px;
+      color: var(--primary-red);
+      border-left: 4px solid #D4AF37;
+      padding: 12px 20px;
+      margin: 16px 0;
+      background: #fff;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Warning box */
+    .warning-box {
+      background: #fff;
+      border: 2px solid #D4AF37;
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .warning-box h5 { color: var(--primary-red); margin-bottom: 10px; font-size: 18px; }
+    .warning-box p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
+
+    /* Back to top */
+    .back-to-top.show { opacity: 1; visibility: visible; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner h1 { font-size: 32px; }
+      .banner .subtitle { font-size: 14px; }
+      .two-col { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr; }
+      .header nav { display: none; }
+      .main-container { padding: 30px 16px; }
+      .section-title { font-size: 22px; }
+    }
+  </style>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <!-- Top Bar & Header -->
+  <div class="top-bar">
+    <span>雪域安多·藏韵传承 — 青海安多藏族文化传播平台</span>
+    <a href="../index.html"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+  <div class="header">
+    <a href="../index.html" class="logo">གངས་ལྗོངས་ཨ་མདོ།</a>
+    <nav>
+      <a href="../index.html">首页</a>
+      <a href="../minsu.html">安多民俗</a>
+      <a href="../jingdian.html">藏地旅游</a>
+      <a href="../fanyi/fanyi.html">藏文工具</a>
+    </nav>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div>
+      <h1>骷髅墙</h1>
+      <p class="subtitle">达姆寺天葬台・藏北生死奇观・生命静观圣地</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-container">
+
+    <!-- Overview Cards -->
+    <section>
+      <h2 class="section-title">景点速览</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-institution"></i></div>
+          <h3>天葬与骷髅墙概况</h3>
+          <p>西藏唯一完整保存头骨的天葬台</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-map-marker"></i></div>
+          <h3>达姆寺与多多卡天葬台</h3>
+          <p>那曲比如县茶曲乡</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-th"></i></div>
+          <h3>头骨排列与建筑</h3>
+          <p>约300余颗头骨的规整木格墙</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-history"></i></div>
+          <h3>历史与活佛创建</h3>
+          <p>达普八世白玛白扎活佛定下规制</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-yin-yang fa-balance-scale"></i></div>
+          <h3>生死哲思与文化意义</h3>
+          <p>诸行无常・生命警示</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-pagelines"></i></div>
+          <h3>天葬文化与仪式</h3>
+          <p>肉身布施・灵魂解脱</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-book"></i></div>
+          <h3>传说与警示意义</h3>
+          <p>恶人悔悟・劝善从德</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-exclamation-circle"></i></div>
+          <h3>参观礼仪与指南</h3>
+          <p>敬畏参观・保持肃穆</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cultural Introduction -->
+    <section>
+      <h2 class="section-title">骷髅墙・直面生死的生命警钟</h2>
+      <div class="two-col">
+        <div>
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+        </div>
+        <div class="text-block">
+          <p>达姆寺骷髅墙位于西藏自治区那曲市比如县茶曲乡达姆寺内的多多卡天葬台，是西藏唯一完整保存头骨的天葬台，也是自治区级文物保护单位和世界罕见的丧葬文化奇观。</p>
+          <p>这里现存两面规整的木格骷髅墙，共存放约300余颗头骨，由达普八世白玛白扎活佛定下规制，留存头骨以警示世人、参悟生死、劝善从德。骷髅墙不仅是藏北地区独特的文化景观，更是佛教生死观的具象体现。</p>
+          <p>作为生命静观圣地，骷髅墙以其庄严肃穆的氛围，引导人们直面死亡、觉知生命短暂、珍惜当下，体现了"诸行无常"的佛教核心教义，是藏传佛教文化中极具震撼力的精神象征。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section>
+      <h2 class="section-title">千骨成墙・规整庄严</h2>
+      <div class="two-col">
+        <div>
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+        </div>
+        <div class="text-block">
+          <p><strong>整体布局：</strong>两面木质格架骷髅墙，一人多高，整齐排列在达姆寺天葬台院落内，与藏式土墙、经幡、佛龛、诵经房共同构成庄严肃穆的宗教空间。</p>
+          <p><strong>头骨排列：</strong>约300余颗头骨有序嵌入木格之中，部分头骨绘有眉眼，呈现出灰白质感与沧桑庄严的视觉效果。头骨排列规整有序，体现了对逝者的尊重和对生死的敬畏。</p>
+          <p><strong>环境氛围：</strong>天葬台院落四周环绕着藏式土墙，经幡随风飘扬，佛龛中供奉着佛像，诵经房内时常传来僧人的诵经声，整个环境宁静肃穆，充满神圣感。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section>
+      <h2 class="section-title">活佛规制・劝善警世</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>创建历史</h3>
+          <p>19世纪初，达普八世白玛白扎活佛创建达姆寺天葬台，并定下保留头骨的寺规。这一规制在藏区独一无二，体现了活佛对生死教育的深刻思考。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>两大缘起</h3>
+          <p><strong>活佛旨意：</strong>留存头骨，警醒世人生命无常、劝人向善、敬畏生死<br><strong>民间传说：</strong>恶人临终悔悟，愿留头骨警示后人从善</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>历史变迁</h3>
+          <p>曾有三面骷髅墙，后因历史原因损毁，现存两面为近代修复。尽管历经沧桑，骷髅墙的文化价值和宗教意义依然完整保留。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section>
+      <h2 class="section-title">天葬奉献・生死轮回・诸行无常</h2>
+      <div style="max-width:800px;margin:0 auto;">
+        <div class="text-block" style="text-align:center;">
+          <p>天葬是藏族传统丧葬方式，体现了"肉身布施"的佛教理念。通过将遗体奉献给秃鹫，实现灵魂的解脱和轮回转生，达到消业祈福的目的。</p>
+          <p>骷髅墙作为天葬文化的特殊载体，承载着深刻的生死哲思：</p>
+        </div>
+        <div class="philosophy-quote">"生命警示：直面死亡、觉知生命短暂、珍惜当下"</div>
+        <div class="philosophy-quote">"诸行无常：佛教核心教义、万物皆变、放下执念"</div>
+        <div class="philosophy-quote">"慈悲向善：以生死为镜、劝人行善、净化心灵"</div>
+        <div class="text-block" style="text-align:center;margin-top:20px;">
+          <p>在蓝天、经幡、远山、佛影的映衬下，骷髅墙营造出神圣、宁静、超脱的氛围，引导人们思考生命的真谛，领悟佛教的智慧。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Legend -->
+    <section>
+      <h2 class="section-title">雪域传说・神秘天葬院</h2>
+      <div class="two-col">
+        <div>
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+        </div>
+        <div class="text-block">
+          <p><strong>生死之门：</strong>天葬台设有西门和南门，西门供活人进入，南门用于抬入尸体。经幡杆顶部的骷髅雕塑象征着生死界限，提醒人们敬畏生命。</p>
+          <p><strong>神奇葬师池：</strong>在极寒天气下，葬师池仍可自然解冻尸体，被视为神迹。这一现象增添了天葬台的神秘色彩，也体现了藏北高原的独特自然环境。</p>
+          <p><strong>头骨法器：</strong>部分头骨被用于制作嘎巴拉等宗教法器，这些法器在宗教仪式中具有神圣庄严的意义，是藏传佛教文化的重要组成部分。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Travel Guide -->
+    <section>
+      <h2 class="section-title">敬畏参观・礼仪指南</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-ban"></i></div>
+          <h3>绝对禁忌</h3>
+          <ul class="feature-list">
+            <li><strong>禁止喧哗</strong>，保持安静肃穆</li>
+            <li><strong>禁止嬉笑</strong>，尊重宗教场所</li>
+            <li><strong>禁止近距离拍照</strong>，尤其不能对着头骨特写</li>
+            <li><strong>禁止触摸头骨</strong>，尊重逝者</li>
+            <li><strong>尊重宗教仪式</strong>，不干扰僧人活动</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-users"></i></div>
+          <h3>参观要求</h3>
+          <ul class="feature-list">
+            <li>保持<strong>肃穆庄重</strong>的态度</li>
+            <li>按<strong>顺时针方向</strong>绕行参观</li>
+            <li>心怀<strong>敬畏之心</strong>，反思生命意义</li>
+            <li>不打扰僧人修行和宗教活动</li>
+            <li>穿着得体，避免过于鲜艳的服装</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-map-marker"></i></div>
+          <h3>开放与位置</h3>
+          <ul class="feature-list">
+            <li>位于<strong>那曲市比如县达姆寺</strong></li>
+            <li>距比如县城约<strong>65公里</strong></li>
+            <li>靠近<strong>317国道</strong>，交通便利</li>
+            <li>建议包车或自驾前往</li>
+            <li>开放时间：全天（建议白天参观）</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-calendar"></i></div>
+          <h3>季节与提示</h3>
+          <ul class="feature-list">
+            <li>最佳季节：<strong>5-10月</strong></li>
+            <li>注意<strong>高反预防</strong>，海拔较高</li>
+            <li>做好<strong>保暖措施</strong>，昼夜温差大</li>
+            <li>保护<strong>生态环境</strong>，不乱扔垃圾</li>
+            <li>尊重当地<strong>民俗习惯</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <h5><i class="fa fa-exclamation-triangle"></i> 特别提醒</h5>
+        <p>骷髅墙是庄严肃穆的宗教场所，不是旅游景点。参观时请始终保持敬畏之心，尊重当地的宗教信仰和文化传统。任何不敬行为都是不可接受的，请自觉遵守参观礼仪，共同维护这一珍贵的文化遗产。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Back to Top (Vue) -->
+  <div id="app">
+    <button class="back-to-top" :class="{show: showTop}" @click="scrollTop" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;background:#9B2B25;color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 2px 10px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transition:all 0.3s;display:flex;align-items:center;justify-content:center;">
+      <i class="fa fa-chevron-up"></i>
+    </button>
+  </div>
+  <script>
+  Vue.createApp({
+    data() { return { showTop: false } },
+    mounted() { window.addEventListener('scroll', () => { this.showTop = window.scrollY > 300 }) },
+    methods: { scrollTop() { window.scrollTo({top:0,behavior:'smooth'}) } }
+  }).mount('#app')
+  </script>
+</body>
+</html>

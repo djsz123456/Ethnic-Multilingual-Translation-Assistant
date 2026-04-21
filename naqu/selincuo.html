@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="色林错 - 西藏第一大湖・黑颈鹤栖息地・苍茫高原深蓝秘境，展示藏北高原最大湖泊的自然景观与生态保护">
+  <meta name="keywords" content="色林错,西藏第一大湖,黑颈鹤,候鸟天堂,藏北高原,自然保护区,魔鬼湖">
+  <title>色林错 - 雪域安多·藏韵传承</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: #444;
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 30px;
+      font-size: 13px;
+    }
+    .top-bar a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+    }
+    .top-bar a:hover {
+      color: #D4AF37;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #9B2B25, #B83C2E);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header .logo {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .header nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 15px;
+    }
+    .header nav a:hover {
+      color: #D4AF37;
+    }
+
+    /* Banner */
+    .banner {
+      height: 500px;
+      background: linear-gradient(135deg, #3a1a0a, #6b2e15, #9b4a25);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .banner h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 4px;
+    }
+    .banner .subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 12px;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 30px;
+    }
+    .main-container section {
+      margin-bottom: 60px;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 30px;
+      padding-left: 16px;
+      border-left: 4px solid var(--primary-red);
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+      background: #fff;
+      border-left: 4px solid #D4AF37;
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-bottom: 30px;
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-sm);
+      line-height: 1.8;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Feature List */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 10px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .feature-list li::before {
+      content: '\25C6';
+      position: absolute;
+      left: 0;
+      color: #D4AF37;
+      font-size: 10px;
+    }
+
+    /* Back to Top */
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner h1 {
+        font-size: 32px;
+      }
+      .banner .subtitle {
+        font-size: 14px;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .header nav {
+        display: none;
+      }
+      .top-bar {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+      .section-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <span>雪域安多·藏韵传承 — 青海安多藏族文化传播平台</span>
+    <a href="../index.html"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+  <div class="header">
+    <a href="../index.html" class="logo">གངས་ལྗོངས་ཨ་མདོ།</a>
+    <nav>
+      <a href="../index.html">首页</a>
+      <a href="../minsu.html">安多民俗</a>
+      <a href="../jingdian.html">藏地旅游</a>
+      <a href="../fanyi/fanyi.html">藏文工具</a>
+    </nav>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div>
+      <h1>色林错</h1>
+      <p class="subtitle">西藏第一大湖・黑颈鹤栖息地・苍茫高原深蓝秘境</p>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <!-- 湖泊概况 -->
+    <section>
+      <h2 class="section-title">色林错・藏北高原的苍茫深蓝之心</h2>
+      <div class="highlight-box">
+        <p>色林错，藏语意为"威光映复湖"，位于西藏自治区那曲市和阿里地区交界处，海拔4530米，是西藏第一大湖泊，也是中国第二大咸水湖。这片辽阔的深蓝水域如同一颗镶嵌在藏北高原的蓝宝石，以其苍茫壮阔的气势和原始荒野的气质，展现出高原大湖的磅礴与孤寂。</p>
+      </div>
+      <div class="highlight-box">
+        <p>色林错形成于地质历史时期的构造运动，湖区面积达2391平方公里，周围雪山环绕，草原辽阔。作为国家级自然保护区的核心区域，色林错是黑颈鹤等多种珍稀候鸟的重要栖息地和迁徙停歇地，具有极其重要的生态价值。</p>
+      </div>
+      <div class="highlight-box">
+        <p>在当地传说中，色林错被称为"魔鬼湖"，蕴含着神秘的宗教色彩。湖畔的牧民世代与此湖共生，形成了独特的信仰体系和生活方式。这里的每一寸土地、每一片湖水都承载着深厚的文化底蕴和生态意义。</p>
+      </div>
+      <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+    </section>
+
+    <!-- 快速导航 -->
+    <section>
+      <h2 class="section-title">色林错亮点</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-tint"></i></div>
+          <h3>湖泊概况</h3>
+          <p>西藏第一大湖泊</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-globe"></i></div>
+          <h3>地理地貌</h3>
+          <p>高原大型咸水湖</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-twitter"></i></div>
+          <h3>黑颈鹤与候鸟</h3>
+          <p>候鸟迁徙重要驿站</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-paw"></i></div>
+          <h3>高原野生动物</h3>
+          <p>珍稀物种栖息地</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-leaf"></i></div>
+          <h3>湖畔湿地草原</h3>
+          <p>原始荒野之美</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-book"></i></div>
+          <h3>传说与文化</h3>
+          <p>魔鬼湖的神秘传说</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-camera"></i></div>
+          <h3>环湖风光</h3>
+          <p>辽阔壮美的湖景</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-shield"></i></div>
+          <h3>保护与生态</h3>
+          <p>国家级自然保护区</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 高原飞鸟的家园 -->
+    <section>
+      <h2 class="section-title">高原飞鸟的家园</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>黑颈鹤</h3>
+          <p>世界上唯一生长、繁殖在高原的鹤类，国家一类保护动物。每年春夏季节，成群的黑颈鹤在色林错湖畔栖息繁衍，成为这片高原湖泊最灵动的风景。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>斑头雁</h3>
+          <p>能够飞越喜马拉雅山脉的候鸟奇迹，每年迁徙季节在色林错停歇补给，展现生命的顽强与坚韧。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>渔鸥</h3>
+          <p>色林错常见的水鸟，以湖中鱼类为食，成群结队飞翔于湖面之上，为静谧的湖泊增添生机。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>赤麻鸭</h3>
+          <p>色彩鲜艳的野鸭，常成对或小群活动于湖畔湿地，是色林错鸟类多样性的重要组成部分。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 色林错野生动物区 -->
+    <section>
+      <h2 class="section-title">色林错野生动物区</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>藏原羚</h3>
+          <p>高原特有物种</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>藏野驴</h3>
+          <p>草原奔跑者</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>雪豹</h3>
+          <p>雪山之王</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>狼</h3>
+          <p>高原掠食者</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>旱獭</h3>
+          <p>草原小精灵</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 传说与文化 -->
+    <section>
+      <h2 class="section-title">传说与文化</h2>
+      <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:20px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+      <div class="highlight-box">
+        <p>色林错在当地传说中被称为"魔鬼湖"，相传古代有一位名叫色林的妖魔在此作祟，后被降服并困于湖中，因此得名。这个传说反映了当地藏族人民对自然力量的敬畏和对神秘现象的解释。</p>
+      </div>
+      <div class="highlight-box">
+        <p>尽管有着"魔鬼湖"的称号，色林错在牧民心中依然是神圣的存在。湖畔随处可见的经幡和玛尼堆，见证着人们对湖泊的虔诚祈祷。牧民们相信，色林错有着净化心灵的力量，同时也需要人们的尊重和保护。</p>
+      </div>
+      <div class="highlight-box">
+        <p>色林错周边的村落保持着传统的放牧生活方式，牧民们依湖而居，与这片高原湖泊形成了和谐共生的关系。每年的特定时节，当地会举行祭祀仪式，祈求湖泊保佑人畜平安、水草丰美。</p>
+      </div>
+    </section>
+
+    <!-- 高原湿地与地貌 -->
+    <section>
+      <h2 class="section-title">高原湿地与地貌</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>连绵湖岸线</h3>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>沼泽湿地</h3>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>草原与戈壁交错</h3>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>雪山倒影</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- 游览与保护提示 -->
+    <section>
+      <h2 class="section-title">色林错游览与保护提示</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="card">
+          <h3><i class="fa fa-calendar" style="color:var(--primary-red);margin-right:8px;"></i>最佳游览季节</h3>
+          <ul class="feature-list">
+            <li><strong>5-10月</strong>为最佳旅游季节</li>
+            <li>6-8月候鸟聚集，观赏最佳</li>
+            <li>冬季气候严寒，交通不便</li>
+            <li>避开雨季（7-8月午后多雨）</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-map" style="color:var(--primary-red);margin-right:8px;"></i>交通与路线</h3>
+          <ul class="feature-list">
+            <li>从<strong>那曲市</strong>出发，约300公里</li>
+            <li>建议包车或参加旅行团</li>
+            <li>路况复杂，需越野车</li>
+            <li>提前办理相关通行证件</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-camera" style="color:var(--primary-red);margin-right:8px;"></i>拍摄机位推荐</h3>
+          <ul class="feature-list">
+            <li><strong>湖北岸高地</strong>：全景拍摄</li>
+            <li>湖畔湿地：候鸟拍摄</li>
+            <li>日落时分：湖面金光</li>
+            <li>清晨：雪山倒影</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-heartbeat" style="color:var(--primary-red);margin-right:8px;"></i>高反与保暖</h3>
+          <ul class="feature-list">
+            <li>色林错海拔<strong>4530米</strong>，注意预防高反</li>
+            <li>昼夜温差极大，需厚外套</li>
+            <li>携带氧气瓶和抗高反药物</li>
+            <li>防风防晒必备</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-leaf" style="color:var(--primary-red);margin-right:8px;"></i>生态保护注意事项</h3>
+          <ul class="feature-list">
+            <li><strong>严禁惊扰候鸟</strong>，保持安全距离</li>
+            <li>不随意丢弃垃圾</li>
+            <li>不破坏植被和湿地</li>
+            <li>遵守保护区管理规定</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-info-circle" style="color:var(--primary-red);margin-right:8px;"></i>其他提示</h3>
+          <ul class="feature-list">
+            <li>湖区无完善住宿设施</li>
+            <li>自备充足食物和水</li>
+            <li>手机信号较弱</li>
+            <li>尊重当地民俗信仰</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Vue App: Back to Top -->
+  <div id="app">
+    <button class="back-to-top" :class="{show:showTop}" @click="scrollTop" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;background:#9B2B25;color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 2px 10px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transition:all 0.3s;display:flex;align-items:center;justify-content:center;">
+      <i class="fa fa-chevron-up"></i>
+    </button>
+  </div>
+  <script>
+  Vue.createApp({
+    data(){return{showTop:false}},
+    mounted(){window.addEventListener('scroll',()=>{this.showTop=window.scrollY>300})},
+    methods:{scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}}
+  }).mount('#app')
+  </script>
+</body>
+</html>

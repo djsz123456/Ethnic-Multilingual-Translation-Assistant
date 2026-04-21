@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="唐古拉山口 - 天路咽喉・安多文化西向门户，展示青藏公路/铁路地标、高原生态与驿站文化">
+  <meta name="keywords" content="唐古拉山口,青藏公路,青藏铁路,安多文化,高原生态,进藏攻略">
+  <title>唐古拉山口 - 雪域安多·藏韵传承</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: #444;
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 30px;
+      font-size: 13px;
+    }
+    .top-bar a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+    }
+    .top-bar a:hover {
+      color: #D4AF37;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #9B2B25, #B83C2E);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header .logo {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .header nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 15px;
+    }
+    .header nav a:hover {
+      color: #D4AF37;
+    }
+
+    /* Banner */
+    .banner {
+      height: 500px;
+      background: linear-gradient(135deg, #3a1a0a, #6b2e15, #9b4a25);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .banner h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 4px;
+    }
+    .banner .subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 12px;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 30px;
+    }
+    .main-container section {
+      margin-bottom: 60px;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 30px;
+      padding-left: 16px;
+      border-left: 4px solid var(--primary-red);
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+      background: #fff;
+      border-left: 4px solid #D4AF37;
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-bottom: 30px;
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-sm);
+      line-height: 1.8;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Feature List */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 10px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .feature-list li::before {
+      content: '\25C6';
+      position: absolute;
+      left: 0;
+      color: #D4AF37;
+      font-size: 10px;
+    }
+
+    /* Back to Top */
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner h1 {
+        font-size: 32px;
+      }
+      .banner .subtitle {
+        font-size: 14px;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .header nav {
+        display: none;
+      }
+      .top-bar {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+      .section-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <span>雪域安多·藏韵传承 — 青海安多藏族文化传播平台</span>
+    <a href="../index.html"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+  <div class="header">
+    <a href="../index.html" class="logo">གངས་ལྗོངས་ཨ་མདོ།</a>
+    <nav>
+      <a href="../index.html">首页</a>
+      <a href="../minsu.html">安多民俗</a>
+      <a href="../jingdian.html">藏地旅游</a>
+      <a href="../fanyi/fanyi.html">藏文工具</a>
+    </nav>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div>
+      <h1>唐古拉山口</h1>
+      <p class="subtitle">天路咽喉・安多文化西向门户</p>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <!-- 概况介绍 -->
+    <section>
+      <h2 class="section-title">唐古拉山口・雪域天路的千年守望</h2>
+      <div class="highlight-box">
+        <p>唐古拉山口位于青藏高原腹地，海拔5231米，是青藏公路和青藏铁路的必经之地，被誉为"天路咽喉"。作为安多文化向西延伸的重要门户，这里不仅是地理上的分界线，更是文化交流的纽带。</p>
+      </div>
+      <div class="highlight-box">
+        <p>从古至今，唐古拉山口见证了无数商旅、朝圣者和探险家的足迹。茶马古道时期，这里是重要的驿站；现代交通建设后，它成为连接内地与西藏的关键节点。山口的每一块石头都承载着历史的记忆，每一阵寒风都诉说着坚韧的故事。</p>
+      </div>
+      <div class="highlight-box">
+        <p>在生态保护方面，唐古拉山口地处羌塘国家级自然保护区边缘，是长江、黄河等重要河流的发源区域之一。这里的高原生态系统脆弱而珍贵，保护工作至关重要。当代的唐古拉山口，既是交通要道，也是生态文明建设的示范窗口。</p>
+      </div>
+      <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+    </section>
+
+    <!-- 快速导航 -->
+    <section>
+      <h2 class="section-title">唐古拉山口亮点</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-map-marker"></i></div>
+          <h3>山口界碑</h3>
+          <p>地理标志·海拔5231米</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-road"></i></div>
+          <h3>青藏公路</h3>
+          <p>109国道·进藏大动脉</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-train"></i></div>
+          <h3>青藏铁路</h3>
+          <p>世界海拔最高铁路</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-home"></i></div>
+          <h3>安多驿站文化</h3>
+          <p>茶马古道·商贸枢纽</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-snowflake-o"></i></div>
+          <h3>唐古拉雪山</h3>
+          <p>长江源头·冰川秘境</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-leaf"></i></div>
+          <h3>高原生态</h3>
+          <p>羌塘保护区·珍稀物种</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-suitcase"></i></div>
+          <h3>进藏攻略</h3>
+          <p>自驾·火车·高反预防</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-history"></i></div>
+          <h3>历史沿革</h3>
+          <p>从茶马古道到天路</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-camera"></i></div>
+          <h3>周边打卡</h3>
+          <p>沱沱河·可可西里边缘</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 天路双脉 -->
+    <section>
+      <h2 class="section-title">青藏公路 × 青藏铁路・两条天路的传奇</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>青藏公路（109国道）</h3>
+          <p><strong>建设历程：</strong>1950年动工，1954年通车，全长1937公里，是世界上海拔最高的公路之一。</p>
+          <p><strong>沿途风光：</strong>穿越戈壁、草原、雪山，途经青海湖、昆仑山、可可西里等壮丽景观。</p>
+          <p><strong>自驾攻略：</strong>最佳季节为5-10月，需准备防寒衣物、氧气瓶，注意高原反应。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>青藏铁路</h3>
+          <p><strong>工程奇迹：</strong>2006年全线通车，海拔最高点5072米，是世界海拔最高的铁路。</p>
+          <p><strong>列车体验：</strong>穿越唐古拉山口时，乘客可透过车窗欣赏雪山云海，感受"天路"震撼。</p>
+          <p><strong>发展意义：</strong>极大促进了西藏经济社会发展，加强了民族团结和文化交流。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 驿站文化 -->
+    <section>
+      <h2 class="section-title">山口驿站・安多文化的西向纽带</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>古代驿站</h3>
+          <p>茶马古道时期的重要补给点，商旅歇脚、货物中转的枢纽</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>牧民生活</h3>
+          <p>安多牧民世代在此放牧，形成了独特的游牧文化和生活方式</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>现代枢纽</h3>
+          <p>当代进藏交通的关键节点，承载着文化交流与经济往来的使命</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 出行指南 -->
+    <section>
+      <h2 class="section-title">雪域打卡・唐古拉山口出行指南</h2>
+      <div class="highlight-box">
+        <p><strong>海拔与高反：</strong>唐古拉山口海拔5231米，空气稀薄，氧气含量仅为平原的50%左右。建议提前1-2天在西宁或格尔木适应高原环境，携带便携式氧气瓶。</p>
+      </div>
+      <div class="highlight-box">
+        <p><strong>最佳打卡时间：</strong>每年5-10月为最佳旅游季节，其中7-8月气候相对温和，但也是雨季。冬季气温极低，不建议前往。</p>
+      </div>
+      <div class="highlight-box">
+        <p><strong>周边必去景点：</strong></p>
+        <ul class="feature-list">
+          <li>沱沱河：长江正源，景色壮美</li>
+          <li>可可西里边缘：观赏藏羚羊等野生动物</li>
+          <li>各拉丹冬峰：长江发源地，冰川壮观</li>
+        </ul>
+      </div>
+      <div class="highlight-box">
+        <p><strong>实用小贴士</strong></p>
+        <ul class="feature-list">
+          <li>穿着保暖：即使是夏季，山口温度也可能低于0℃</li>
+          <li>防晒措施：高原紫外线强烈，需涂抹高倍数防晒霜</li>
+          <li>尊重当地：遵守环保规定，不随意丢弃垃圾</li>
+          <li>安全第一：避免剧烈运动，如有不适立即下山</li>
+        </ul>
+      </div>
+      <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+    </section>
+
+    <!-- 历史沿革 -->
+    <section>
+      <h2 class="section-title">历史沿革・从茶马古道到天路</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-bookmark"></i></div>
+          <h3>唐宋时期</h3>
+          <p>茶马古道形成，唐古拉山口成为重要驿站，连接川藏、滇藏贸易通道。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-university"></i></div>
+          <h3>明清时期</h3>
+          <p>安多文化与卫藏文化交流频繁，山口地区寺庙兴建，宗教文化繁荣。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-road"></i></div>
+          <h3>1950-1954年</h3>
+          <p>青藏公路修建，数万名筑路官兵克服极端困难，打通进藏大动脉。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-train"></i></div>
+          <h3>2006年</h3>
+          <p>青藏铁路全线通车，创造世界铁路建设史上的奇迹，唐古拉山口迎来新的发展机遇。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Vue App: Back to Top -->
+  <div id="app">
+    <button class="back-to-top" :class="{show:showTop}" @click="scrollTop" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;background:#9B2B25;color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 2px 10px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transition:all 0.3s;display:flex;align-items:center;justify-content:center;">
+      <i class="fa fa-chevron-up"></i>
+    </button>
+  </div>
+  <script>
+  Vue.createApp({
+    data(){return{showTop:false}},
+    mounted(){window.addEventListener('scroll',()=>{this.showTop=window.scrollY>300})},
+    methods:{scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}}
+  }).mount('#app')
+  </script>
+</body>
+</html>

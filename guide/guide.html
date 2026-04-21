@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="贵德 - 高原江南·黄河明珠·丹霞秘境">
+  <meta name="keywords" content="贵德,高原江南,黄河明珠,丹霞地貌,贵德古城,青海旅游">
+  <title>贵德 - 高原江南·黄河明珠</title>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --bg-secondary: #FFFFFF;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(90deg, #f8f8f8 0%, #f0f0f0 100%);
+      border-bottom: 1px solid #e0e0e0;
+      line-height: 40px;
+      padding: 0 30px;
+      font-size: 13px;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar-text {
+      font-weight: 500;
+    }
+
+    .back-link {
+      color: var(--primary-red);
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      color: var(--primary-gold);
+    }
+
+    /* Header */
+    .header {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary-red) 0%, #B83C2E 100%);
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .header-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 30px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .logo a {
+      color: #fff;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .logo a:hover {
+      color: var(--primary-gold);
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--primary-gold);
+      transition: var(--transition);
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--primary-gold);
+    }
+
+    .nav a:hover::after {
+      width: 60%;
+    }
+
+    .nav a.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--primary-gold);
+    }
+
+    /* Banner */
+    .banner {
+      width: 100%;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #5a1a0a 0%, #8B3A1A 50%, #C47030 100%);
+    }
+
+    .banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(155, 43, 37, 0.65) 0%, rgba(0, 0, 0, 0.45) 100%);
+      z-index: 1;
+    }
+
+    .banner img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      max-width: 900px;
+      padding: 0 30px;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .banner h1 {
+      font-size: 52px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+      letter-spacing: 4px;
+    }
+
+    .banner .subtitle {
+      font-size: 24px;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .banner .tibetan-name {
+      font-size: 18px;
+      opacity: 0.85;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .banner-stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-top: 30px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary-gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 30px;
+    }
+
+    /* Section Styles */
+    .section {
+      margin-bottom: 80px;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 36px;
+      color: var(--primary-red);
+      margin-bottom: 30px;
+      padding-left: 20px;
+      border-left: 5px solid var(--primary-gold);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-gold), transparent);
+      margin-left: 20px;
+    }
+
+    .section-title .tibetan {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-left: 15px;
+      font-weight: 400;
+    }
+
+    .section-text {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 2;
+      text-align: justify;
+      margin-bottom: 20px;
+      padding: 0 10px;
+    }
+
+    .section-text:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+      background: linear-gradient(135deg, #fff9f0 0%, #fff5e6 100%);
+      border-left: 4px solid var(--primary-gold);
+      padding: 25px 30px;
+      margin: 25px 0;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .highlight-box p {
+      font-size: 16px;
+      color: var(--text-primary);
+      line-height: 1.9;
+      margin-bottom: 15px;
+    }
+
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-box .label {
+      font-weight: 700;
+      color: var(--primary-red);
+      margin-right: 8px;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 25px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-title {
+      font-size: 18px;
+      color: var(--primary-red);
+      margin-bottom: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .card-content {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    /* Feature List */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .feature-list li {
+      padding: 15px 20px 15px 40px;
+      margin-bottom: 12px;
+      background: white;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: var(--transition);
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .feature-list li:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-list li::before {
+      content: '✦';
+      position: absolute;
+      left: 15px;
+      color: var(--primary-gold);
+      font-size: 16px;
+    }
+
+    .feature-list li .label {
+      font-weight: 600;
+      color: var(--primary-red);
+      margin-right: 5px;
+    }
+
+    /* Attraction Cards */
+    .attraction-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .attraction-card {
+      background: white;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .attraction-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .attraction-header {
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: white;
+      padding: 15px 20px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .attraction-body {
+      padding: 20px;
+    }
+
+    .attraction-body p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Tips Box */
+    .tips-box {
+      background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+      border: 1px solid #b3d9f2;
+      border-radius: var(--radius-md);
+      padding: 25px 30px;
+      margin: 25px 0;
+    }
+
+    .tips-box h4 {
+      color: var(--primary-red);
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .tips-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .tips-box ul li {
+      padding: 10px 0 10px 25px;
+      position: relative;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .tips-box ul li::before {
+      content: '⚠';
+      position: absolute;
+      left: 0;
+      color: #e74c3c;
+    }
+
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: var(--primary-red);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 998;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--primary-gold);
+      transform: translateY(-5px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-wrap {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 20px;
+      }
+
+      .logo {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav a {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .banner {
+        height: 400px;
+      }
+
+      .banner h1 {
+        font-size: 36px;
+      }
+
+      .banner .subtitle {
+        font-size: 18px;
+      }
+
+      .banner-stats {
+        gap: 30px;
+      }
+
+      .stat-number {
+        font-size: 24px;
+      }
+
+      .section-title {
+        font-size: 26px;
+      }
+
+      .card-grid,
+      .attraction-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .main-container {
+        padding: 40px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .banner {
+        height: 300px;
+      }
+
+      .banner h1 {
+        font-size: 28px;
+      }
+
+      .banner .subtitle {
+        font-size: 16px;
+      }
+
+      .banner-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-text">
+        🌊 高原江南·黄河明珠 | 贵德古城 - 丹霞秘境·安多文化胜地
+      </div>
+      <div>
+        <a href="../index.html" class="back-link"><i class="fa fa-home"></i> 返回首页</a>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-wrap">
+        <div class="logo">
+          <a href="../index.html">གངས་ལྗོངས་ཨ་མདོ།</a>
+        </div>
+        <nav class="nav">
+          <a href="../index.html">首页</a>
+          <a href="../index.html#culture">安多民俗</a>
+          <a href="../index.html#tour">藏地旅游</a>
+          <a href="../index.html#tools">藏文工具</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Banner -->
+    <section class="banner">
+      <img src="images/gd1.jpg" alt="贵德古城与黄河丹霞风光" loading="lazy">
+      <div class="banner-content">
+        <div class="tibetan-name">གུ་དེ།</div>
+        <h1>贵德古城</h1>
+        <p class="subtitle">高原江南·黄河明珠</p>
+        <div class="banner-stats">
+          <div class="stat-item">
+            <span class="stat-number">国家4A</span>
+            <div class="stat-label">景区级别</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">2200m</span>
+            <div class="stat-label">平均海拔</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">丹霞</span>
+            <div class="stat-label">地貌奇观</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">千年</span>
+            <div class="stat-label">历史古城</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+      <!-- Section 1: 贵德概述 -->
+      <section class="section" id="overview">
+        <h2 class="section-title">
+          贵德概述
+          <span class="tibetan">གུ་དེའི་སྤྱི་བཤད།</span>
+        </h2>
+
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>贵德是青海省海南藏族自治州下辖县，素有"高原江南""黄河明珠"的美誉，是安多藏区罕见的温润绿洲与多元文化交汇地。</p>
+        </div>
+
+        <p class="section-text">
+          贵德县位于青海省东部、黄河上游，地处海南藏族自治州北部，南依拉脊山，北临黄土高原，黄河自西向东穿境而过，形成了独特的高原河谷地貌。这里平均海拔约2200米，是青海省海拔较低、气候最为温和的地区之一，年均气温7.5℃，四季分明，物产丰饶。
+        </p>
+
+        <p class="section-text">
+          贵德以"天下黄河贵德清"闻名天下——这里是黄河上游唯一清澈见底的河段，两岸绿树成荫，阡陌交错，梨花、桃花随季节盛放，构成了高原上少见的"江南"风光。每逢春夏，游人纷至沓来，感受这方"高原上的江南水乡"独有的温柔与诗意。
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-map-marker"></i></div>
+            <h3 class="card-title">地理位置</h3>
+            <p class="card-content">位于青海省东部黄河上游，海南藏族自治州北部，南依拉脊山，黄河自西向东穿境而过，形成高原河谷独特地貌。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-thermometer-half"></i></div>
+            <h3 class="card-title">气候特点</h3>
+            <p class="card-content">平均海拔约2200米，年均气温7.5℃，是青海省气候最温和的地区之一，四季分明，降水适中，素有"高原小江南"之称。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-tint"></i></div>
+            <h3 class="card-title">黄河风情</h3>
+            <p class="card-content">"天下黄河贵德清"，贵德是黄河上游唯一清澈见底的河段，两岸绿柳成荫，梨花桃花四季争艳，高原水乡风情浓郁。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-leaf"></i></div>
+            <h3 class="card-title">生态绿洲</h3>
+            <p class="card-content">高原罕见的生态绿洲，农业发达，梨园、桃园遍布河谷两岸，贵德软梨、核桃、花椒等特产闻名全省，是青海重要的果品产区。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: 历史人文 -->
+      <section class="section" id="history">
+        <h2 class="section-title">
+          历史人文
+          <span class="tibetan">ལོ་རྒྱུས་རིག་གནས།</span>
+        </h2>
+
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>贵德是安多藏区与中原文化交汇的历史要地，古城历史逾千年，文成公主进藏途经此地，黄河文化与藏文化在此深度融合。</p>
+        </div>
+
+        <p class="section-text">
+          贵德古城历史悠久，建城已逾千年。汉代即在此设置郡县，唐代时更成为丝绸之路与唐蕃古道的重要节点。贵德古城保存有完好的明代城垣遗址，城内布局规整，庙宇林立，是研究西北边疆历史与多民族文化交融的重要实物遗存。
+        </p>
+
+        <p class="section-text">
+          唐代文成公主入藏时途经贵德，留下了众多历史传说与文化遗迹。贵德因此成为汉藏文化交流的历史见证地，藏传佛教文化与汉地建筑风格在古城中和谐共存，形成了独特的边疆文化景观。
+        </p>
+
+        <ul class="feature-list">
+          <li>
+            <span class="label">古城历史：</span>贵德古城始建于明洪武年间，城垣保存完好，内有玉皇阁、文庙、关帝庙等古建筑群，是青海保存最完整的明代古城之一，被誉为"高原上的历史博物馆"。
+          </li>
+          <li>
+            <span class="label">文成公主：</span>唐贞观十五年（641年），文成公主入藏途经贵德，在此留下了深厚的历史渊源。当地至今流传着公主驻跸、祈福黄河的传说，文化影响绵延千年。
+          </li>
+          <li>
+            <span class="label">黄河文化：</span>贵德是黄河流域文化的重要组成部分，"天下黄河贵德清"一语道出贵德与母亲河的深厚情缘。黄河文化孕育了贵德独特的农耕文明与渔猎传统，形成了丰富多彩的黄河风情民俗。
+          </li>
+          <li>
+            <span class="label">多元融合：</span>贵德地处安多藏区与汉地的交界地带，藏、汉、回、土等多个民族在此世代共居，形成了独特的多元文化格局，是安多文化与中原文化交流融合的典范。
+          </li>
+        </ul>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-university"></i></div>
+            <h3 class="card-title">贵德古城</h3>
+            <p class="card-content">明代城垣保存完好，玉皇阁、文庙等古建精美，是青海省保存最完整的明代古城，千年历史积淀的文化瑰宝。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-road"></i></div>
+            <h3 class="card-title">唐蕃古道</h3>
+            <p class="card-content">文成公主入藏必经之地，唐蕃古道的重要节点，汉藏文化交流的历史见证，留存丰富的历史传说与文化遗迹。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-users"></i></div>
+            <h3 class="card-title">多民族共居</h3>
+            <p class="card-content">藏、汉、回、土等多民族世代共居，形成独特的多元文化格局，是安多地区民族团结与文化融合的典范之地。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: 自然景观 -->
+      <section class="section" id="scenery">
+        <h2 class="section-title">
+          自然景观
+          <span class="tibetan">རང་བྱུང་མཛེས་ལྗོངས།</span>
+        </h2>
+
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>贵德坐拥丹霞地貌、黄河奇观与高原绿洲三大自然奇景，色彩斑斓的丹霞山峦与清澈的黄河水交相辉映，构成了青海最震撼的自然画卷。</p>
+        </div>
+
+        <p class="section-text">
+          贵德的自然景观以"丹霞地貌"最为著名。境内丹霞山体赤红灿烂，造型奇特，与绿洲、黄河、蓝天相互映衬，色彩层次极为丰富，被摄影爱好者誉为"青海最美的色彩秘境"。每当夕阳斜照，丹霞山体如烈焰燃烧，场面壮阔震撼。
+        </p>
+
+        <p class="section-text">
+          黄河在贵德段清澈见底，水面宽阔，两岸杨柳依依，农田错落，春季桃梨花开，夏季绿野如茵，秋季金黄遍野，形成了高原罕见的四季美景。黄河漂流是贵德最具特色的体验项目之一，游客可乘筏顺流而下，近距离感受黄河的温柔与壮阔。
+        </p>
+
+        <ul class="feature-list">
+          <li>
+            <span class="label">丹霞地貌：</span>贵德丹霞地貌分布广泛，红色砂岩历经亿万年风化侵蚀，形成了峡谷、石柱、石墙等多样地貌，色彩由橘红到深褐，层次丰富，是华夏西部丹霞景观的典型代表。
+          </li>
+          <li>
+            <span class="label">黄河奇观：</span>"天下黄河贵德清"并非虚言，贵德境内的黄河水清澈碧绿，清晰可见河底砾石，与黄河上下游浑浊的泥沙水形成鲜明对比，是自然的馈赠，也是贵德最珍贵的名片。
+          </li>
+          <li>
+            <span class="label">高原绿洲：</span>黄河两岸，梨园、桃园、核桃林绵延数十公里，每年四月梨花盛开，白花如雪覆盖河谷，与红色丹霞山体构成"红白相映"的绝美景致，吸引万千游客踏春赏花。
+          </li>
+        </ul>
+
+        <h3 style="color: var(--primary-red); font-size: 22px; margin: 30px 0 20px 10px;">核心景点推荐</h3>
+        <div class="attraction-grid">
+          <div class="attraction-card">
+            <div class="attraction-header">贵德国家地质公园</div>
+            <div class="attraction-body">
+              <p>以丹霞地貌为核心，集地质奇观、黄河风光于一体的国家级地质公园，是观赏贵德丹霞地貌的最佳场所，拥有壮观的红色岩层与奇特的峡谷地形。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">黄河清漂流</div>
+            <div class="attraction-body">
+              <p>顺黄河清澈河段漂流而下，两岸丹霞赤壁与绿洲农田交替呈现，是体验"黄河清"奇观最直接、最震撼的方式，全程约15公里。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">贵德古城</div>
+            <div class="attraction-body">
+              <p>保存完好的明代古城，城内玉皇阁、文庙、关帝庙等古建筑群保存精美，是了解贵德千年历史文化的核心场所，被列为国家重点文物保护单位。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">松巴峡</div>
+            <div class="attraction-body">
+              <p>黄河穿越丹霞山体形成的壮观峡谷，两壁赤红耸立，水流湍急，峡谷幽深，是贵德丹霞地貌与黄河水文景观结合最为精彩的地段之一。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">龙羊峡水库</div>
+            <div class="attraction-body">
+              <p>亚洲第一高坝——龙羊峡大坝所在地，水天一色的高原平湖与周边山峦构成壮丽景观，是贵德境内重要的水利工程奇观与旅游胜地。</p>
+            </div>
+          </div>
+          <div class="attraction-card">
+            <div class="attraction-header">千姿湖</div>
+            <div class="attraction-body">
+              <p>位于贵德丹霞地貌腹地的高原湖泊，湖水碧蓝，周围丹霞山体倒映水中，色彩如梦似幻，是摄影爱好者和自然探索者的理想目的地。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: 旅游指南 -->
+      <section class="section" id="travel-guide">
+        <h2 class="section-title">
+          旅游指南
+          <span class="tibetan">ཡུལ་སྐོར་དམིགས་བསལ།</span>
+        </h2>
+
+        <div class="highlight-box">
+          <p><span class="label">核心定位：</span>为前往贵德的游客提供实用旅游参考，涵盖最佳旅游季节、交通方式、住宿选择与特色产品，助您深度体验高原江南之美。</p>
+        </div>
+
+        <h3 style="color: var(--primary-red); font-size: 22px; margin: 30px 0 20px 10px;">最佳旅游季节</h3>
+        <ul class="feature-list">
+          <li>
+            <span class="label">春季（4月—5月）：</span>梨花、桃花竞相盛开，万顷花海覆盖河谷，是贵德最浪漫、最受摄影爱好者追捧的赏花季，此时气温宜人，强烈推荐。
+          </li>
+          <li>
+            <span class="label">夏季（6月—8月）：</span>绿野如茵，黄河漂流体验最佳，丹霞色彩在阳光下最为鲜艳，是户外探索与避暑的理想时节。
+          </li>
+          <li>
+            <span class="label">秋季（9月—10月）：</span>果实成熟，梨、苹果、核桃等特产进入采摘季，金黄的树叶与红色丹霞相映成趣，秋色层次丰富，美不胜收。
+          </li>
+          <li>
+            <span class="label">冬季（11月—3月）：</span>游客较少，古城宁静，偶有雪景，适合深度文化探访，但需注意部分户外景点关闭，建议提前确认。
+          </li>
+        </ul>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-car"></i></div>
+            <h3 class="card-title">交通指南</h3>
+            <p class="card-content">西宁至贵德约130公里，驾车约1.5小时；西宁西关汽车站每日有多班客车直达贵德，车程约2小时。景区间可乘坐景区专线或租车出行，自驾是游览各景点最便捷的方式。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-bed"></i></div>
+            <h3 class="card-title">住宿选择</h3>
+            <p class="card-content">贵德县城内有多家星级酒店与精品民宿可供选择，黄河沿岸亦有特色农家乐，可体验高原农耕生活。建议提前预订，旺季（4月—8月）住宿紧张。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fa fa-shopping-basket"></i></div>
+            <h3 class="card-title">特色产品</h3>
+            <p class="card-content">贵德软梨、贵德核桃、贵德花椒为三大名产，黄河鲤鱼、河谷蔬菜新鲜可口。此外，当地藏族手工艺品、唐卡、藏刀等民族特色产品也是馈赠亲友的佳选。</p>
+          </div>
+        </div>
+
+        <div class="tips-box">
+          <h4><i class="fa fa-exclamation-triangle"></i> 旅游注意事项</h4>
+          <ul>
+            <li>贵德虽然海拔相对较低（约2200米），但部分景区（如丹霞地貌深处）海拔超过3000米，仍需注意高原反应，初次进藏者建议随行携带应急药品；</li>
+            <li>丹霞地貌景区部分路段较为陡峭，雨季后道路湿滑，请穿着防滑鞋，跟随景区指引游览，不得擅自攀爬山体；</li>
+            <li>黄河漂流旅游旺季需提前预约，务必穿着救生衣，遵守漂流安全规定；</li>
+            <li>进入贵德古城寺庙参观，请遵守宗教礼仪，保持安静肃穆，拍照前征得管理人员同意；</li>
+            <li>贵德春季（梨花节期间）游客量极大，自驾游客建议错峰出行，并提前规划停车场所；</li>
+            <li>尊重当地藏、汉、回等各民族的风俗习惯与饮食禁忌，做到文明旅游。</li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top"
+         :class="{ visible: showBackToTop }"
+         @click="scrollToTop"
+         aria-label="返回顶部">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  <footer style="background:#9B2B25;color:rgba(255,255,255,0.85);text-align:center;padding:24px 20px;font-size:14px;">
+    <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 探寻安多秘境，传承藏韵文化</p>
+  </footer>
+
+  <script>
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          showBackToTop: false
+        }
+      },
+      mounted() {
+        window.addEventListener('scroll', this.handleScroll)
+      },
+      beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll)
+      },
+      methods: {
+        handleScroll() {
+          this.showBackToTop = window.pageYOffset > 300
+        },
+        scrollToTop() {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

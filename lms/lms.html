@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>六字真言 - 雪域安多·藏韵传承</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      background-color: #f7f3ee;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* 整体布局 */
+    .app-container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* 左侧菜单 */
+    .left-menu {
+      width: 280px;
+      background: linear-gradient(135deg, #f9f1e9 0%, #f1e2d3 100%);
+      border-right: 1px solid #e8d5c0;
+      padding: 30px 0;
+      overflow-y: auto;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+    }
+
+    .menu-title {
+      text-align: center;
+      font-size: 20px;
+      color: #8b4c39;
+      margin-bottom: 30px;
+      font-weight: bold;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .menu-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #d48a5d;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .menu-item {
+      padding: 16px 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #555;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(212, 138, 93, 0.1);
+      color: #8b4c39;
+      transform: translateX(5px);
+    }
+
+    .menu-item.active {
+      background: linear-gradient(90deg, #d48a5d 0%, #e6a87a 100%);
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(212, 138, 93, 0.3);
+    }
+
+    .menu-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #8b4c39;
+    }
+
+    /* 右侧内容 */
+    .right-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 50px 80px;
+      background: #fff;
+      position: relative;
+    }
+
+    /* 图片样式 */
+    .culture-img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      border-radius: 12px;
+      margin: 20px 0 30px 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .culture-img:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    /* 轮播图样式 */
+    .carousel-container {
+      width: 100%;
+      max-width: 800px;
+      height: 500px;
+      margin: 20px 0 30px 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    .carousel-wrapper {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+
+    .carousel-item {
+      flex: 0 0 100%;
+      height: 100%;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .carousel-control {
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .carousel-control:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .carousel-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-indicator.active {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.2);
+    }
+
+    /* 板块 */
+    .section {
+      margin-bottom: 60px;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .section-title {
+      font-size: 24px;
+      color: #8b4c39;
+      margin-bottom: 25px;
+      padding-left: 15px;
+      border-left: 5px solid #d48a5d;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, #d48a5d, transparent);
+      margin-left: 20px;
+    }
+
+    /* 卡片样式 */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #f0e6d8;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #8b4c39;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #d48a5d;
+      padding-bottom: 8px;
+    }
+
+    .card-content {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.6;
+      text-align: justify;
+      margin-bottom: 15px;
+    }
+
+    .card-link {
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .link-button {
+      background: linear-gradient(135deg, #d48a5d, #8b4c39);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(212, 138, 93, 0.3);
+    }
+
+    .link-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 138, 93, 0.5);
+      background: linear-gradient(135deg, #8b4c39, #d48a5d);
+    }
+
+    .section-text {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 15px;
+      line-height: 1.8;
+      text-align: justify;
+      padding: 0 10px;
+    }
+
+    .section-text:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .app-container {
+        flex-direction: column;
+      }
+
+      .left-menu {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        padding: 20px 0;
+      }
+
+      .menu-item {
+        padding: 12px 20px;
+        display: inline-block;
+        margin: 5px 10px;
+        border-radius: 20px;
+      }
+
+      .right-content {
+        padding: 30px 20px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+
+      .section-text {
+        font-size: 15px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 滚动条样式 */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d48a5d;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8b4c39;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="app-container">
+    <!-- 左侧菜单 -->
+    <div class="left-menu">
+      <div class="menu-title">藏族文化专题</div>
+      <div
+        class="menu-item"
+        :class="{ active: currentMenu === item }"
+        v-for="item in menuList"
+        @click="selectMenu(item)"
+      >
+        {{ item }}
+      </div>
+    </div>
+
+    <!-- 右侧内容 -->
+    <div class="right-content" v-if="currentContent || currentCards.length > 0 || currentCarousel.length > 0">
+      <div class="section">
+        <div class="section-title">{{ currentMenu }}</div>
+        
+        <!-- 图片展示 -->
+        <img v-if="currentImg && currentCarousel.length === 0" :src="currentImg" class="culture-img" alt="文化图片">
+        
+        <!-- 轮播图 -->
+        <div v-if="currentCarousel.length > 0" class="carousel-container">
+          <div class="carousel-wrapper" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+            <div v-for="(item, index) in currentCarousel" :key="index" class="carousel-item">
+              <img :src="item" alt="轮播图片">
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-control" @click="prev">&lt;</button>
+            <button class="carousel-control" @click="next">&gt;</button>
+          </div>
+          <div class="carousel-indicators">
+            <div 
+              v-for="(item, index) in currentCarousel" 
+              :key="index" 
+              class="carousel-indicator" 
+              :class="{ active: currentIndex === index }"
+              @click="goToSlide(index)"
+            ></div>
+          </div>
+        </div>
+        
+        <!-- 卡片显示 -->
+        <div v-if="currentCards.length > 0" class="card-container">
+          <div v-for="(card, index) in currentCards" :key="index" class="card">
+            <div class="card-title">{{ card.title }}</div>
+            <div class="card-content">{{ card.content }}</div>
+            <a v-if="card.url" :href="card.url" target="_blank" class="card-link">
+              <button class="link-button">访问链接</button>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 普通文本显示 -->
+        <div v-else class="section-text" v-for="(text, i) in currentContent" :key="i">
+          {{ text }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          currentMenu: "郎木寺 ལང་མུ་སི།",
+          menuList: ["郎木寺 ལང་མུ་སི།", "历史沿革 ལོ་རྒྱུས་འབྱུང་བ་", "建筑特色 རྫོགས་འབྲུག་ཁྱད་ཆོས་", "宗教意义 གནས་ལྡན་དགོན་པའི་དོན་དམ་", "文化地位 རིག་གནས་ས་གནས་", "旅游服务 ལོ་ཉུང་ཞབས་ཞུ་"],
+          currentContent: [],
+          currentImg: "",
+          currentCarousel: [],
+          currentCards: [],
+          currentIndex: 0
+        };
+      },
+      mounted() {
+        this.selectMenu("郎木寺 ལང་མུ་སི།");
+      },
+      methods: {
+        selectMenu(item) {
+          this.currentMenu = item;
+
+          const contentMap = {
+            "郎木寺 ལང་མུ་སི།": {
+              carousel: [
+                "images/lms1.jpg",
+                "images/lms2.jpg",
+                "images/lms3.jpg",
+                "images/lms4.jpg",
+                "images/lms5.jpg",
+                "images/lms6.jpg",
+                "images/lms7.jpg",
+                "images/lms8.jpg",
+                "images/lms9.jpg"
+              ],
+              cards: [
+                {
+                  title: "郎木寺简介 ལང་མུ་སིའི་གཏན་འཁེལ་གསལ་བཤད།",
+                  content: "郎木寺始建于公元1748年（清乾隆十三年），由格鲁派高僧赛赤·坚参桑盖活佛主持创建，是安多藏区重要的格鲁派寺院。寺院地处甘肃甘南与四川阿坝交界的白龙江源头，自古就是川甘青交界地带的宗教、文化与商贸枢纽，历经近300年的传承与扩建，逐步形成了如今融合藏传佛教寺院与藏乡古镇的文化格局，见证了安多藏区与康巴藏区的文化交融，是汉藏茶马古道上的重要文化节点。ལང་མུ་སི་ནི་སྤྱི་ལོ་1748ལོར་（ཆིང་རྒྱལ་རབས་ཀྱི་ཆན་ལུང་ལོ་13པ）དགེ་ལུགས་པའི་གྲུབ་མཐོན་སེ་ཁྲི་རྗེ་བཙུན་བསམ་གཏན་བཟང་པོས་གཙོ་སྐྱོང་གནང་སྟེ་བཞེངས་པ་དང་།ཨ་མདོ་བོད་རིགས་ས་ཁུལ་གྱི་དགེ་ལུགས་པའི་དགོན་པ་གལ་ཆེན་ཞིག་ཡིན།དགོན་པ་དེ་ཀན་སུའུ་ཀན་ལྷོ་དང་སི་ཁྲོན་རྔ་བ་ཁུལ་གྱི་མཚམས་སུ་གནས་པའི་དབལ་ཆུའི་འབྱུང་ཁུངས་སུ་གནས་ཤིང་།གནའ་ནས་བཟུང་སི་ཀན་མཚོ་གསུམ་གྱི་མཚམས་ཀྱི་ཆོས་ལུགས་དང་རིག་གནས།ཚོང་དོན་བཅས་ཀྱི་ལྟེ་གནས་སུ་གྱུར་ཡོད།ལོ་ངོ་300ཙམ་གྱི་རྒྱུན་འཛིན་དང་རྒྱ་བསྐྱེད་བརྒྱུད་དེ།ད་ལྟའི་བོད་བརྒྱུད་ནང་བསྟན་གྱི་དགོན་པ་དང་བོད་གྲོང་རྙིང་པ་མཉམ་འདྲེས་བྱས་པའི་རིག་གནས་ཀྱི་ཆ་ཤས་ཆགས་ཡོད་པ་དང་།ཨ་མདོ་བོད་རིགས་ས་ཁུལ་དང་ཁམས་པ་བོད་རིགས་ས་ཁུལ་གྱི་རིག་གནས་མཉམ་འདྲེས་ལ་དཔང་པོ་བྱས་ཡོད་པ་མ་ཟད།རྒྱ་བོད་ཇ་རྟ་གཞུང་ལམ་གྱི་རིག་གནས་ཀྱི་གནད་ས་གལ་ཆེན་ཞིག་ཀྱང་ཡིན།"
+                }
+              ]
+            },
+            "历史沿革 ལོ་རྒྱུས་འབྱུང་བ་": {
+              cards: [
+                {
+                  title: "创建历史 གནང་བ་ལོ་རྒྱུས།",
+                  content: "郎木寺创建于1748年，由格鲁派高僧赛赤·坚参桑盖活佛主持创建。寺院地处甘肃甘南与四川阿坝交界的白龙江源头，自古就是川甘青交界地带的宗教、文化与商贸枢纽。历经近300年的传承与扩建，逐步形成了如今融合藏传佛教寺院与藏乡古镇的文化格局。ལང་མུ་སི་ནི་1748ལོར་དགེ་ལུགས་པའི་གྲུབ་མཐོན་སེ་ཁྲི་རྗེ་བཙུན་བསམ་གཏན་བཟང་པོས་གཙོ་སྐྱོང་གནང་སྟེ་བཞེངས་པ་ཡིན།དགོན་པ་དེ་ཀན་སུའུ་ཀན་ལྷོ་དང་སི་ཁྲོན་རྔ་བ་ཁུལ་གྱི་མཚམས་སུ་གནས་པའི་དབལ་ཆུའི་འབྱུང་ཁུངས་སུ་གནས་ཤིང་།གནའ་ནས་བཟུང་སི་ཀན་མཚོ་གསུམ་གྱི་མཚམས་ཀྱི་ཆོས་ལུགས་དང་རིག་གནས།ཚོང་དོན་བཅས་ཀྱི་ལྟེ་གནས་སུ་གྱུར་ཡོད།ལོ་ངོ་300ཙམ་གྱི་རྒྱུན་འཛིན་དང་རྒྱ་བསྐྱེད་བརྒྱུད་དེ།ད་ལྟའི་བོད་བརྒྱུད་ནང་བསྟན་གྱི་དགོན་པ་དང་བོད་གྲོང་རྙིང་པ་མཉམ་འདྲེས་བྱས་པའི་རིག་གནས་ཀྱི་ཆ་ཤས་ཆགས་ཡོད།"
+                },
+                {
+                  title: "发展历程 འཕེལ་རྒྱས་ཀྱི་ལོ་རྒྱུས།",
+                  content: "郎木寺见证了安多藏区与康巴藏区的文化交融，是汉藏茶马古道上的重要文化节点。寺院历经近300年的传承与扩建，从最初的单一寺院发展为如今融合藏传佛教寺院与藏乡古镇的文化格局，成为川甘青三省交界的文化重镇。ལང་མུ་སིས་ཨ་མདོ་བོད་རིགས་ས་ཁུལ་དང་ཁམས་པ་བོད་རིགས་ས་ཁུལ་གྱི་རིག་གནས་མཉམ་འདྲེས་ལ་དཔང་པོ་བྱས་ཡོད་པ་མ་ཟད།རྒྱ་བོད་ཇ་རྟ་གཞུང་ལམ་གྱི་རིག་གནས་ཀྱི་གནད་ས་གལ་ཆེན་ཞིག་ཀྱང་ཡིན།དགོན་པ་དེས་ལོ་ངོ་300ཙམ་གྱི་རྒྱུན་འཛིན་དང་རྒྱ་བསྐྱེད་བརྒྱུད་དེ།ཐོག་མའི་དགོན་པ་གཅིག་པུ་ནས་ད་ལྟའི་བོད་བརྒྱུད་ནང་བསྟན་གྱི་དགོན་པ་དང་བོད་གྲོང་རྙིང་པ་མཉམ་འདྲེས་བྱས་པའི་རིག་གནས་ཀྱི་ཆ་ཤས་སུ་འཕེལ་རྒྱས་བྱུང་ཡོད་པ་དང་།སི་ཀན་མཚོ་གསུམ་གྱི་མཚམས་ཀྱི་རིག་གནས་ཀྱི་གྲོང་རྡལ་དུ་གྱུར་ཡོད།"
+                }
+              ]
+            },
+            "建筑特色 རྫོགས་འབྲུག་ཁྱད་ཆོས་": {
+              cards: [
+                {
+                  title: "建筑风格 འཛུགས་སྐྲུན་ཀྱི་ཁྱད་ཆོས།",
+                  content: "郎木寺建筑群依山而建，沿白龙江两岸分布，整体遵循藏传佛教寺院的传统布局，以大经堂为核心，环绕佛殿、僧舍、灵塔殿等建筑。寺院建筑融合了安多藏式建筑的厚重与川藏建筑的灵动，采用石砌墙体、金顶飞檐的设计，殿内装饰有精美唐卡、堆绣、酥油花与木雕佛像，兼具宗教庄严感与艺术美感。ལང་མུ་སིའི་འཛུགས་སྐྲུན་ཚོགས་པ་ནི་རི་བོ་ལ་བརྟེན་ནས་བཞེངས་པ་དང་དབལ་ཆུའི་གཡས་གཡོན་དུ་ཁྱབ་ཡོད།སྤྱིའི་ཆ་ནས་བོད་བརྒྱུད་ནང་བསྟན་གྱི་དགོན་པའི་སྲོལ་རྒྱུན་གྱི་སྒྲིག་གཞི་ལྟར་འདུ་ཁང་ཆེ་མོ་ལྟེ་བར་བྱས་ཏེ།ལྷ་ཁང་དང་གྲྭ་ཤག མཆོད་རྟེན་ཁང་སོགས་ཀྱི་འཛུགས་སྐྲུན་གྱིས་བསྐོར་ཡོད།དགོན་པའི་འཛུགས་སྐྲུན་ནི་ཨ་མདོ་བོད་བཟོའི་བརྟན་ཆ་དང་སི་བོད་འཛུགས་སྐྲུན་གྱི་སྤྲོ་ཆ་མཉམ་འདྲེས་བྱས་པ་དང་།རྡོ་ཡི་གྱང་དང་གསེར་གྱི་ཀླད་ཀ་ཐོད་པ་ཅན་གྱི་ཇུས་འགོད་བེད་སྤྱད་ཡོད།ལྷ་ཁང་ནང་དུ་ཕུལ་དུ་བྱུང་བའི་ཐང་ག་དང་འཐགས་རིས།མར་མེ།ཤིང་བརྐོས་སངས་རྒྱས་སྐུ་བརྙན་སོགས་ཀྱིས་བརྒྱན་ཡོད་པ་དང་།ཆོས་ལུགས་ཀྱི་དམ་ཚིག་གི་ཉམས་དང་སྒྱུ་རྩལ་གྱི་མཛེས་ཉམས་གཉིས་ཀ་ལྡན་ཡོད།"
+                },
+                {
+                  title: "独特格局 ཐུན་མོང་མ་ཡིན་པའི་སྒྲིག་གཞི།",
+                  content: "同时，郎木寺古镇与寺院共生，形成了'寺中有镇、镇中有寺'的独特格局，白龙江穿镇而过，将寺院与藏式民居、商铺自然串联，是藏区寺院与城镇融合发展的典型代表。དེ་མིན།ལང་མུ་སིའི་གྲོང་རྙིང་དང་དགོན་པ་མཉམ་དུ་གནས་པས་'དགོན་པའི་ནང་དུ་གྲོང་རྡལ་ཡོད་པ་དང་གྲོང་རྡལ་གྱི་ནང་དུ་དགོན་པ་ཡོད་པ'འི་ཐུན་མོང་མ་ཡིན་པའི་སྒྲིག་གཞི་ཆགས་ཡོད།དབལ་ཆུ་གྲོང་རྡལ་བརྒྱུད་དེ་འབབ་པས་དགོན་པ་དང་བོད་བརྒྱུད་ཀྱི་ཁྱིམ་ཤག ཚོང་ཁང་སོགས་རང་བཞིན་གྱིས་འབྲེལ་མཐུད་བྱས་ཡོད་པ་དང་།བོད་ཁུལ་གྱི་དགོན་པ་དང་གྲོང་རྡལ་མཉམ་འདྲེས་འཕེལ་རྒྱས་ཀྱི་དཔེ་མཚོན་མཚོན་བྱེད་ཅིག་ཡིན།"
+                }
+              ]
+            },
+            "宗教意义 གནས་ལྡན་དགོན་པའི་དོན་དམ་": {
+              cards: [
+                {
+                  title: "格鲁派重要寺院 དགེ་ལུགས་པའི་དགོན་པ་གཙོ་བོར་བརྗོད།",
+                  content: "郎木寺是安多藏区格鲁派的重要寺院之一，也是川甘青交界地带的宗教文化中心。寺院传承了完整的格鲁派学经体系，培养了大批藏传佛教高僧，在安多、康巴藏区拥有极高的宗教影响力。ལང་མུ་སི་ནི་ཨ་མདོ་བོད་རིགས་ས་ཁུལ་གྱི་དགེ་ལུགས་པའི་དགོན་པ་གལ་ཆེན་ཞིག་ཡིན་པ་མ་ཟད།སི་ཀན་མཚོ་གསུམ་གྱི་མཚམས་ཀྱི་ཆོས་ལུགས་དང་རིག་གནས་ཀྱི་ལྟེ་གནས་ཀྱང་ཡིན།དགོན་པ་དེས་དགེ་ལུགས་པའི་གཞུང་ལུགས་སློབ་སྦྱོང་གི་མ་ལག་ཆ་ཚང་རྒྱུན་འཛིན་བྱས་ཡོད་པ་དང་།བོད་བརྒྱུད་ནང་བསྟན་གྱི་བླ་ཆེན་མང་པོ་གསོ་སྐྱོང་བྱས་ཡོད།ཨ་མདོ་དང་ཁམས་པ་བོད་རིགས་ས་ཁུལ་དུ་ཆོས་ལུགས་ཀྱི་ཤུགས་རྐྱེན་ཧ་ཅང་ཆེན་པོ་ཡོད།"
+                },
+                {
+                  title: "文化传播枢纽 རིག་གནས་ཁྱབ་སྤེལ་གྱི་ལྟེ་གནས།",
+                  content: "同时，郎木寺是藏传佛教文化传播的重要枢纽，承载着藏区民众的信仰与精神寄托，是藏传佛教文化活态传承的重要载体，见证了藏传佛教在安多地区的发展与传播。དེ་མིན།ལང་མུ་སི་ནི་བོད་བརྒྱུད་ནང་བསྟན་རིག་གནས་ཁྱབ་སྤེལ་གྱི་ལྟེ་གནས་གལ་ཆེན་ཞིག་ཡིན་པ་དང་།བོད་ཁུལ་གྱི་མང་ཚོགས་ཀྱི་དད་མོས་དང་སེམས་ཀྱི་ཡིད་ཆེས་འཁུར་བཞིན་ཡོད།བོད་བརྒྱུད་ནང་བསྟན་རིག་གནས་ཀྱི་འགྱུར་ལྡོག་རྒྱུན་འཛིན་གྱི་སྣེ་ཁྲིད་གལ་ཆེན་ཞིག་ཡིན་པ་མ་ཟད།བོད་བརྒྱུད་ནང་བསྟན་ཨ་མདོ་ས་ཁུལ་དུ་འཕེལ་རྒྱས་དང་ཁྱབ་སྤེལ་བྱུང་བར་དཔང་པོ་བྱས་ཡོད།"
+                }
+              ]
+            },
+            "文化地位 རིག་གནས་ས་གནས་": {
+              cards: [
+                {
+                  title: "文化交融地标 རིག་གནས་མཉམ་འདྲེས་ཀྱི་མཚོན་བྱེད།",
+                  content: "郎木寺是安多文化与康巴文化交融的核心地标，是甘南安多文化区的核心文化符号之一。作为川甘青三省交界的文化重镇，郎木寺融合了安多藏文化、康巴藏文化与汉地文化，形成了独特的多元文化风貌，是研究藏区文化交融的重要样本。ལང་མུ་སི་ནི་ཨ་མདོ་རིག་གནས་དང་ཁམས་པའི་རིག་གནས་མཉམ་འདྲེས་ཀྱི་ལྟེ་བའི་མཚོན་བྱེད་ཅིག་ཡིན་པ་དང་།ཀན་ལྷོ་ཨ་མདོ་རིག་གནས་ཁུལ་གྱི་རིག་གནས་ཀྱི་མཚོན་བྱེད་གཙོ་བོ་ཞིག་ཡིན།སི་ཀན་མཚོ་གསུམ་གྱི་མཚམས་ཀྱི་རིག་གནས་ཀྱི་གྲོང་རྡལ་ཆེན་པོ་ཞིག་ཡིན་པའི་ཆ་ནས།ལང་མུ་སིས་ཨ་མདོ་བོད་རིགས་རིག་གནས་དང་ཁམས་པ་བོད་རིགས་རིག་གནས།རྒྱ་རིགས་རིག་གནས་བཅས་མཉམ་འདྲེས་བྱས་ཏེ་ཐུན་མོང་མ་ཡིན་པའི་རིག་གནས་སྣ་མང་གི་ཁྱད་ཆོས་ཆགས་ཡོད་པ་དང་།བོད་ཁུལ་གྱི་རིག་གནས་མཉམ་འདྲེས་ཞིབ་འཇུག་བྱེད་པའི་གལ་ཆེན་གྱི་དཔེ་མཚོན་ཞིག་ཡིན།"
+                },
+                {
+                  title: "数字化传播IP གྲངས་འཛིན་ཁྱབ་སྤེལ་གྱི་IP",
+                  content: "同时，郎木寺以其独特的寺院文化、藏乡风情与自然景观，成为藏族文化数字化传播的重要IP，是展示安多藏区文化魅力的重要窗口。དེ་མིན།ལང་མུ་སིས་རང་གི་ཐུན་མོང་མ་ཡིན་པའི་དགོན་པའི་རིག་གནས་དང་བོད་གྲོང་གི་ཁྱད་ཆོས།རང་བྱུང་མཛེས་ལྗོངས་བཅས་ལ་བརྟེན་ནས།བོད་རིགས་རིག་གནས་ཀྱི་གྲངས་འཛིན་ཁྱབ་སྤེལ་གྱི་IPགལ་ཆེན་ཞིག་ཏུ་གྱུར་ཡོད་པ་དང་།ཨ་མདོ་བོད་རིགས་ས་ཁུལ་གྱི་རིག་གནས་ཀྱི་མཛེས་ཉམས་འགྲེམས་སྟོན་བྱེད་པའི་སྒེའུ་ཁུང་གལ་ཆེན་ཞིག་ཡིན།"
+                }
+              ]
+            },
+            "旅游服务 ལོ་ཉུང་ཞབས་ཞུ་": {
+              cards: [
+                {
+                  title: "旅游服务项目 ཡུལ་སྐོར་ཞབས་ཞུའི་རྣམ་གྲངས།",
+                  content: "郎木寺为游客提供完善的旅游服务，包含寺院参观讲解、藏文化体验、民俗活动参与等服务项目。游客可参观寺院核心建筑、了解藏传佛教文化，体验藏式生活、参与藏乡民俗活动，同时可游览周边白龙江源头、郎木寺古镇等自然与人文景观。ལང་མུ་སིས་ཡུལ་སྐོར་བར་ཞབས་ཞུ་འཐུས་སྒོ་ཚང་པོ་མཁོ་འདོན་བྱེད་པ་དང་།དགོན་པར་ལྟ་སྐོར་དང་བཤད་པ།བོད་རིགས་རིག་གནས་ཉམས་ལེན།དམངས་སྲོལ་བྱེད་སྒོར་ཞུགས་པ་སོགས་ཀྱི་ཞབས་ཞུའི་རྣམ་གྲངས་ཚུད་ཡོད།ཡུལ་སྐོར་བས་དགོན་པའི་ལྟེ་བའི་འཛུགས་སྐྲུན་ལ་ལྟ་སྐོར་བྱས་ནས་བོད་བརྒྱུད་ནང་བསྟན་རིག་གནས་ཤེས་རྟོགས་བྱེད་པ་དང་།བོད་ཀྱི་འཚོ་བ་ཉམས་ལེན་བྱེད་པ།བོད་གྲོང་གི་དམངས་སྲོལ་བྱེད་སྒོར་ཞུགས་པ་བཅས་བྱེད་ཆོག་པ་མ་ཟད།མཐའ་འཁོར་གྱི་དབལ་ཆུའི་འབྱུང་ཁུངས་དང་ལང་མུ་སིའི་གྲོང་རྙིང་སོགས་ཀྱི་རང་བྱུང་དང་མི་ཆོས་རིག་གནས་ཀྱི་མཛེས་ལྗོངས་ལ་ལྟ་སྐོར་བྱེད་ཆོག"
+                },
+                {
+                  title: "专业讲解服务 ཆེད་ལས་བཤད་པའི་ཞབས་ཞུ།",
+                  content: "景区提供专业的文化讲解服务，帮助游客深入了解郎木寺的历史、宗教与文化，同时配套有餐饮、住宿、交通等基础服务，为游客提供舒适的游览体验。མཛེས་ལྗོངས་ཁུལ་གྱིས་རིག་གནས་ཀྱི་ཆེད་ལས་བཤད་པའི་ཞབས་ཞུ་མཁོ་འདོན་བྱེད་པ་དང་།ཡུལ་སྐོར་བར་ལང་མུ་སིའི་ལོ་རྒྱུས་དང་ཆོས་ལུགས།རིག་གནས་བཅས་ཟབ་མོར་ཤེས་རྟོགས་བྱེད་པར་རོགས་རམ་བྱེད་ཀྱི་ཡོད།དེ་མིན་ཟས་རིགས་དང་།སྡོད་གནས།འགྲིམ་འགྲུལ་སོགས་ཀྱི་རྨང་གཞིའི་ཞབས་ཞུ་ཡང་མཉམ་དུ་མཁོ་འདོན་བྱེད་པས་ཡུལ་སྐོར་བར་བདེ་འཇགས་ཀྱི་ལྟ་སྐོར་ཉམས་མྱོང་མཁོ་འདོན་བྱེད་ཀྱི་ཡོད།"
+                }
+              ]
+            }
+          };
+
+          const content = contentMap[item] || {};
+          this.currentContent = []; // 不再使用文本形式
+          this.currentImg = content.img || "";
+          this.currentCarousel = content.carousel || [];
+          this.currentCards = content.cards || [];
+          this.currentIndex = 0;
+        },
+        prev() {
+          this.currentIndex = (this.currentIndex - 1 + this.currentCarousel.length) % this.currentCarousel.length;
+        },
+        next() {
+          this.currentIndex = (this.currentIndex + 1) % this.currentCarousel.length;
+        },
+        goToSlide(index) {
+          this.currentIndex = index;
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="纳木错 - 天湖圣境・念青唐古拉守护神湖，展示西藏三大圣湖之一的自然景观与藏传佛教文化">
+  <meta name="keywords" content="纳木错,天湖,念青唐古拉山,扎西半岛,圣象天门,转湖祈福,西藏圣湖">
+  <title>纳木错 - 雪域安多·藏韵传承</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: #444;
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 30px;
+      font-size: 13px;
+    }
+    .top-bar a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+    }
+    .top-bar a:hover {
+      color: #D4AF37;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #9B2B25, #B83C2E);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header .logo {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .header nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 15px;
+    }
+    .header nav a:hover {
+      color: #D4AF37;
+    }
+
+    /* Banner */
+    .banner {
+      height: 500px;
+      background: linear-gradient(135deg, #3a1a0a, #6b2e15, #9b4a25);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .banner h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 4px;
+    }
+    .banner .subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 12px;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 30px;
+    }
+    .main-container section {
+      margin-bottom: 60px;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 30px;
+      padding-left: 16px;
+      border-left: 4px solid var(--primary-red);
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+      background: #fff;
+      border-left: 4px solid #D4AF37;
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-bottom: 30px;
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-sm);
+      line-height: 1.8;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Feature List */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 10px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .feature-list li::before {
+      content: '\25C6';
+      position: absolute;
+      left: 0;
+      color: #D4AF37;
+      font-size: 10px;
+    }
+
+    /* Image Placeholder */
+    .img-placeholder {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #f0e6d6, #e8d5c0);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 14px;
+    }
+
+    /* Back to Top */
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner h1 {
+        font-size: 32px;
+      }
+      .banner .subtitle {
+        font-size: 14px;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .header nav {
+        display: none;
+      }
+      .top-bar {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+      .section-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <span>雪域安多·藏韵传承 — 青海安多藏族文化传播平台</span>
+    <a href="../index.html"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+  <div class="header">
+    <a href="../index.html" class="logo">གངས་ལྗོངས་ཨ་མདོ།</a>
+    <nav>
+      <a href="../index.html">首页</a>
+      <a href="../minsu.html">安多民俗</a>
+      <a href="../jingdian.html">藏地旅游</a>
+      <a href="../fanyi/fanyi.html">藏文工具</a>
+    </nav>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div>
+      <h1>纳木错</h1>
+      <p class="subtitle">天湖圣境・念青唐古拉守护神湖</p>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <!-- 圣湖概况 -->
+    <section>
+      <h2 class="section-title">天湖纳木错・雪域高原的蓝色眼泪</h2>
+      <div class="highlight-box">
+        <p>纳木错，藏语意为"天湖"，位于西藏自治区中部，海拔4718米，是世界上海拔最高的大型湖泊之一。作为西藏三大圣湖之首，纳木错以其冰蓝色的湖水、壮丽的雪山倒影和深厚的宗教文化底蕴，被誉为"雪域高原的蓝色眼泪"。</p>
+      </div>
+      <div class="highlight-box">
+        <p>在藏传佛教中，纳木错被视为神圣的湖泊，是密宗本尊胜乐金刚的道场。每年都有无数信徒前来转湖朝拜，相信绕湖一周可以洗清罪孽，获得功德。纳木错与念青唐古拉山被视为一对神山圣湖，流传着动人的爱情传说。</p>
+      </div>
+      <div class="highlight-box">
+        <p>纳木错的湖水颜色随季节变化而呈现不同色调，春夏时节湖水湛蓝如宝石，冬季湖面结冰，白雪皑皑。湖畔的扎西半岛、圣象天门等景点各具特色，构成了纳木错独特的自然与人文景观。</p>
+      </div>
+      <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+    </section>
+
+    <!-- 快速导航 -->
+    <section>
+      <h2 class="section-title">纳木错亮点</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-tint"></i></div>
+          <h3>圣湖概况</h3>
+          <p>西藏三大圣湖之一</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-mountain"></i></div>
+          <h3>念青唐古拉山</h3>
+          <p>神山与圣湖的相伴</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-map-marker"></i></div>
+          <h3>扎西半岛</h3>
+          <p>岩画与寺庙圣地</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-cube"></i></div>
+          <h3>湖畔玛尼堆</h3>
+          <p>祈福信仰的象征</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-university"></i></div>
+          <h3>藏传佛教圣地</h3>
+          <p>转湖朝圣的传统</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-camera"></i></div>
+          <h3>环湖风光</h3>
+          <p>雪山湖泊的绝美</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-leaf"></i></div>
+          <h3>高原生态</h3>
+          <p>独特的高原生物</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-suitcase"></i></div>
+          <h3>旅游攻略</h3>
+          <p>出行实用指南</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 神山与圣湖传说 -->
+    <section>
+      <h2 class="section-title">神山与圣湖的相伴</h2>
+      <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:20px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+      <div class="highlight-box">
+        <p>在藏族传说中，念青唐古拉山神与纳木错是一对恩爱夫妻。念青唐古拉山神是一位威武的战神，统领着北方大地；纳木错则是美丽的女神，温柔而圣洁。</p>
+      </div>
+      <div class="highlight-box">
+        <p>相传他们相爱相守，共同守护着这片土地。念青唐古拉山的雪峰倒映在纳木错的湖水中，象征着他们永恒的爱情。每年的特定时节，当地藏民会举行仪式，祭祀这对神山圣湖，祈求风调雨顺、人畜平安。</p>
+      </div>
+      <div class="highlight-box">
+        <p>这个美丽的传说不仅体现了藏族人民对自然的敬畏，也表达了他们对美好爱情的向往和对和谐生活的追求。</p>
+      </div>
+    </section>
+
+    <!-- 扎西半岛与圣象天门 -->
+    <section>
+      <h2 class="section-title">扎西半岛与圣象天门</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>扎西半岛</h3>
+          <p>扎西半岛是纳木错最大的半岛，也是最重要的宗教圣地。岛上分布着众多岩画、寺庙和转经步道。这里的岩画记录了古代藏族人民的生活场景，具有极高的历史和艺术价值。岛上的扎西寺是信徒们朝拜的重要场所，每年吸引大量朝圣者前来。</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>圣象天门</h3>
+          <p>圣象天门是纳木错北岸的天然奇观，由巨大的岩石形成天然石门，形似大象头部伸入湖中。这里是近年来备受关注的网红打卡地，也是拍摄纳木错日出日落的绝佳位置。圣象天门周围的湖湾秘境风景如画，是探索纳木错原始之美的理想之地。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 转湖祈福文化 -->
+    <section>
+      <h2 class="section-title">转湖祈福文化</h2>
+      <div class="highlight-box">
+        <p>纳木错转湖是藏传佛教信徒重要的朝圣活动，被认为可以净化心灵、积累功德。</p>
+      </div>
+      <div class="highlight-box">
+        <p><strong>转湖路线示意：</strong>起点：扎西半岛 → 沿湖北岸向东 → 经过圣象天门 → 继续绕行 → 返回扎西半岛<br>全程约320公里 | 徒步需时：15-20天 | 最佳季节：5-10月</p>
+      </div>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-heart"></i></div>
+          <h3>转湖意义</h3>
+          <p>藏民相信绕湖一周可以洗清一生的罪孽，获得无量功德。马年转湖一圈相当于平时转湖十三圈的功德。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-road"></i></div>
+          <h3>转湖方式</h3>
+          <p>信徒们以磕长头、步行或骑马的方式绕湖，边走边诵经祈祷，表达对神湖的虔诚敬意。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-flag"></i></div>
+          <h3>玛尼堆与经幡</h3>
+          <p>沿途可见无数玛尼堆和五彩经幡，这些都是信徒们祈福的象征，承载着美好的愿望与祝福。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 高原生态 -->
+    <section>
+      <h2 class="section-title">高原生态・纳木错的自然生灵</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>藏原羚</h3>
+          <p>高原特有物种，适应高寒环境</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>雪雀</h3>
+          <p>高原常见鸟类，耐寒性强</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>高原牧草</h3>
+          <p>独特的草原生态系统</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>斑头雁</h3>
+          <p>迁徙候鸟，飞越喜马拉雅</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 出行指南 -->
+    <section>
+      <h2 class="section-title">纳木错出行指南</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="card">
+          <h3><i class="fa fa-calendar" style="color:var(--primary-red);margin-right:8px;"></i>最佳游览季节</h3>
+          <ul class="feature-list">
+            <li><strong>5-10月</strong>为最佳旅游季节</li>
+            <li>7-8月湖水最蓝，景色最美</li>
+            <li>冬季湖面结冰，可体验冰雪景观</li>
+            <li>避开雨季（7-8月午后多雨）</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-heartbeat" style="color:var(--primary-red);margin-right:8px;"></i>高反注意事项</h3>
+          <ul class="feature-list">
+            <li>纳木错海拔<strong>4718米</strong>，注意预防高反</li>
+            <li>建议在西宁或拉萨适应2-3天</li>
+            <li>携带氧气瓶和抗高反药物</li>
+            <li>避免剧烈运动，保持良好心态</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-shopping-bag" style="color:var(--primary-red);margin-right:8px;"></i>穿衣与保暖</h3>
+          <ul class="feature-list">
+            <li>昼夜温差大，需准备<strong>厚外套</strong></li>
+            <li>夏季白天15-20℃，夜间5-10℃</li>
+            <li>防风防晒，携带墨镜和防晒霜</li>
+            <li>建议穿舒适防滑的登山鞋</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-clock-o" style="color:var(--primary-red);margin-right:8px;"></i>开放时间与门票</h3>
+          <ul class="feature-list">
+            <li>开放时间：<strong>全天开放</strong></li>
+            <li>门票：旺季120元/人，淡季60元/人</li>
+            <li>观光车：往返90元/人</li>
+            <li>建议游玩时间：1-2天</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-bus" style="color:var(--primary-red);margin-right:8px;"></i>交通方式</h3>
+          <ul class="feature-list">
+            <li>从<strong>当雄县</strong>出发，约60公里</li>
+            <li>包车或参加旅行团前往</li>
+            <li>路况较好，但需注意限速</li>
+            <li>也可从拉萨直接包车前往</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><i class="fa fa-camera" style="color:var(--primary-red);margin-right:8px;"></i>拍摄机位推荐</h3>
+          <ul class="feature-list">
+            <li><strong>扎西半岛</strong>：拍摄雪山倒影</li>
+            <li>圣象天门：日出日落绝佳位置</li>
+            <li>合掌石：经典拍照打卡点</li>
+            <li>湖畔公路：拍摄湖光山色</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Vue App: Back to Top -->
+  <div id="app">
+    <button class="back-to-top" :class="{show:showTop}" @click="scrollTop" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;background:#9B2B25;color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 2px 10px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transition:all 0.3s;display:flex;align-items:center;justify-content:center;">
+      <i class="fa fa-chevron-up"></i>
+    </button>
+  </div>
+  <script>
+  Vue.createApp({
+    data(){return{showTop:false}},
+    mounted(){window.addEventListener('scroll',()=>{this.showTop=window.scrollY>300})},
+    methods:{scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}}
+  }).mount('#app')
+  </script>
+</body>
+</html>

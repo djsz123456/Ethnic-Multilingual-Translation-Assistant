@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="那曲 - 藏北羌塘・安多文化核心区，展示那曲地区的自然景观、民俗文化和生态保护">
+  <meta name="keywords" content="那曲,羌塘草原,念青唐古拉山,纳木错,安多文化,赛马节">
+  <title>那曲 - 雪域安多·藏韵传承</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --secondary-orange: #E8A87C;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: #444;
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 30px;
+      font-size: 13px;
+    }
+    .top-bar a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+    }
+    .top-bar a:hover {
+      color: #D4AF37;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #9B2B25, #B83C2E);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header .logo {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .header nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 15px;
+    }
+    .header nav a:hover {
+      color: #D4AF37;
+    }
+
+    /* Banner */
+    .banner {
+      height: 500px;
+      background: linear-gradient(135deg, #3a1a0a, #6b2e15, #9b4a25);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .banner h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 4px;
+    }
+    .banner .subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 12px;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 30px;
+    }
+    .main-container section {
+      margin-bottom: 60px;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 30px;
+      padding-left: 16px;
+      border-left: 4px solid var(--primary-red);
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+      background: #fff;
+      border-left: 4px solid #D4AF37;
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-bottom: 30px;
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-sm);
+      line-height: 1.8;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-red), #B83C2E);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Feature List */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 10px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .feature-list li::before {
+      content: '\25C6';
+      position: absolute;
+      left: 0;
+      color: #D4AF37;
+      font-size: 10px;
+    }
+
+    /* Back to Top */
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner h1 {
+        font-size: 32px;
+      }
+      .banner .subtitle {
+        font-size: 14px;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .header nav {
+        display: none;
+      }
+      .top-bar {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+      .section-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <span>雪域安多·藏韵传承 — 青海安多藏族文化传播平台</span>
+    <a href="../index.html"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+  <div class="header">
+    <a href="../index.html" class="logo">གངས་ལྗོངས་ཨ་མདོ།</a>
+    <nav>
+      <a href="../index.html">首页</a>
+      <a href="../minsu.html">安多民俗</a>
+      <a href="../jingdian.html">藏地旅游</a>
+      <a href="../fanyi/fanyi.html">藏文工具</a>
+    </nav>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div>
+      <h1>那曲</h1>
+      <p class="subtitle">藏北羌塘・安多文化核心区</p>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <!-- 文化溯源 -->
+    <section>
+      <h2 class="section-title">藏北安多・那曲文化溯源</h2>
+      <div class="highlight-box">
+        <p>那曲，藏语意为"黑河"，位于西藏自治区北部，是安多文化的重要承载地。这里平均海拔4500米以上，被誉为"世界屋脊的屋脊"。作为羌塘草原的核心区域，那曲不仅拥有壮美的高原风光，更承载着深厚的安多文化底蕴。</p>
+      </div>
+      <div class="highlight-box">
+        <p>那曲历史悠久，是古代羌人活动的核心区域。在这里，安多藏族人民世代繁衍生息，形成了独特的生产生活方式和文化传统。从游牧文化到宗教信仰，从民间艺术到节庆习俗，那曲文化展现了安多藏族的智慧和精神追求。</p>
+      </div>
+      <div class="highlight-box">
+        <p>作为羌塘国家级自然保护区的重要组成部分，那曲在生态保护方面具有重要地位。这里是藏羚羊、野牦牛、藏野驴等珍稀野生动物的栖息地，也是长江、黄河等重要河流的发源地之一，生态价值不可估量。</p>
+      </div>
+      <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+    </section>
+
+    <!-- 快速导航 -->
+    <section>
+      <h2 class="section-title">那曲亮点</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-leaf"></i></div>
+          <h3>羌塘草原</h3>
+          <p>世界屋脊的屋脊</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-mountain"></i></div>
+          <h3>念青唐古拉山</h3>
+          <p>神山圣湖的传说</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-tint"></i></div>
+          <h3>纳木错（那曲段）</h3>
+          <p>天湖秘境</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-trophy"></i></div>
+          <h3>那曲赛马节</h3>
+          <p>藏北最盛大的狂欢</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-music"></i></div>
+          <h3>安多藏戏</h3>
+          <p>千年艺术传承</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-paw"></i></div>
+          <h3>羌塘野生动物</h3>
+          <p>高原生灵的家园</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-star"></i></div>
+          <h3>那曲非遗</h3>
+          <p>文化遗产保护</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-users"></i></div>
+          <h3>藏北民俗</h3>
+          <p>传统生活方式</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-cutlery"></i></div>
+          <h3>那曲美食</h3>
+          <p>高原特色饮食</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 羌塘生态 -->
+    <section>
+      <h2 class="section-title">羌塘国家级自然保护区・高原生灵的家园</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>藏羚羊</h3>
+          <p>高原精灵，国家一级保护动物</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>野牦牛</h3>
+          <p>高原之舟，适应极端环境</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>藏野驴</h3>
+          <p>草原奔跑者，群体生活</p>
+        </div>
+        <div class="card">
+          <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;margin-bottom:16px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+          <h3>黑颈鹤</h3>
+          <p>高原仙鹤，迁徙奇迹</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 赛马节 -->
+    <section>
+      <h2 class="section-title">那曲赛马节・藏北最盛大的狂欢</h2>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-history"></i></div>
+          <h3>历史渊源</h3>
+          <p>那曲赛马节有着悠久的历史，起源于古代牧民的军事训练和祭祀活动，距今已有千年历史。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-calendar"></i></div>
+          <h3>节日时间</h3>
+          <p>每年8月举行，为期7-15天，是藏北地区规模最大、影响最广的传统节日。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-flag"></i></div>
+          <h3>主要活动</h3>
+          <p>包括速度赛马、马上射击、马术表演、歌舞表演、物资交流等丰富多彩的活动。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa fa-heart"></i></div>
+          <h3>文化意义</h3>
+          <p>不仅是体育竞技，更是民族文化展示、经贸交流、社会交往的重要平台。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 安多文化 -->
+    <section>
+      <h2 class="section-title">安多文化・藏北文明的根脉</h2>
+      <div class="highlight-box">
+        <p>安多文化是那曲地区的文化根基，涵盖了语言、服饰、建筑、宗教等多个方面。安多藏语是那曲地区的主要语言，保留了古藏语的许多特征，是研究藏族语言演变的重要资料。</p>
+      </div>
+      <div class="highlight-box">
+        <p>那曲的安多服饰具有鲜明的地域特色，男女服饰都注重实用性和美观性的结合。男子常穿羊皮袍，女子则喜欢色彩鲜艳的绸缎服装，配以精美的银饰和珊瑚饰品。</p>
+      </div>
+      <div class="highlight-box">
+        <p>在宗教信仰方面，那曲地区藏传佛教文化深厚，寺庙众多，僧侣们传承着古老的经文诵读和宗教仪式。同时，原始的苯教信仰也在民间有所保留，形成了独特的宗教文化景观。</p>
+      </div>
+      <div style="width:100%;height:200px;background:linear-gradient(135deg,#f0e6d6,#e8d5c0);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;"><i class="fa fa-image" style="font-size:24px;margin-right:8px;"></i>图片待补充</div>
+    </section>
+  </main>
+
+  <!-- Vue App: Back to Top -->
+  <div id="app">
+    <button class="back-to-top" :class="{show:showTop}" @click="scrollTop" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;background:#9B2B25;color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 2px 10px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transition:all 0.3s;display:flex;align-items:center;justify-content:center;">
+      <i class="fa fa-chevron-up"></i>
+    </button>
+  </div>
+  <script>
+  Vue.createApp({
+    data(){return{showTop:false}},
+    mounted(){window.addEventListener('scroll',()=>{this.showTop=window.scrollY>300})},
+    methods:{scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}}
+  }).mount('#app')
+  </script>
+</body>
+</html>
