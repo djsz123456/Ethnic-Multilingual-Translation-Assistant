@@ -45,7 +45,7 @@
       max-width: 1200px;
       margin: 0 auto;
       gap: 20px;
-      min-height: calc(100vh - 140px);
+      min-height: calc(100vh - 80px);
     }
 
     /* ==================== Sidebar ==================== */
@@ -207,7 +207,7 @@
     .note-editor {
       width: 100%;
       flex: 1;
-      min-height: 400px;
+      min-height: 600px;
       padding: 20px;
       font-size: 17px;
       line-height: 1.8;
@@ -332,7 +332,7 @@
   <a href="../index.html"><i class="fa fa-home"></i> 返回首页</a>
 </div>
 
-<div class="page-body">
+<div v-else class="page-body">
 <div id="app" class="note-page">
 
   <!-- Sidebar -->
@@ -407,6 +407,7 @@ const { createApp } = Vue
 createApp({
   data() {
     return {
+      needLogin: false,
       noteTitle: '',
       noteContent: '',
       notes: [],
@@ -418,39 +419,34 @@ createApp({
     }
   },
   mounted() {
-    // Migrate old single-note format
-    const oldTitle = localStorage.getItem('tibetan_note_title')
-    const oldContent = localStorage.getItem('tibetan_note_content')
-    let savedNotes = []
-    try {
-      savedNotes = JSON.parse(localStorage.getItem('tibetan_notes') || '[]')
-    } catch(e) { savedNotes = [] }
-
-    if ((oldTitle || oldContent) && savedNotes.length === 0) {
-      const migrated = {
-        id: Date.now(),
-        title: oldTitle || '',
-        content: oldContent || '',
-        createdAt: Date.now(),
-        updatedAt: Date.now()
-      }
-      savedNotes.unshift(migrated)
-      localStorage.setItem('tibetan_notes', JSON.stringify(savedNotes))
-      localStorage.removeItem('tibetan_note_title')
-      localStorage.removeItem('tibetan_note_content')
+    const token = localStorage.getItem('authToken');
+    const name = localStorage.getItem('userName');
+    if (!token || !name) {
+      this.needLogin = true;
+      return;
     }
-
-    this.notes = savedNotes
-    if (this.notes.length > 0) {
-      this.loadNote(this.notes[0])
-    }
-
+    this.loadNotes(name);
     window.addEventListener('scroll', () => {
       this.showBackTop = window.scrollY > 300
     })
   },
   methods: {
+    goLogin() {
+      window.location.href = '../index.html';
+    },
+    loadNotes(userName) {
+      let savedNotes = [];
+      try {
+        savedNotes = JSON.parse(localStorage.getItem(`tibetan_notes_${userName}`) || '[]');
+      } catch(e) { savedNotes = []; }
+      this.notes = savedNotes;
+      if (this.notes.length > 0) {
+        this.loadNote(this.notes[0]);
+      }
+    },
     saveNote() {
+      const userName = localStorage.getItem('userName');
+      if (!userName) return;
       const now = Date.now()
       if (this.currentNoteId) {
         const idx = this.notes.findIndex(n => n.id === this.currentNoteId)
@@ -470,7 +466,7 @@ createApp({
         this.notes.unshift(newNote)
         this.currentNoteId = newNote.id
       }
-      localStorage.setItem('tibetan_notes', JSON.stringify(this.notes))
+      localStorage.setItem(`tibetan_notes_${userName}`, JSON.stringify(this.notes))
       this.hasUnsaved = false
       this.showToast('笔记保存成功')
     },
@@ -493,10 +489,12 @@ createApp({
       this.hasUnsaved = false
     },
     deleteNote(id) {
+      const userName = localStorage.getItem('userName');
+      if (!userName) return;
       const idx = this.notes.findIndex(n => n.id === id)
       if (idx === -1) return
       this.notes.splice(idx, 1)
-      localStorage.setItem('tibetan_notes', JSON.stringify(this.notes))
+      localStorage.setItem(`tibetan_notes_${userName}`, JSON.stringify(this.notes))
       if (this.currentNoteId === id) {
         if (this.notes.length > 0) {
           this.loadNote(this.notes[0])
@@ -539,6 +537,43 @@ createApp({
   }
 }).mount('#app')
 </script>
+
+<style>
+.login-required {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 40px;
+}
+.login-required i {
+  font-size: 64px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+.login-required h2 {
+  color: #9B2B25;
+  margin-bottom: 16px;
+}
+.login-required p {
+  color: #888;
+  margin-bottom: 24px;
+}
+.login-required button {
+  padding: 12px 36px;
+  background: #9B2B25;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.login-required button:hover {
+  background: #8B2020;
+}
+</style>
 
 <footer style="background:#9B2B25;color:rgba(255,255,255,0.85);text-align:center;padding:24px 20px;font-size:14px;">
   <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 探寻安多秘境，传承藏韵文化</p>

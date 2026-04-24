@@ -325,6 +325,40 @@
         font-size: 20px;
       }
     }
+    .login-required {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      padding: 40px;
+    }
+    .login-required i {
+      font-size: 64px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+    .login-required h2 {
+      color: #9B2B25;
+      margin-bottom: 16px;
+    }
+    .login-required p {
+      color: #888;
+      margin-bottom: 24px;
+    }
+    .login-required button {
+      padding: 12px 36px;
+      background: #9B2B25;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .login-required button:hover {
+      background: #8B2020;
+    }
   </style>
 </head>
 <body>
@@ -336,7 +370,8 @@
   <span class="current">安多藏语常用短语</span>
 </div>
 
-<div id="app" class="phrase-container">
+
+<div v-else id="app" class="phrase-container">
   <!-- 顶部标题 -->
   <div class="page-header">
     <div class="main-title">
@@ -411,6 +446,7 @@ const { createApp } = Vue
 createApp({
   data() {
     return {
+      needLogin: false,
       categories: [
         { id: 'all',      name: '全部' },
         { id: 'greeting', name: '问候礼仪' },
@@ -464,8 +500,18 @@ createApp({
         { tibetan: 'བཅུ', pinyin: 'Chu', chinese: '十（10）', category: 'number', categoryLabel: '数字时间', collected: false }
       ],
       toastShow: false,
-      toastText: ''
+      toastText: '',
+      userFavorites: []
     }
+  },
+  mounted() {
+    const token = localStorage.getItem('authToken');
+    const name = localStorage.getItem('userName');
+    if (!token || !name) {
+      this.needLogin = true;
+      return;
+    }
+    this.loadFavorites(name);
   },
   computed: {
     filteredPhrases() {
@@ -481,6 +527,19 @@ createApp({
     }
   },
   methods: {
+    goLogin() {
+      window.location.href = '../index.html';
+    },
+    loadFavorites(userName) {
+      const favorites = JSON.parse(localStorage.getItem(`user_favorites_${userName}`) || '[]');
+      this.userFavorites = favorites;
+      this.phrases.forEach(p => {
+        const found = favorites.find(f => f.name === p.chinese);
+        if (found) {
+          p.collected = true;
+        }
+      });
+    },
     playAudio(item) {
       if ('speechSynthesis' in window) {
         const utter = new SpeechSynthesisUtterance(item.chinese)
@@ -493,8 +552,24 @@ createApp({
       }
     },
     toggleCollect(item) {
-      item.collected = !item.collected
-      this.showToast(item.collected ? '已收藏' : '已取消收藏')
+      const userName = localStorage.getItem('userName');
+      if (!userName) return;
+      item.collected = !item.collected;
+      if (item.collected) {
+        const favoriteItem = {
+          id: Date.now(),
+          name: item.chinese,
+          link: '../duanyu/duanyu.html',
+          time: Date.now()
+        };
+        this.userFavorites.push(favoriteItem);
+        localStorage.setItem(`user_favorites_${userName}`, JSON.stringify(this.userFavorites));
+        this.showToast('已添加到收藏');
+      } else {
+        this.userFavorites = this.userFavorites.filter(f => f.name !== item.chinese);
+        localStorage.setItem(`user_favorites_${userName}`, JSON.stringify(this.userFavorites));
+        this.showToast('已取消收藏');
+      }
     },
     showToast(text) {
       this.toastText = text

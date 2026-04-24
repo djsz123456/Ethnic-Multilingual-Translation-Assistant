@@ -1220,7 +1220,8 @@
     .user-panel-overlay.show { opacity: 1; visibility: visible; }
     .user-panel {
       position: fixed; top: 0; right: -400px; bottom: 0;
-      width: 380px; max-width: 90vw;
+      width: 420px; max-width: 95vw;
+      height: 100vh;
       background: var(--bg-secondary);
       box-shadow: -4px 0 20px rgba(0,0,0,0.15);
       z-index: 10004; transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
@@ -1231,6 +1232,7 @@
       padding: 24px 20px 16px;
       background: linear-gradient(135deg, var(--primary-red), #B83C2E);
       color: #fff; display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
     }
     .user-panel-header h3 { font-size: 18px; font-weight: 600; margin: 0; }
     .user-panel-close {
@@ -1239,10 +1241,10 @@
       cursor: pointer; display: flex; align-items: center; justify-content: center;
     }
     .user-panel-close:hover { background: rgba(255,255,255,0.3); }
-    .user-panel-tabs { display: flex; border-bottom: 1px solid #eee; background: #fff; }
+    .user-panel-tabs { display: flex; border-bottom: 1px solid #eee; background: #fff; flex-shrink: 0; }
     .user-panel-tabs button {
-      flex: 1; padding: 12px 0; border: none; background: none;
-      font-size: 14px; color: var(--text-secondary); cursor: pointer;
+      flex: 1; padding: 14px 0; border: none; background: none;
+      font-size: 15px; color: var(--text-secondary); cursor: pointer;
       position: relative; transition: var(--transition); font-family: inherit;
     }
     .user-panel-tabs button.active { color: var(--primary-red); font-weight: 600; }
@@ -1250,7 +1252,12 @@
       content: ''; position: absolute; bottom: 0; left: 20%; right: 20%;
       height: 2px; background: var(--primary-red); border-radius: 1px;
     }
-    .user-panel-body { flex: 1; overflow-y: auto; padding: 20px; }
+    .user-panel-body { 
+      flex: 1; 
+      overflow-y: auto; 
+      padding: 20px; 
+      max-height: calc(100vh - 120px);
+    }
     .panel-profile-card { text-align: center; padding: 30px 20px; }
     .panel-avatar {
       width: 72px; height: 72px; border-radius: 50%;
@@ -1260,37 +1267,38 @@
     }
     .panel-username { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
     .panel-welcome { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
-    .panel-stats { display: flex; justify-content: center; gap: 40px; }
+    .panel-stats { display: flex; justify-content: center; gap: 50px; }
     .panel-stat { text-align: center; }
-    .panel-stat-num { font-size: 24px; font-weight: 700; color: var(--primary-red); }
-    .panel-stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .panel-stat-num { font-size: 28px; font-weight: 700; color: var(--primary-red); }
+    .panel-stat-label { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
     .panel-list-item {
-      display: flex; align-items: center; padding: 14px 16px; border-radius: 10px;
-      margin-bottom: 8px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      display: flex; align-items: center; padding: 16px 18px; border-radius: 12px;
+      margin-bottom: 12px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       transition: var(--transition); cursor: pointer; text-decoration: none; color: inherit;
     }
-    .panel-list-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
+    .panel-list-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); transform: translateY(-2px); }
     .panel-list-icon {
-      width: 40px; height: 40px; border-radius: 8px;
+      width: 48px; height: 48px; border-radius: 10px;
       background: linear-gradient(135deg, var(--primary-red), #B83C2E);
       color: #fff; display: flex; align-items: center; justify-content: center;
-      font-size: 16px; flex-shrink: 0; margin-right: 12px;
+      font-size: 20px; flex-shrink: 0; margin-right: 14px;
     }
     .panel-list-info { flex: 1; min-width: 0; }
-    .panel-list-name { font-size: 14px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .panel-list-time { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .panel-list-name { font-size: 16px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .panel-list-time { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
     .panel-list-action {
-      width: 28px; height: 28px; border-radius: 50%; border: none; background: none;
+      width: 32px; height: 32px; border-radius: 50%; border: none; background: none;
       color: #ccc; cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: var(--transition); flex-shrink: 0;
     }
     .panel-list-action:hover { color: #DC3545; background: #fef2f2; }
-    .panel-empty { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
-    .panel-empty i { font-size: 48px; color: #ddd; display: block; margin-bottom: 12px; }
+    .panel-empty { text-align: center; padding: 50px 20px; color: var(--text-secondary); }
+    .panel-empty i { font-size: 56px; color: #ddd; display: block; margin-bottom: 16px; }
+    .panel-empty small { font-size: 14px; display: block; margin-top: 8px; }
     .panel-clear-btn {
-      display: block; width: 100%; padding: 10px; margin-top: 16px;
+      display: block; width: 100%; padding: 12px; margin-top: 20px;
       border: 1px solid #eee; border-radius: 8px; background: none;
-      color: var(--text-secondary); font-size: 13px; cursor: pointer;
+      color: var(--text-secondary); font-size: 14px; cursor: pointer;
       transition: var(--transition); font-family: inherit;
     }
     .panel-clear-btn:hover { background: #fef2f2; color: #DC3545; border-color: #DC3545; }
@@ -1929,12 +1937,8 @@
 <div id="app">
   <div class="top-bar">
     <div class="top-bar-text">
-      🏔️ 雪域安多·藏韵传承 | 本地人讲述·真实民俗·安多藏族文化传播平台
+      🏔️ 雪域安多·藏韵传承 | 安多藏族文化传播平台
     </div>
-    <div class="top-bar-links">
-        <a href="#" @click.prevent="handleFeatureClick('收藏')"><i class="fa fa-heart"></i> 收藏</a>
-        <a href="#" @click.prevent="handleFeatureClick('分享')"><i class="fa fa-share-alt"></i> 分享</a>
-      </div>
   </div>
 
   <header class="header">
@@ -1977,9 +1981,9 @@
               <i class="fa fa-star-o"></i>
               我的收藏
             </a>
-            <a class="dropdown-item" href="javascript:void(0)" @click="openUserPanel('history')">
-              <i class="fa fa-history"></i>
-              浏览历史
+            <a class="dropdown-item" href="javascript:void(0)" @click="openUserPanel('notes')">
+              <i class="fa fa-file-text-o"></i>
+              我的笔记
             </a>
             <div class="dropdown-divider"></div>
             <button class="dropdown-item logout" @click="handleLogout">
@@ -1995,13 +1999,13 @@
     <div class="user-panel-overlay" :class="{ show: showUserPanel }" @click="showUserPanel = false"></div>
     <div class="user-panel" :class="{ show: showUserPanel }">
       <div class="user-panel-header">
-        <h3>{{ userPanelTab === 'profile' ? '个人中心' : userPanelTab === 'favorites' ? '我的收藏' : '浏览历史' }}</h3>
+        <h3>{{ userPanelTab === 'profile' ? '个人中心' : userPanelTab === 'favorites' ? '我的收藏' : '我的笔记' }}</h3>
         <button class="user-panel-close" @click="showUserPanel = false"><i class="fa fa-times"></i></button>
       </div>
       <div class="user-panel-tabs">
         <button :class="{ active: userPanelTab === 'profile' }" @click="userPanelTab = 'profile'"><i class="fa fa-user"></i> 个人</button>
         <button :class="{ active: userPanelTab === 'favorites' }" @click="userPanelTab = 'favorites'"><i class="fa fa-star"></i> 收藏</button>
-        <button :class="{ active: userPanelTab === 'history' }" @click="userPanelTab = 'history'"><i class="fa fa-history"></i> 历史</button>
+        <button :class="{ active: userPanelTab === 'notes' }" @click="userPanelTab = 'notes'; loadUserNotes()"><i class="fa fa-file-text"></i> 笔记</button>
       </div>
       <div class="user-panel-body">
         <div v-if="userPanelTab === 'profile'" class="panel-profile-card">
@@ -2014,15 +2018,15 @@
               <div class="panel-stat-label">收藏</div>
             </div>
             <div class="panel-stat">
-              <div class="panel-stat-num">{{ browseHistory.length }}</div>
-              <div class="panel-stat-label">足迹</div>
+              <div class="panel-stat-num">{{ userNotesCount }}</div>
+              <div class="panel-stat-label">笔记</div>
             </div>
           </div>
         </div>
         <div v-if="userPanelTab === 'favorites'">
           <div v-if="favorites.length === 0" class="panel-empty">
             <i class="fa fa-star-o"></i>
-            暂无收藏内容<br><small>浏览景点时点击收藏按钮即可添加</small>
+            暂无收藏内容<br><small>在常用短语页面点击收藏按钮即可添加</small>
           </div>
           <a v-for="(item, idx) in favorites" :key="item.id" class="panel-list-item" :href="item.link">
             <div class="panel-list-icon"><i class="fa fa-star"></i></div>
@@ -2033,21 +2037,19 @@
             <button class="panel-list-action" @click.prevent.stop="removeFavorite(idx)" title="取消收藏"><i class="fa fa-times"></i></button>
           </a>
         </div>
-        <div v-if="userPanelTab === 'history'">
-          <div v-if="browseHistory.length === 0" class="panel-empty">
-            <i class="fa fa-history"></i>
-            暂无浏览记录<br><small>您浏览过的景点将显示在这里</small>
+        <div v-if="userPanelTab === 'notes'">
+          <div v-if="userNotes.length === 0" class="panel-empty">
+            <i class="fa fa-file-text-o"></i>
+            暂无笔记内容<br><small>在藏文笔记页面创建的笔记将显示在这里</small>
           </div>
-          <a v-for="(item, idx) in browseHistory" :key="idx" class="panel-list-item" :href="item.link">
-            <div class="panel-list-icon"><i class="fa fa-map-marker"></i></div>
+          <a v-for="(item, idx) in userNotes" :key="item.id" class="panel-list-item" href="biji/biji.html">
+            <div class="panel-list-icon"><i class="fa fa-file-text"></i></div>
             <div class="panel-list-info">
-              <div class="panel-list-name">{{ item.name }}</div>
-              <div class="panel-list-time">{{ formatTime(item.time) }}</div>
+              <div class="panel-list-name">{{ item.title || '无标题笔记' }}</div>
+              <div class="panel-list-time">{{ formatTime(item.updatedAt) }}</div>
             </div>
+            <button class="panel-list-action" @click.prevent.stop="removeNote(idx)" title="删除笔记"><i class="fa fa-times"></i></button>
           </a>
-          <button v-if="browseHistory.length > 0" class="panel-clear-btn" @click="clearHistory">
-            <i class="fa fa-trash-o"></i> 清空浏览记录
-          </button>
         </div>
       </div>
     </div>
@@ -2310,59 +2312,51 @@
     <section id="tools" aria-labelledby="tools-title">
       <h2 class="section-title" id="tools-title">藏文实用工具（ལག་ཆ།）</h2>
       <div class="tools-grid">
-        <div class="tool-card">
-          <a href="zangli-master/calendar.html" class="card-link" aria-label="藏文日历"></a>
+        <div class="tool-card" @click="handleToolClick('藏文日历')">
           <div class="tool-icon"><i class="fa fa-calendar"></i></div>
-          <h3 class="tool-title"><a href="zangli-master/calendar.html">藏文日历</a></h3>
+          <h3 class="tool-title">藏文日历</h3>
           <p class="tool-tibetan">བོད་ཡིག་ལོ་ཐོ།</p>
         </div>
 
-        <div class="tool-card">
-          <a href="jianpan/jianpan.html" class="card-link" aria-label="藏族输入法"></a>
+        <div class="tool-card" @click="handleToolClick('藏族输入法')">
           <div class="tool-icon"><i class="fa fa-keyboard-o"></i></div>
-          <h3 class="tool-title"><a href="jianpan/jianpan.html">藏族输入法</a></h3>
+          <h3 class="tool-title">藏族输入法</h3>
           <p class="tool-tibetan">བོད་ཡིག་གཏགས་ཐབས</p>
         </div>
 
-        <div class="tool-card">
-          <a href="biji/biji.html" class="card-link" aria-label="藏文笔记"></a>
+        <div class="tool-card" @click="handleToolClick('藏文笔记')">
           <div class="tool-icon"><i class="fa fa-pencil"></i></div>
-          <h3 class="tool-title"><a href="biji/biji.html">藏文笔记</a></h3>
+          <h3 class="tool-title">藏文笔记</h3>
           <p class="tool-tibetan">བོད་ཡིག་གི་ཟིན་བྲིས།</p>
         </div>
 
-        <div class="tool-card">
-          <a href="duanyu/duanyu.html" class="card-link" aria-label="常用短语"></a>
+        <div class="tool-card" @click="handleToolClick('常用短语')">
           <div class="tool-icon"><i class="fa fa-comment"></i></div>
-          <h3 class="tool-title"><a href="duanyu/duanyu.html">常用短语</a></h3>
+          <h3 class="tool-title">常用短语</h3>
           <p class="tool-tibetan">རྒྱུན་བཀོལ་ཚིག་ཐུང་།</p>
         </div>
 
-        <div class="tool-card">
-          <a href="zifu/zifu.html" class="card-link" aria-label="藏文字符"></a>
+        <div class="tool-card" @click="handleToolClick('藏文字符')">
           <div class="tool-icon"><i class="fa fa-font"></i></div>
-          <h3 class="tool-title"><a href="zifu/zifu.html">藏文字符</a></h3>
+          <h3 class="tool-title">藏文字符</h3>
           <p class="tool-tibetan">བོད་ཡིག་ཡིག་འབྲུ།</p>
         </div>
 
-        <div class="tool-card">
-          <a href="fanyi/fanyi.html" class="card-link" aria-label="藏文翻译"></a>
+        <div class="tool-card" @click="handleToolClick('藏文翻译')">
           <div class="tool-icon"><i class="fa fa-language"></i></div>
-          <h3 class="tool-title"><a href="fanyi/fanyi.html">藏文翻译</a></h3>
+          <h3 class="tool-title">藏文翻译</h3>
           <p class="tool-tibetan">བོད་རྒྱ་རིག་སྒྱུར།</p>
         </div>
 
-        <div class="tool-card">
-          <a href="music/music.html" class="card-link" aria-label="传统音乐"></a>
+        <div class="tool-card" @click="handleToolClick('传统音乐')">
           <div class="tool-icon"><i class="fa fa-music"></i></div>
-          <h3 class="tool-title"><a href="music/music.html">传统音乐</a></h3>
+          <h3 class="tool-title">传统音乐</h3>
           <p class="tool-tibetan">སྲོལ་རྒྱུན་རོལ་དབྱངས</p>
         </div>
 
-        <div class="tool-card">
-          <a href="jingdian/jingdian.html" class="card-link" aria-label="藏文经典"></a>
+        <div class="tool-card" @click="handleToolClick('藏文经典')">
           <div class="tool-icon"><i class="fa fa-book"></i></div>
-          <h3 class="tool-title"><a href="jingdian/jingdian.html">藏文经典</a></h3>
+          <h3 class="tool-title">藏文经典</h3>
           <p class="tool-tibetan">བོད་ཀྱི་གསུང་རབ།</p>
         </div>
       </div>
@@ -2620,6 +2614,7 @@ createApp({
       userPanelTab: 'profile',
       favorites: [],
       browseHistory: [],
+      userNotes: [],
       showModal: false,
       authTab: 'login',
 
@@ -2979,7 +2974,7 @@ createApp({
         { 
           img: 'image/mm1.jpg', 
           alt: '青海安多风景',
-          title: '青海安多藏族文化传播平台',
+          title: '安多藏族文化传播平台',
           subtitle: '旅游景点 + 民俗文化深度融合 · 本地人讲述 · 拒绝编造'
         },
         { 
@@ -3009,28 +3004,6 @@ createApp({
       ],
       folkList: [],
       tourList: []
-    }
-  },
-  mounted() {
-    this.startAutoSlide()
-    window.addEventListener('scroll', this.handleScroll)
-    window.addEventListener('resize', this.handleResize)
-    this.checkMobile()
-    this.$nextTick(() => {
-      this.updateCardWidth()
-      this.updateMaxScroll()
-      this.initAMap()
-    })
-    this.highlightCurrentPage()
-    this.loadFolkList()
-    this.loadTourList()
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-    window.removeEventListener('resize', this.handleResize)
-    // 销毁地图实例，避免内存泄漏
-    if (this.map) {
-      this.map.destroy()
     }
   },
   methods: {
@@ -3064,6 +3037,28 @@ createApp({
       }
       if (feature === '收藏') {
         this.openUserPanel('favorites')
+      }
+    },
+
+    handleToolClick(toolName) {
+      if (!this.isLoggedIn) {
+        this.showModal = true
+        this.authTab = 'login'
+        this.showToast('请先登录后再使用' + toolName, 'info')
+        return
+      }
+      const toolLinks = {
+        '藏文日历': 'zangli-master/calendar.html',
+        '藏族输入法': 'jianpan/jianpan.html',
+        '藏文笔记': 'biji/biji.html',
+        '常用短语': 'duanyu/duanyu.html',
+        '藏文字符': 'zifu/zifu.html',
+        '藏文翻译': 'fanyi/fanyi.html',
+        '传统音乐': 'music/music.html',
+        '藏文经典': 'jingdian/jingdian.html'
+      }
+      if (toolLinks[toolName]) {
+        window.location.href = toolLinks[toolName]
       }
     },
 
@@ -3302,8 +3297,8 @@ createApp({
         { id: 2, title: '安多藏戏', desc: '以面具、唱腔、舞蹈三位一体，每逢节日庆典必演，是藏族最古老的表演艺术。', img: 'huangnan/images/hn1.jpg' },
         { id: 3, title: '雪顿节', desc: '藏历六七月的晒佛、藏戏、酸奶宴庆典，是安多地区最盛大的传统节日之一。', img: 'taersi/images/ts1.jpg' },
         { id: 4, title: '转湖习俗', desc: '信众沿青海湖环行祈福，转湖一圈约360公里，是藏传佛教重要的朝圣方式。', img: 'qinghahu/images/nn3.jpg' },
-        { id: 5, title: '煨桑仪式', desc: '焚烧柏枝、糌粑、青稞，烟雾升腾以祭祀山神、祈愿平安，是藏族日常信仰核心。', img: 'sangkecaoyuan/images/skcy1.jpg' },
-        { id: 6, title: '藏历新年', desc: '家庭团聚、跳神驱邪、互赠哈达，热贡地区尤以"於菟"傩舞闻名全国。', img: 'sanjiangyuan/images/sjy.jpg' }
+        { id: 5, title: '祭桑仪式', desc: '焚烧柏枝、青藏粑、青藏麦，烟雾升腾以祭祀山神、祈愿平安，是藏族日常信仰核心。', img: 'image/weisang.jpg' },
+        { id: 6, title: '藏历新年', desc: '家庭团聚、跳神驱邪、互赠哈达，热贡地区尤以"於菟"傩舞闻名全国。', img: 'image/xinnian.jpg' }
       ]
     },
     loadTourList() {
@@ -3313,7 +3308,7 @@ createApp({
         { id: 3, title: '拉卜楞寺', desc: '甘南·夏河｜世界最长转经廊，安多藏区最大佛教学府，六大学院完整保存。', img: 'labulengsi/images/lb8.jpg', link: 'labulengsi/labulengsi.html' },
         { id: 4, title: '黄南热贡', desc: '青海·黄南｜热贡艺术国家级非遗，唐卡、堆绣、泥塑享誉世界。', img: 'huangnan/images/hn1.jpg', link: 'huangnan/huangnan.html' },
         { id: 5, title: '日月山', desc: '青海·湟源｜文成公主入藏必经地，农耕与游牧文明的地理分界线。', img: 'riyueshan/images/nn2.jpg', link: 'riyueshan/riyueshan.html' },
-        { id: 6, title: '三江源', desc: '青海·玉树｜长江、黄河、澜沧江发源地，中华水塔，世界级生态保护区。', img: 'sanjiangyuan/images/sjy.jpg', link: 'sanjiangyuan/sanjiangyuan.html' }
+        { id: 6, title: '三江源', desc: '青海·玉树｜长江、黄河、澜沧江发源地，中华水塔，世界级生态保护区。', img: 'image/sanjiangyuan.jpg', link: 'sanjiangyuan/sanjiangyuan.html' }
       ]
     },
     updateScrollPos(type) {
@@ -3381,33 +3376,10 @@ createApp({
       const token = localStorage.getItem('authToken')
       const name = localStorage.getItem('userName')
       if (token && name) {
-        try {
-          const response = await fetch('/api/user/info', {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            }
-          })
-
-          if (!response.ok) {
-            throw new Error('登录已过期')
-          }
-
-          const data = await response.json()
-          
-          if (data.code === 200) {
-            this.isLoggedIn = true
-            this.userName = name
-          }
-        } catch (error) {
-          console.error('验证登录状态失败:', error)
-          localStorage.removeItem('authToken')
-          localStorage.removeItem('userId')
-          localStorage.removeItem('userName')
-          this.isLoggedIn = false
-          this.userName = ''
-        }
+        this.isLoggedIn = true
+        this.userName = name
+        this.favorites = JSON.parse(localStorage.getItem(`user_favorites_${name}`) || '[]')
+        this.browseHistory = JSON.parse(localStorage.getItem(`browse_history_${name}`) || '[]')
       }
     },
 
@@ -3415,22 +3387,24 @@ createApp({
       this.userPanelTab = tab;
       this.showUserPanel = true;
       this.showDropdown = false;
+      if (tab === 'notes') {
+        this.loadUserNotes();
+      }
     },
     removeFavorite(idx) {
       this.favorites.splice(idx, 1);
-      localStorage.setItem('user_favorites', JSON.stringify(this.favorites));
+      localStorage.setItem(`user_favorites_${this.userName}`, JSON.stringify(this.favorites));
       this.showToast('已取消收藏', 'info');
     },
-    addToHistory(item) {
-      this.browseHistory = this.browseHistory.filter(h => h.link !== item.link);
-      this.browseHistory.unshift({ name: item.name, link: item.link, time: Date.now() });
-      if (this.browseHistory.length > 50) this.browseHistory = this.browseHistory.slice(0, 50);
-      localStorage.setItem('browse_history', JSON.stringify(this.browseHistory));
+    loadUserNotes() {
+      if (this.isLoggedIn && this.userName) {
+        this.userNotes = JSON.parse(localStorage.getItem(`tibetan_notes_${this.userName}`) || '[]');
+      }
     },
-    clearHistory() {
-      this.browseHistory = [];
-      localStorage.setItem('browse_history', JSON.stringify([]));
-      this.showToast('浏览记录已清空', 'info');
+    removeNote(idx) {
+      this.userNotes.splice(idx, 1);
+      localStorage.setItem(`tibetan_notes_${this.userName}`, JSON.stringify(this.userNotes));
+      this.showToast('笔记已删除', 'info');
     },
     formatTime(ts) {
       if (!ts) return '';
@@ -3517,6 +3491,8 @@ createApp({
 
         this.isLoggedIn = true
         this.userName = user.username
+        this.favorites = JSON.parse(localStorage.getItem(`user_favorites_${user.username}`) || '[]')
+        this.browseHistory = JSON.parse(localStorage.getItem(`browse_history_${user.username}`) || '[]')
         this.showModal = false
         this.showToast('登录成功，欢迎回来！', 'success')
 
@@ -3640,10 +3616,17 @@ createApp({
         info: 'fa fa-info-circle'
       }
       return icons[this.toast.type] || icons.info
+    },
+    userNotesCount() {
+      if (this.isLoggedIn && this.userName) {
+        return JSON.parse(localStorage.getItem(`tibetan_notes_${this.userName}`) || '[]').length;
+      }
+      return 0;
     }
   },
   
   mounted() {
+    this.checkLoginStatus()
     this.startAutoSlide()
     window.addEventListener('scroll', this.handleScroll)
     window.addEventListener('resize', this.handleResize)
@@ -3656,12 +3639,7 @@ createApp({
     this.highlightCurrentPage()
     this.loadFolkList()
     this.loadTourList()
-    this.checkLoginStatus()
     document.addEventListener('click', this.closeDropdown)
-    try {
-      this.favorites = JSON.parse(localStorage.getItem('user_favorites') || '[]')
-      this.browseHistory = JSON.parse(localStorage.getItem('browse_history') || '[]')
-    } catch(e) { this.favorites = []; this.browseHistory = []; }
   },
   
   beforeUnmount() {
