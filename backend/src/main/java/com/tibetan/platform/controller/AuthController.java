@@ -31,9 +31,9 @@ public class AuthController {
                 .passwordHash(passwordEncoder.encode(req.getPassword()))
                 .nickname(req.getUsername())
                 .build();
-        userRepository.save(user);
-        String token = jwtUtil.generateToken(user.getId(), user.getUsername());
-        return ApiResponse.ok("注册成功", Map.of("token", token, "username", user.getUsername(), "userId", user.getId()));
+        User saved = userRepository.save(user);
+        String token = jwtUtil.generateToken(saved.getId(), saved.getUsername());
+        return ApiResponse.ok("注册成功", Map.of("token", token, "username", saved.getUsername(), "userId", saved.getId()));
     }
 
     @PostMapping("/login")

@@ -60,7 +60,7 @@ CREATE TABLE scriptures (
 -- 用户笔记表
 CREATE TABLE notes (
     id          BIGSERIAL PRIMARY KEY,
-    user_id     BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    user_id     BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     title       VARCHAR(200),
     content     TEXT,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -70,7 +70,7 @@ CREATE TABLE notes (
 -- 用户收藏表
 CREATE TABLE favorites (
     id          BIGSERIAL PRIMARY KEY,
-    user_id     BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    user_id     BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     item_type   VARCHAR(20) NOT NULL,
     item_id     BIGINT NOT NULL,
     item_name   VARCHAR(200),
@@ -81,7 +81,7 @@ CREATE TABLE favorites (
 -- 浏览历史表
 CREATE TABLE browse_history (
     id          BIGSERIAL PRIMARY KEY,
-    user_id     BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    user_id     BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     item_type   VARCHAR(20) NOT NULL,
     item_id     BIGINT NOT NULL,
     item_name   VARCHAR(200),

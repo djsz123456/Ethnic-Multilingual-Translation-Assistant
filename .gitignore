@@ -9,6 +9,11 @@ frontend/.vite/
 node_modules/
 dist/
 
+# Backend
+backend/target/
+*.jar
+*.class
+
 # Environment
 .env
 .env.local
