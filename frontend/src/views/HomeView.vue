@@ -62,26 +62,26 @@
             <h3>藏文日历</h3>
             <p>百年藏历在线查询</p>
           </a>
-          <a href="/fanyi/fanyi.html" class="tool-card">
+          <router-link to="/translate" class="tool-card">
             <div class="tool-icon"><i class="fa fa-language"></i></div>
             <h3>藏汉翻译</h3>
             <p>藏汉双向智能翻译</p>
-          </a>
+          </router-link>
           <a href="/jianpan/jianpan.html" class="tool-card">
             <div class="tool-icon"><i class="fa fa-keyboard-o"></i></div>
             <h3>藏文键盘</h3>
             <p>在线藏文输入法</p>
           </a>
-          <a href="/music/music.html" class="tool-card">
+          <router-link to="/music" class="tool-card">
             <div class="tool-icon"><i class="fa fa-music"></i></div>
             <h3>藏族音乐</h3>
             <p>安多传统音乐欣赏</p>
-          </a>
-          <a href="/jingdian/jingdian.html" class="tool-card">
+          </router-link>
+          <router-link to="/scripture" class="tool-card">
             <div class="tool-icon"><i class="fa fa-book"></i></div>
             <h3>藏文经典</h3>
             <p>经典藏文诵读学习</p>
-          </a>
+          </router-link>
           <a href="/biji/biji.html" class="tool-card">
             <div class="tool-icon"><i class="fa fa-pencil"></i></div>
             <h3>藏文笔记</h3>

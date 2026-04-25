@@ -16,6 +16,21 @@ const routes = [
     name: 'FolkDetail',
     component: () => import('@/views/FolkDetailView.vue'),
   },
+  {
+    path: '/music',
+    name: 'Music',
+    component: () => import('@/views/MusicView.vue'),
+  },
+  {
+    path: '/scripture',
+    name: 'Scripture',
+    component: () => import('@/views/ScriptureView.vue'),
+  },
+  {
+    path: '/translate',
+    name: 'Translate',
+    component: () => import('@/views/TranslateView.vue'),
+  },
 ]
 
 const router = createRouter({
