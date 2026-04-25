@@ -40,12 +40,39 @@
       font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
     }
     
-    *:focus-visible {
-      outline: 2px solid var(--primary-gold);
-      outline-offset: 2px;
+    *:focus {
+      outline: none;
     }
-
-html {
+    
+    *:focus-visible {
+      outline: none;
+    }
+    
+    button {
+      outline: none;
+    }
+    
+    button:focus {
+      outline: none;
+    }
+    
+    button:focus-visible {
+      outline: none;
+    }
+    
+    a {
+      outline: none;
+    }
+    
+    a:focus {
+      outline: none;
+    }
+    
+    a:focus-visible {
+      outline: none;
+    }
+    
+    html {
       scroll-behavior: smooth;
     }
     
@@ -2196,10 +2223,10 @@ html {
 
         <!-- 右侧地名列表 -->
         <div class="place-list-wrapper">
-          <!-- 安多核心区 -->
+          <!-- 青海 · 安多核心区 -->
           <div class="region-group" :class="{ expanded: expandedRegions.includes('qinghai') }">
             <h3 @click="toggleRegion('qinghai')" style="cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;">
-              安多核心区
+              青海 · 安多核心区
               <i class="fa" :class="expandedRegions.includes('qinghai') ? 'fa-chevron-up' : 'fa-chevron-down'" style="font-size:12px;"></i>
             </h3>
             <ul class="place-list" v-show="expandedRegions.includes('qinghai')">
@@ -2351,20 +2378,15 @@ html {
       </div>
       <div class="footer-section">
         <h3>联系方式</h3>
-        <p><i class="fa fa-envelope"></i> contact@tibetan-culture.com</p>
-        <p><i class="fa fa-phone"></i> +86 400-000-0000</p>
-        <p><i class="fa fa-map-marker"></i> 青海省西宁市</p>
+        <p><i class="fa fa-envelope"></i> 3846603042@qq.com</p>
       </div>
       <div class="footer-section">
         <h3>关注我们</h3>
         <p>微信公众号：雪域安多</p>
-        <p>微博：@安多藏族文化</p>
-        <p>抖音：@藏韵传承</p>
       </div>
     </div>
     <div class="footer-bottom">
       <p>计算机设计大赛 — གངས་ལྗོངས་ཨ་མདོའི་བོད་རིགས་རིག་གནས་བརྒྱུད་སྤེལ་དྲ་ཚིགས།</p>
-      <p>内容来源：青海安多本地人讲述、当地导游提供 · 真实民俗 · 拒绝编造</p>
       <p>&copy; 2026 雪域安多·藏韵传承. All Rights Reserved.</p>
     </div>
   </footer>
@@ -2835,7 +2857,7 @@ createApp({
           lat: 32.95,
           desc: '安多藏区的神山圣湖，以雪山、湖泊和原始森林闻名，是藏族心中的圣地。',
           img: 'image1/nb1.jpg',
-          link: 'nianbaoyuze/nianbaoyuze.html'
+          link: 'nianbao/nianbao.html'
         },
         {
           id: 24,
@@ -2844,7 +2866,7 @@ createApp({
           lat: 31.90,
           desc: '嘉绒藏族文化的代表建筑，《尘埃落定》的故事原型地，藏式官寨建筑的典范。',
           img: 'image1/me1.jpg',
-          link: 'zhuokeji/zhuokeji.html'
+          link: 'maerkang/maerkang.html'
         },
         {
           id: 25,
@@ -2853,7 +2875,7 @@ createApp({
           lat: 33.30,
           desc: '黄河在四川境内的第一处大拐弯，日落时分的“九曲晚霞”是川西北的标志性景观。',
           img: 'image1/jq1.jpg',
-          link: 'huanghewan/huanghewan.html'
+          link: 'jiuqu/jiuqu.html'
         },
         {
           id: 26,
@@ -2871,7 +2893,7 @@ createApp({
           lat: 32.90,
           desc: '阿坝地区重要的格鲁派寺院，建筑宏伟，是川西北安多藏区重要的宗教场所。',
           img: 'image1/gm1.jpg',
-          link: 'gemoshi/gemoshi.html'
+          link: 'gemosi/gemosi.html'
         }
       ],
 

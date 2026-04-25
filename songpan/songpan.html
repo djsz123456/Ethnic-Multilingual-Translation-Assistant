@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>松潘古城 - 川西北门户重镇</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-red: #9B2B25;
+      --primary-gold: #D4AF37;
+      --bg-primary: #FAF9F7;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.15);
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Noto Sans SC',"Microsoft YaHei",sans-serif; }
+    body { background:var(--bg-primary); color:var(--text-primary); line-height:1.7; overflow-x:hidden; }
+
+    .top-bar { width:100%; height:40px; background:linear-gradient(90deg,#f8f8f8,#f0f0f0); border-bottom:1px solid #e0e0e0; line-height:40px; padding:0 30px; font-size:13px; color:#666; display:flex; justify-content:space-between; align-items:center; }
+    .back-link { color:var(--primary-red); text-decoration:none; font-weight:500; transition:var(--transition); }
+    .back-link:hover { color:var(--primary-gold); }
+
+    .header { width:100%; background:linear-gradient(135deg,var(--primary-red) 0%,#B83C2E 100%); box-shadow:var(--shadow-md); position:sticky; top:0; z-index:999; }
+    .header-wrap { max-width:1400px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:80px; padding:0 30px; }
+    .logo { font-size:22px; font-weight:bold; color:#fff; }
+    .logo a { color:#fff; text-decoration:none; transition:var(--transition); }
+    .logo a:hover { color:var(--primary-gold); }
+    .nav { display:flex; gap:8px; }
+    .nav a { color:#fff; text-decoration:none; padding:10px 18px; font-size:15px; font-weight:500; border-radius:8px; transition:var(--transition); }
+    .nav a:hover { background:rgba(255,255,255,0.15); color:var(--primary-gold); }
+
+    .banner { width:100%; height:500px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#3a3a4a 0%,#4a4a5a 50%,#5a5a6a 100%); }
+    .banner::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(155,43,37,0.6),rgba(0,0,0,0.5)); z-index:1; }
+    .banner-content { position:relative; z-index:2; text-align:center; color:#fff; max-width:900px; padding:0 30px; animation:fadeInUp 1s ease; }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .banner h1 { font-size:52px; margin-bottom:20px; font-weight:700; text-shadow:3px 3px 6px rgba(0,0,0,0.5); letter-spacing:4px; }
+    .banner .subtitle { font-size:24px; margin-bottom:30px; text-shadow:2px 2px 4px rgba(0,0,0,0.5); font-weight:300; letter-spacing:2px; }
+    .banner .tibetan-name { font-size:18px; opacity:0.85; margin-bottom:20px; font-style:italic; }
+    .banner-stats { display:flex; justify-content:center; gap:60px; margin-top:30px; }
+    .stat-item { text-align:center; }
+    .stat-number { font-size:32px; font-weight:700; color:var(--primary-gold); display:block; }
+    .stat-label { font-size:14px; opacity:0.9; margin-top:5px; }
+
+    .main-container { max-width:1400px; margin:0 auto; padding:60px 30px; }
+    .section { margin-bottom:80px; }
+    .section-title { font-size:36px; color:var(--primary-red); margin-bottom:30px; padding-left:20px; border-left:5px solid var(--primary-gold); font-weight:700; display:flex; align-items:center; letter-spacing:1px; }
+    .section-title::after { content:''; flex:1; height:2px; background:linear-gradient(90deg,var(--primary-gold),transparent); margin-left:20px; }
+    .section-title .tibetan { font-size:18px; color:var(--text-secondary); margin-left:15px; font-weight:400; }
+    .section-text { font-size:16px; color:var(--text-secondary); line-height:2; text-align:justify; margin-bottom:20px; padding:0 10px; }
+
+    .highlight-box { background:linear-gradient(135deg,#fff9f0,#fff5e6); border-left:4px solid var(--primary-gold); padding:25px 30px; margin:25px 0; border-radius:0 var(--radius-md) var(--radius-md) 0; box-shadow:var(--shadow-sm); }
+    .highlight-box p { font-size:16px; color:var(--text-primary); line-height:1.9; margin-bottom:15px; }
+    .highlight-box p:last-child { margin-bottom:0; }
+    .highlight-box .label { font-weight:700; color:var(--primary-red); margin-right:8px; }
+
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:25px; margin:30px 0; }
+    .card { background:#fff; border-radius:var(--radius-md); padding:25px; box-shadow:var(--shadow-sm); transition:var(--transition); border:1px solid rgba(0,0,0,0.05); position:relative; overflow:hidden; }
+    .card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--primary-red),var(--primary-gold)); transform:scaleX(0); transition:var(--transition); }
+    .card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
+    .card:hover::before { transform:scaleX(1); }
+    .card-icon { width:60px; height:60px; margin:0 auto 20px; background:linear-gradient(135deg,var(--primary-red),#B83C2E); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px; box-shadow:var(--shadow-md); }
+    .card-title { font-size:18px; color:var(--primary-red); margin-bottom:12px; font-weight:600; text-align:center; }
+    .card-content { font-size:15px; color:var(--text-secondary); line-height:1.8; text-align:justify; }
+
+    .feature-list { list-style:none; padding:0; margin:20px 0; }
+    .feature-list li { padding:15px 20px 15px 40px; margin-bottom:12px; background:#fff; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); position:relative; transition:var(--transition); font-size:15px; color:var(--text-secondary); line-height:1.7; }
+    .feature-list li:hover { transform:translateX(5px); box-shadow:var(--shadow-md); }
+    .feature-list li::before { content:'✦'; position:absolute; left:15px; color:var(--primary-gold); font-size:16px; }
+    .feature-list li .label { font-weight:600; color:var(--primary-red); margin-right:5px; }
+
+    .attraction-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; margin:30px 0; }
+    .attraction-card { background:#fff; border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); }
+    .attraction-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+    .attraction-header { background:linear-gradient(135deg,var(--primary-red),#B83C2E); color:#fff; padding:15px 20px; font-size:16px; font-weight:600; }
+    .attraction-body { padding:20px; }
+    .attraction-body p { font-size:14px; color:var(--text-secondary); line-height:1.7; }
+
+    .tips-box { background:linear-gradient(135deg,#f0f7ff,#e8f4fd); border:1px solid #b3d9f2; border-radius:var(--radius-md); padding:25px 30px; margin:25px 0; }
+    .tips-box h4 { color:var(--primary-red); margin-bottom:15px; font-size:18px; }
+    .tips-box ul { list-style:none; padding:0; }
+    .tips-box ul li { padding:10px 0 10px 25px; position:relative; font-size:15px; color:var(--text-secondary); line-height:1.7; }
+    .tips-box ul li::before { content:'⚠'; position:absolute; left:0; color:#e74c3c; }
+
+    footer { background:var(--primary-red); color:rgba(255,255,255,0.85); text-align:center; padding:30px 20px; font-size:14px; }
+
+    .back-to-top { position:fixed; bottom:30px; right:30px; width:50px; height:50px; background:var(--primary-red); color:#fff; border-radius:50%; display:none; align-items:center; justify-content:center; font-size:20px; cursor:pointer; box-shadow:var(--shadow-lg); transition:var(--transition); z-index:998; border:none; }
+    .back-to-top.visible { display:flex; }
+    .back-to-top:hover { background:var(--primary-gold); transform:translateY(-5px); }
+
+    @media (max-width:768px) {
+      .header-wrap { flex-direction:column; height:auto; padding:15px 20px; }
+      .logo { font-size:18px; margin-bottom:10px; }
+      .nav { flex-wrap:wrap; justify-content:center; }
+      .banner { height:400px; }
+      .banner h1 { font-size:36px; }
+      .banner .subtitle { font-size:18px; }
+      .banner-stats { gap:30px; }
+      .stat-number { font-size:24px; }
+      .section-title { font-size:26px; }
+      .card-grid, .attraction-grid { grid-template-columns:1fr; }
+      .main-container { padding:40px 20px; }
+    }
+    @media (max-width:480px) {
+      .banner { height:300px; }
+      .banner h1 { font-size:28px; }
+      .banner .subtitle { font-size:16px; }
+      .banner-stats { flex-direction:column; gap:15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div>🏔️ 雪域安多·藏韵传承 | 松潘古城 - 川西北门户重镇</div>
+    <a href="../index.html" class="back-link"><i class="fa fa-home"></i> 返回首页</a>
+  </div>
+
+  <header class="header">
+    <div class="header-wrap">
+      <div class="logo"><a href="../index.html">གངས་ལྗོངས་ཨ་མདོ།</a></div>
+      <nav class="nav">
+        <a href="../index.html">首页</a>
+        <a href="../index.html#culture">安多民俗</a>
+        <a href="../index.html#tour">藏地旅游</a>
+        <a href="../index.html#tools">藏文工具</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="banner">
+    <div class="banner-content">
+      <div class="tibetan-name">ཀྲོང་ཤོད།</div>
+      <h1>松潘古城</h1>
+      <p class="subtitle">川西北门户重镇・茶马古道枢纽</p>
+      <div class="banner-stats">
+        <div class="stat-item"><span class="stat-number">2,850m</span><div class="stat-label">平均海拔</div></div>
+        <div class="stat-item"><span class="stat-number">千年</span><div class="stat-label">建城历史</div></div>
+        <div class="stat-item"><span class="stat-number">古城</span><div class="stat-label">历史遗迹</div></div>
+        <div class="stat-item"><span class="stat-number">要塞</span><div class="stat-label">军事地位</div></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-container">
+    <section class="section" id="overview">
+      <h2 class="section-title">古城概况<span class="tibetan">གྲོང་ཁྱེར་གྱི་སྤྱི་ནོར།</span></h2>
+      <div class="highlight-box">
+        <p><span class="label">核心定位：</span>松潘古城位于四川省阿坝州松潘县，是川西北地区历史最为悠久的古城之一。古城始建于唐代，历代都是川西北的军事重镇和商贸枢纽，是中国历史文化名城。</p>
+      </div>
+      <p class="section-text">松潘古城依山而建，城墙保存完好，是中国唐宋时期古城建筑的杰出代表。古城内街道纵横，商铺林立，青砖灰瓦，古色古香。历史上这里是茶马古道的重要节点，汉藏贸易在此汇聚。</p>
+    </section>
+
+    <section class="section" id="history">
+      <h2 class="section-title">历史渊源<span class="tibetan">ལོ་རྒྱུས་ཡེ་ཤེས།</span></h2>
+      <p class="section-text">松潘古城历史悠久，历经唐、宋、元、明、清等多个朝代，是研究中国西南地区古代城市发展的活标本。</p>
+      <ul class="feature-list">
+        <li><span class="label">建城历史：</span>松潘古城始建于唐代，距今已有1300多年历史。相传唐代名将李靖曾在此驻守。</li>
+        <li><span class="label">茶马古道：</span>松潘是茶马古道的重要节点，内地的茶叶、丝绸由此运往藏区，藏区的马匹、药材由此进入中原。</li>
+        <li><span class="label">军事重镇：</span>由于其特殊的地理位置，松潘历来是军事重镇。明代在此设卫，"松潘卫"是川西北最重要的军事机构。</li>
+        <li><span class="label">商贸中心：</span>历史上松潘是汉藏贸易的重要市场，来自内地的商人与藏族商人交易于此，形成繁荣的商贸景象。</li>
+      </ul>
+    </section>
+
+    <section class="section" id="culture">
+      <h2 class="section-title">民族文化<span class="tibetan">མི་རིག་རིག་གནས།</span></h2>
+      <p class="section-text">松潘是汉藏文化交融的重要地区，古城内保留着丰富的民族文化元素。</p>
+      <ul class="feature-list">
+        <li><span class="label">藏汉融合：</span>古城内既有藏式建筑，也有汉式建筑，体现了汉藏文化的深度融合。</li>
+        <li><span class="label">宗教文化：</span>古城内有清真寺、藏传佛教寺院，体现了多元宗教文化的共存。</li>
+        <li><span class="label">饮食文化：</span>松潘的饮食融合了川菜和藏餐的特点，形成了独特的饮食文化。</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tourism">
+      <h2 class="section-title">参观指南<span class="tibetan">ལྟ་གླེང་བྱ་ཐབས།</span></h2>
+      <div class="highlight-box">
+        <p><span class="label">位置：</span>松潘古城位于松潘县城内，距成都约300公里，可自驾或乘坐长途汽车前往。九寨沟、黄龙景区均在松潘周边，是川西北旅游的重要中转站。</p>
+      </div>
+      <div class="attraction-grid">
+        <div class="attraction-card">
+          <div class="attraction-header">古城墙</div>
+          <div class="attraction-body"><p>保存完好的唐代古城墙，周长数公里，城墙高约10米，气势雄伟，是国内保存最完整的古城墙之一。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">松潘古城楼</div>
+          <div class="attraction-body"><p>古城正门城楼高三层，飞檐翘角，雕梁画栋，是古城的标志性建筑。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">古街道</div>
+          <div class="attraction-body"><p>古城内保存有完整的古街道，青石铺路，两侧为明清时期的商铺建筑，极具历史韵味。</p></div>
+        </div>
+        <div class="attraction-card">
+          <div class="attraction-header">古寺</div>
+          <div class="attraction-body"><p>古城内的藏传佛教寺院和清真寺，是了解松潘多元宗教文化的重要场所。</p></div>
+        </div>
+      </div>
+      <div class="tips-box">
+        <h4><i class="fa fa-exclamation-triangle"></i> 参观注意事项</h4>
+        <ul>
+          <li>古城为历史文化名城，参观时请爱护文物古迹；</li>
+          <li>尊重当地藏族和回族同胞的宗教信仰；</li>
+          <li>古城内石板路不平整，建议穿舒适的鞋子；</li>
+          <li>建议请当地导游讲解，以便更好地了解古城历史。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>青海安多藏族文化传播平台 &copy; 2026 &nbsp;·&nbsp; 探寻安多秘境，传承藏韵文化</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fa fa-arrow-up"></i>
+  </button>
+  <script>
+    window.addEventListener('scroll', function() {
+      document.getElementById('backToTop').classList.toggle('visible', window.pageYOffset > 300);
+    });
+  </script>
+</body>
+</html>
