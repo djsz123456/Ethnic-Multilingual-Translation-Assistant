@@ -1,1 +1,19 @@
-"SecretKey.csv" 
+"SecretKey.csv"
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Root-level legacy artifacts
+node_modules/
+dist/
+
+# Environment
+.env
+.env.local
+*.local
+
+# IDE
+.vscode/
+.idea/
