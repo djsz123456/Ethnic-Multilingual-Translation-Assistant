@@ -21,21 +21,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background-color: var(--bg-primary); color: var(--text-main); line-height: 1.6; }
 
-    /* Topbar */
-    .topbar {
-      background: var(--primary-red);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      height: 56px;
-      gap: 12px;
-    }
-    .topbar a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
-    .topbar a:hover { color: #fff; }
-    .topbar .sep { color: rgba(255,255,255,0.4); }
-    .topbar .logo { font-size: 18px; font-weight: 700; color: #fff; margin-right: auto; letter-spacing: 1px; }
-
     /* Header */
     .header { text-align: center; padding: 40px 20px; border-bottom: 2px solid var(--primary-red); background: white; }
     .header h1 { color: var(--primary-red); font-size: 2rem; display: flex; align-items: center; justify-content: center; gap: 15px; }
@@ -164,14 +149,6 @@
 </head>
 <body>
   <div id="app">
-    <!-- Topbar -->
-    <div class="topbar">
-      <span class="logo">雪域安多·藏韵传承</span>
-      <a href="../index.html"><i class="fas fa-home"></i> 首页</a>
-      <span class="sep">|</span>
-      <span style="font-size:14px;">藏族音乐</span>
-    </div>
-
     <!-- Header -->
     <header class="header">
       <h1><i class="fas fa-music"></i> 藏族传统乐器 / བོད་ཀྱི་རོལ་མོ།</h1>
@@ -217,8 +194,8 @@
         <div class="song-grid">
           <div v-for="(song, index) in filteredSongs" :key="index" class="song-card">
             <div style="position: relative;">
-              <img :src="song.cover" class="cover-img" alt="封面">
-              <div class="play-overlay" @click="togglePlay(song)">
+              <img :src="song.cover" class="cover-img" alt="封面" @click="playSong(song)">
+              <div class="play-overlay" @click="playSong(song)">
                 <i class="fas fa-play-circle play-icon-lg"></i>
               </div>
             </div>
@@ -227,12 +204,13 @@
               <p>{{ song.artist }} · {{ song.type }}</p>
             </div>
             <div class="audio-controls">
-              <button class="play-btn-sm" @click="togglePlay(song)">
+              <button class="play-btn-sm" @click="playSong(song)">
                 <i :class="playingSong === song.id ? 'fas fa-pause' : 'fas fa-play'"></i>
               </button>
               <div class="progress-bar"><div class="progress-fill" :style="{ width: song.progress + '%' }"></div></div>
               <span style="font-size: 0.75rem; color: #999;">{{ song.duration }}</span>
             </div>
+            <audio ref="audioPlayer" :src="song.src" @ended="onSongEnded(song)" @timeupdate="onTimeUpdate(song)"></audio>
           </div>
         </div>
       </section>
@@ -261,14 +239,24 @@
     createApp({
       data() {
         return {
-          categories: ['全部', '安多民歌', '曼陀铃弹唱', '器乐独奏', '酒歌'],
+          categories: ['全部', '安多民歌'],
           currentCat: '全部',
           playingSong: null,
+          audioPlayer: null,
           songs: [
-            { id: 1, title: '慈祥的母亲 / བཀྲ་ཤིས་ཀྱི་ཨ་མ།', artist: '才旦卓玛', type: '安多民歌', duration: '04:12', progress: 30, cover: 'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=400&q=80' },
-            { id: 2, title: '金色的故乡 / གསེར་གྱི་ཕ་ཡུལ།', artist: '亚东', type: '曼陀铃弹唱', duration: '03:45', progress: 0, cover: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80' },
-            { id: 3, title: '草原之夜 / རྩྭ་ཐང་གི་མཚན་མོ།', artist: '德德玛', type: '酒歌', duration: '05:01', progress: 10, cover: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=80' },
-            { id: 4, title: '雪山颂 / གངས་རིའི་བསྟོད་པ།', artist: '传统器乐', type: '器乐独奏', duration: '02:58', progress: 0, cover: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=400&q=80' }
+            { id: 1, title: 'ལྷ་ཡུལ་དང་པོ།', artist: '安多民歌', type: '安多民歌', duration: '03:12', progress: 0, cover: 'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་དང་པོ།.mp3' },
+            { id: 2, title: 'ལྷ་ཡུལ་གསུམ་པ།', artist: '安多民歌', type: '安多民歌', duration: '03:45', progress: 0, cover: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་གསུམ་པ།.mp3' },
+            { id: 3, title: 'ལྷ་ཡུལ་བརྒྱད་པ།', artist: '安多民歌', type: '安多民歌', duration: '04:01', progress: 0, cover: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་བརྒྱད་པ།.mp3' },
+            { id: 4, title: 'ལྷ་ཡུལ་ལྔ།', artist: '安多民歌', type: '安多民歌', duration: '02:58', progress: 0, cover: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་ལྔ།.mp3' },
+            { id: 5, title: 'ལྷ་ཡུལ་ཁུལ་རྩེ་ཤང་།', artist: '安多民歌', type: '安多民歌', duration: '03:30', progress: 0, cover: 'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་ཁུལ་རྩེ་ཤང་།.mp3' },
+            { id: 6, title: 'ལྷ་ཡུལ་ཁུལ་ཨུད་ཀྱི་ཨུ་ཡོན་༡༡།', artist: '安多民歌', type: '安多民歌', duration: '04:15', progress: 0, cover: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་ཁུལ་ཨུད་ཀྱི་ཨུ་ཡོན་༡༡།.mp3' },
+            { id: 7, title: 'ལྷ་ཡིག་2པ།', artist: '安多民歌', type: '安多民歌', duration: '03:20', progress: 0, cover: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡིག་2པ།.mp3' },
+            { id: 8, title: 'ལྷ་ཡིག་3.mp3', artist: '安多民歌', type: '安多民歌', duration: '04:05', progress: 0, cover: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡིག་3.mp3' },
+            { id: 9, title: 'ལྷ་ཡིད་དགུ།', artist: '安多民歌', type: '安多民歌', duration: '03:50', progress: 0, cover: 'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡིད་དགུ།.mp3' },
+            { id: 10, title: 'ལྷ་ཡུལ།སྨད་ཤང་།', artist: '安多民歌', type: '安多民歌', duration: '02:45', progress: 0, cover: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ།སྨད་ཤང་།.mp3' },
+            { id: 11, title: 'ལྷ་ཡུལ་སྨད་པ་ཤང་།', artist: '安多民歌', type: '安多民歌', duration: '03:25', progress: 0, cover: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་སྨད་པ་ཤང་།.mp3' },
+            { id: 12, title: 'ལྷ་ཡུལ་ལྔ་པ།', artist: '安多民歌', type: '安多民歌', duration: '04:00', progress: 0, cover: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་ལྔ་པ།.mp3' },
+            { id: 13, title: 'ལྷ་ཡུལ་རྫོང་།མི་གྲངས་12རེ།', artist: '安多民歌', type: '安多民歌', duration: '05:10', progress: 0, cover: 'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=400&q=80', src: '../资料/ལྷ་ཡུལ་རྫོང་།མི་གྲངས་12རེ།.mp3' }
           ]
         }
       },
@@ -279,6 +267,35 @@
         }
       },
       methods: {
+        playSong(song) {
+          const audio = this.$refs.audioPlayer?.find((el, i) => el && this.filteredSongs[i]?.id === song.id);
+          if (!audio) return;
+          
+          if (this.playingSong === song.id) {
+            if (audio.paused) {
+              audio.play();
+              this.playingSong = song.id;
+            } else {
+              audio.pause();
+              this.playingSong = null;
+            }
+          } else {
+            // Pause any playing audio first
+            this.$refs.audioPlayer?.forEach(a => a?.pause());
+            audio.play();
+            this.playingSong = song.id;
+          }
+        },
+        onTimeUpdate(song) {
+          const audio = this.$refs.audioPlayer?.find((el, i) => el && this.filteredSongs[i]?.id === song.id);
+          if (audio) {
+            song.progress = (audio.currentTime / audio.duration) * 100;
+          }
+        },
+        onSongEnded(song) {
+          song.progress = 0;
+          this.playingSong = null;
+        },
         togglePlay(song) {
           if (this.playingSong === song.id) {
             this.playingSong = null; // Pause
